@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>鼠标上的灰土与格里文科定理 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>鼠标上的灰土与格里文科定理</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>这篇日志原文写在<a href="http://yihui.name/en/2008/06/dirt-in-the-mouse-glivenko-cantelli-theorem/">英文Blog</a>中。大意是讲，近日发现鼠标滚轮不好用，于是拆开看了看，一拆吓一跳，咋那么多灰土啊？滚轮的前后灰土分布差异显著，滚轮前的盖子收集的灰土少，后面的盖子收集的多，于是乎，想起格里文科定理，曰：经验分布a.s.收敛到真实分布。鼠标滚轮前后的灰土分布可以视作二项分布，平时用滚轮的时候绝大多数情况下是向下滚，因此向下的p比较大，向上的小，加上鼠标已经用了几年了，滚动无数次，所以滚轮累积起来的“经验分布”可以视作真实分布的完美逼近。</p>
+
+<p>另：顺便看了一眼维基百科，发现Glivenko-Cantelli定理竟然和VC理论有关，最终牵涉到机器学习理论，不禁感叹，这世界的确很奇妙。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-06-15">2008-06-15</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#格里文科定理" title="格里文科定理">格里文科定理</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#经验分布" title="经验分布">经验分布</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#鼠标" title="鼠标">鼠标</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/06/glivenko-cantelli-theorem-and-my-mouse/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/06/ever-changing-world/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/06/importance-of-contrast-group/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

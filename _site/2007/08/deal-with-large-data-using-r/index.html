@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>对于大型数据处理的“庖丁解牛” | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>对于大型数据处理的“庖丁解牛”</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>9号通宵大战，总算大致赶完了一篇报告。这个通宵让我创下了42小时不睡觉的记录，其惨烈程度可想而知。这篇 报告的主题是针对人口抽样调查数据进行分析，得出地区人口素质的一些描述性结论。其实我的相当大一部分时间都花在了处理数据上面，因为数据比较庞大，一共 有260万行、90个变量，数据文件大小在FoxPro存储格式下为424M，首先我要想办法将 FoxPro数据转化为一般常见的数据库格式，因此将之导出为dBase IV（<code>*.dbf</code>），这样SPSS就可以读了（当然也可以用R的RODBC包读）， 从dBase IV转为SPSS格式（<code>*.sav</code>）之后文件大小变为约1.5G，但很容易就能找出减小数据文件大小的办法：将以文本形式（String）表示的数字转化 为数值型（Numeric）即可（其实这份数据中的大部分数值都是用文本形式保存的，除非以零开头，都可以直接转换为数值形式）——我并不了解真正的 SPSS存储形式，但我猜测对于字符数据，至少要比数值数据多两个引号吧。初步整理之后，文件大小能缩减到400多M，当然我是不会直接用SPSS来作分 析的，因为速度太慢，一个变量的频数统计就要花半分钟时间，我可没那么多时间和耐心去等。最终我采用的办法是将数据存为纯文本格式，具体来说是逗号分隔符 数据（<code>*.csv</code>），然后开始用R来作分析。到这里，数据的预处理仍然没有结束，我为了让分析做得更快，又采取了一个策略：将每一列变量都单独存为一个数 据文件。要达到这样的目的，当然要首先把每一列变量提取出来，那么怎样依次提取变量呢？方法很简单，用SQL的select语句即可。文本文件当然也可以 当作数据库来处理，因为Windows一般会有文本文件的ODBC Driver，利用R的RODBC包结合SQL的select语句，变量就可以顺利被选择出来了。</p>
+
+<p>以下是一个R程序示例：</p>
+
+<p><img src="http://i.imgur.com/rdlDQ.png" alt="新建数据源（控制面板--&gt;管理工具--&gt;数据源 (ODBC)；添加）" />
+图1：新建数据源（控制面板-->管理工具-->数据源 (ODBC)；添加）</p>
+
+<p><img src="http://i.imgur.com/3GH3V.png" alt="Microsoft Text Driver" />
+图2：Microsoft Text Driver</p>
+
+<p>用R处理完数据之后，预处理过程才算真正结束了，这里要特别提一句的是，由于R的<code>save()</code>函数默认采用二进制存储方式（而不是直接存储ASCII字符），数据的大小便可以被大幅度压缩，最后以二进制数据形式存储的这90个变量大小之和才50M左右——数据大小被压缩到原来的1/10。</p>
+
+<p>这次采取的另一个节省时间策略就是<a href="/cn/2007/08/remote-connection-under-windows/">上一篇日志</a>里 提到的远程桌面连接；我自己这台电脑跑起来比较慢，于是我把这些数据处理工作都交给了办公室的另一台电脑，在那里执行我的R语句，然后回到自己的电脑同时 做别的工作，等那边的计算结束之后再把结果复制回来就可以了。由于R的计算都是在内存（RAM）中进行，大家都知道读写内存的速度比读写硬盘或其它存储的 速度要快很多倍，R的计算速度尤其是在这种大型数据的情况下就显得极其快，频数统计（<code>table()</code>函数）往往都是半秒不到就计算出来了。 当然，这世上不存在绝对好或者绝对差的东西，读写内存必然对内存有一定的要求（主要是内存大小），比如当数据很庞大的时候，Windows下就很难把数据 一口气读进来。我前面将每一列变量单独存为数据文件的做法其实也是回避这个缺点，因为我的分析并不需要每次都用到所有的变量，而加载一列数据的时间也是很短的，用谁就加载谁。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2007-08-12">2007-08-12</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#ODBC" title="ODBC">ODBC</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R语言" title="R语言">R语言</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#RODBC" title="RODBC">RODBC</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#SPSS" title="SPSS">SPSS</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#SQL" title="SQL">SQL</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Windows" title="Windows">Windows</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#二进制文件" title="二进制文件">二进制文件</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#大型数据" title="大型数据">大型数据</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#计算机" title="计算机">计算机</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#远程连接" title="远程连接">远程连接</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2007/08/deal-with-large-data-using-r/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2007/08/remote-connection-under-windows/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2007/08/prevent-lower-case-tags-bo-blog/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

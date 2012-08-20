@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>画曲线的通用办法：描点法画图 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>画曲线的通用办法：描点法画图</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>初中的时候老师便教我们拿着直尺和圆规作图，那时候恐怕还没几个人会用电脑，直到初中毕业，我才第一次见电脑。那时候画曲线怎样画呢？记得就是在某个<code>x</code>区间上取一系列点，然后计算<code>y = f(x)</code>，把这些点描在笛卡尔坐标系中，然后用铅笔手工连起来。这个办法很笨很原始，但很有效，奇怪的是，到计算机如此发达的今天，仍然有人不断问如何用软件画曲线，仿佛中学时学的东西都还给数学老师了。例如，若干天前，有人问我如何用R画这个曲线：</p>
+
+<p>$latex f(x)=(\sqrt{2}<em>\Gamma(x/2)</em>2)/(\sqrt{x-1}*\Gamma(x-1))$</p>
+
+<p>我只好提醒他回忆中学的描点法。R里面的<code>gamma()</code>和<code>curve()</code>函数是现成的，把数学公式写成相应的代码就可以了：</p>
+
+<pre><code>curve((sqrt(2) * gamma(x/2) * 2)/(sqrt(x - 1) * gamma(x - 1)), 2, 50)
+# 当然，如果你非要按照x = seq(2, 50, ...)然后计算f(x)然后plot(x, f(x), type = "l")
+# 那也可以，只不过curve()就是干这事的，不必麻烦分两步走了
+</code></pre>
+
+<p>[caption id="attachment_1019" align="aligncenter" width="480" caption="描点法画函数曲线"]<a href="http://yihui.name/cn/2009/06/from-points-to-curves/curve-of-a-function/"><img src="http://yihui.name/cn/wp-content/uploads/2009/06/curve-of-a-function.png" alt="描点法画函数曲线" /></a>[/caption]</p>
+
+<p>如同某些网文说人一辈子的守则在幼儿园都已经教完了，就看你长大还记不记得。所以每当面对一个貌似复杂的问题时，首先要想想幼儿园有没有学过。</p>
+
+<p>“武功再高，也怕菜刀”绝对是真理，哈哈。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2009-06-02">2009-06-02</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#curve()" title="curve()">curve()</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#gamma()" title="gamma()">gamma()</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#杀牛用铅笔刀" title="杀牛用铅笔刀">杀牛用铅笔刀</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#画图" title="画图">画图</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#通用办法" title="通用办法">通用办法</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2009/06/from-points-to-curves/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2009/05/1st-volume-the-r-journal-and-1st-chinese-r-conference/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2009/06/creating-tag-cloud-using-r-and-flash-javascript/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

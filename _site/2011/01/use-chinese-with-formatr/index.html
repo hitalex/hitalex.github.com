@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>formatR中文问题解决了（v0.1-7） | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>formatR中文问题解决了（v0.1-7）</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>刚发布formatR包0.1-6版本，解决了几个历史遗留问题。一个是行内注释在之前的版本中都是被去掉的，现在可以用黑魔法保留了（但存在潜在的危险，但愿用户不要中奖）；二是界面内的中文字符现在也可以处理了。答案就像黄荣贵和怡轩提到的一样，用<code>Encoding(x) &lt;- "UTF-8"</code>，但以前处理界面内的代码是先把它写到一个文件中，再用<code>tidy.source()</code>处理，估计这个读写的过程出了问题，现在<code>tidy.source()</code>可以接受一个字符向量来解析，不涉及文件读写，编码问题也就迎刃而解了。</p>
+
+<p>过去总觉得编码问题很可怕，现在经历了各种诡异的错误经验之后，总算心里有了底。</p>
+
+<p>标题写的版本是0.1-7，是因为刚发布0.1-6之后发现多字节字符问题并没有完全解决，编码的顺序不对（应该先编码，再拆分），这个问题<a href="https://github.com/yihui/formatR">已经在0.1-7中修正</a>，过两天再发布。以下为效果图：</p>
+
+<p>[caption id="attachment_1823" align="aligncenter" width="571" caption="formatR：R代码整容前"]<a href="http://yihui.name/cn/wp-content/uploads/2011/01/formatR-before.png"><img src="http://yihui.name/cn/wp-content/uploads/2011/01/formatR-before.png" alt="formatR：R代码整容前" /></a>[/caption]</p>
+
+<p>[caption id="attachment_1824" align="aligncenter" width="571" caption="formatR：R代码整容后"]<a href="http://yihui.name/cn/wp-content/uploads/2011/01/formatR-after.png"><img src="http://yihui.name/cn/wp-content/uploads/2011/01/formatR-after.png" alt="formatR：R代码整容后" /></a>[/caption]</p>
+
+<p>又及：上次<a href="http://cran.r-project.org/package=animation">animation 2.0-0</a>发布之后，有细心的用户Michael Friendly老爷子来信说Sweave演示<code>demo('Sweave_animation')</code>中的<code>prompt</code>和<code>continue</code>选项最后没有重置，又有Aquery指出帮助文档中笔误expresion为expression。对开发者来说，这都是最好的鼓励。就像这里的读者有时候指出我的错别字一样，其实也是不断锻炼我的眼力。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2011-01-06">2011-01-06</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#formatR" title="formatR">formatR</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R包" title="R包">R包</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#代码整理" title="代码整理">代码整理</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2011/01/use-chinese-with-formatr/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2011/01/receive-donations-for-the-first-time/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2011/01/self-portrait/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

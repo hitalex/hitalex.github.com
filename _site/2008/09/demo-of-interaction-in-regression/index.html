@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>回归分析中的交互作用展示 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>回归分析中的交互作用展示</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>我们常见到的教科书上对交互作用的展示一般都是分别给定第二个自变量，然后看第一个自变量对因变量的影响随着第二个自变量取值变化会有何变化。总之，用到的图形都是二维图形，这里我以三维图形来展示交互效应的效果。首先看变量之间没有交互的时候是什么效果：</p>
+
+<p>[caption id="" align="aligncenter" width="400" caption="无交互作用"]<a href="http://yihui.name/en/wp-content/uploads/1221718981_1.png"><img src="http://yihui.name/en/wp-content/uploads/1221718981_0.png" alt="" /></a>[/caption]</p>
+
+<p>无论是从x方向还是z方向来看，y（气泡大小）增大的速度都是一样的，例如x=0与x=10的时候，随着z的增加，y增加的速度一样（因为y与z是线性关系，这种关系不受x影响）。</p>
+
+<p>[caption id="" align="aligncenter" width="400" caption="有交互作用"]<a href="http://yihui.name/en/wp-content/uploads/1221719196_1.png"><img src="http://yihui.name/en/wp-content/uploads/1221719196_0.png" alt="" /></a>[/caption]</p>
+
+<p>而有交互效应的时候情况就不一样了，y在x或z方向上增大的速度会与x或z本身的取值有关。例如图中x越大，则y沿着z增大越快（因为斜率里面包含了x）。</p>
+
+<p>不知这种形式是否比教科书上几道折线更清楚一些。这个问题灵感来自于R-help的邮件列表。R代码参考<a href="http://yihui.name/en/2008/09/to-observe-interactions-in-bubble-plots/">英文Blog</a>。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-09-18">2008-09-18</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#交互作用" title="交互作用">交互作用</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#回归" title="回归">回归</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#气泡图" title="气泡图">气泡图</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/09/demo-of-interaction-in-regression/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/09/academic-circle-and-background-of-stat-graphics/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/09/multiple-outliers-detection/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

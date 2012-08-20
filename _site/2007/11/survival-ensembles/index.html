@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>聚合生存模型 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>聚合生存模型</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>近年来Ensemble的方法已经不算是什么新鲜事儿了，Bootstrap aggregating（bagging）、Boosting、随机森林等等。个人感觉这些方法的理论路线比传统的统计学要次要一些，不像以往的模型、分布、渐进理论等等那样套路化，而是集中精力在提出创意和想法并实现。至于数学推导，有时候甚至都是在创意实现之后再回头来研究的（或者拼凑的）。</p>
+
+<p>现在还在思考准备提交给12月8日“<a href="http://stat.ruc.edu.cn/cn/notice/52039.html">临床医学研究中的统计方法学术研讨会</a>”的论文。生存分析是医学统计的一大支柱分析，经典的参数、半参数模型基本上也定型，没什么挖掘价值了。那么现在只好眼巴巴指望能从机器学习的方法中找一点出路。可惜的是，这样的想法也被人做得差不多了，比如R界的活跃分子之一Torsten Hothorn，这位德国大叔在2005年干脆写了一篇"<strong>Survival Ensembles</strong>"，这下好了，整个世界基本清静了，还有啥可以做的？</p>
+
+<p>只好从这些狮子老虎的牙缝中拼命扒呀找呀，看有没有他们没做的或没想到的，凑一凑，凑出一篇东西来（只能算是“东西”）。</p>
+
+<p>P.S. 1 今天看到Ensemble的鼻祖竟然是John Tukey，他那本"<strong>Exploratory Data Analysis</strong>"真是孕育了不少思想。</p>
+
+<p>P.S. 2 眼看着<a href="http://www.statistik.uni-dortmund.de/useR-2008/">useR! 2008</a>还有六天就可以开始提交论文摘要了，到现在还一点正式的想法都没有。晕。等我写完生存分析的论文我得马上把我的动画论文写完投出去了（试试Teaching Statistics），然后考虑useR!的论文，然后赶紧把我的animation包升级一下；如果还有空，就该考虑明年IASC的那个会了。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2007-11-24">2007-11-24</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#bagging" title="bagging">bagging</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#boosting" title="boosting">boosting</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Ensemble" title="Ensemble">Ensemble</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#John Tukey" title="John Tukey">John Tukey</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Torsten Hothorn" title="Torsten Hothorn">Torsten Hothorn</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#生存分析" title="生存分析">生存分析</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#随机森林" title="随机森林">随机森林</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2007/11/survival-ensembles/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2007/11/friedrich-leisch-reviews-the-r-book/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2007/11/all-opinions-are-biased/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

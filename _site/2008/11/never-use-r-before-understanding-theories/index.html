@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>不懂原理请慎用R | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>不懂原理请慎用R</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>请各位客官谨记：R是一把锋利的刀，用得不好会割到自己（so sharp that you'll cut yourself）。近日一位小同学的一个问题真是让我颇有些生气。</p>
+
+<p>带着图形界面统计软件的思维来用R的话，十有八九会割到自己。在SPSS、SAS等工具中，虽然看着满屏幕的按钮，但大部分人可能也不害怕，因为不用管它们是什么意思，瞎选一通，按OK，下面就可以洋洋自得看着长篇大论的报表出来了，这种过程很是爽。</p>
+
+<p>到了R的世界，满屏幕只有代码，后来好不容易明白了，原来R不用编程，调用现成函数就可以了，于是乎，开始把各式各样的数据、参数往函数里面扔，扔完了summary()一下，长篇大论的报表也出来了，甚爽。直到有一天，R向你报告说某地方出错了，于是傻了。</p>
+
+<p>这里的案例是AdaBoost，这位同学用adabag包中的adaboost.M1()函数对树模型做boosting，却被告知无法进行。我看了一下数据，原来因变量是数值变量。于是火了，数值变量你咋用Adaboost.M1啊？它本身是对分类问题做的提升，对于一个回归问题非要驴唇对马嘴，这不净瞎扯么。</p>
+
+<p>洒家满以为是个有趣的问题，结果饿着肚子回了邮件，真是亏大了。外专业的同仁也就罢了，俺不会说什么，关键是统计专业的。挥一挥衣袖，用膳去鸟。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-11-24">2008-11-24</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#Adaboost.M1" title="Adaboost.M1">Adaboost.M1</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#boosting" title="boosting">boosting</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#提升" title="提升">提升</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计学原理" title="统计学原理">统计学原理</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#莫要自欺欺人" title="莫要自欺欺人">莫要自欺欺人</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/11/never-use-r-before-understanding-theories/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/11/never-grow-old/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/12/explore-scatterplot-with-lowess/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

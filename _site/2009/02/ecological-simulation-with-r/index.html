@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>啊（R），辽阔的非洲草原！（一个生态模拟） | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>啊（R），辽阔的非洲草原！（一个生态模拟）</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>很久以前，某同学问我，为什么R语言要叫R呢？我回答：因为它总是让人发出一声“啊！”。譬如，“啊，R语言真TM难学”，或“啊，R语言真神奇”，等等。啊，我今天在论坛上看见<a href="http://cos.name/cn/topic/14093">一个生态模拟的例子</a>，便为发帖者编撰了如下场景：</p>
+
+<pre><code>ecol.simu = function(nr = 10, nc = 10, col.sp = c(1, 2),
+    pch.sp = c(1, 2), col.die = 1, pch.die = 4, cex = 3,
+    nmax = 50, interval = 1) {
+    x = rep(1:nc, nr)
+    y = rep(1:nr, each = nc)
+    par(ann = FALSE)
+    p = sample(rep(1:2, nr * nc/2), nr * nc)
+    for (i in 1:nmax) {
+        plot(1:nc, 1:nr, type = "n", xlim = c(0.5, nc + 0.5),
+            ylim = c(0.5, nr + 0.5))
+        abline(h = 1:nr, v = 1:nc, col = "lightgray", lty = 3)
+        points(x, y, col = col.sp[p], pch = pch.sp[p], cex = cex)
+        Sys.sleep(interval)
+        idx = sample(nr * nc, 1)
+        points(x[idx], y[idx], pch = pch.die, col = col.die,
+            cex = cex, lwd = 3)
+        tbl = as.vector(table(p))
+        tbl = tbl + sign(p[idx] - 1.5) * c(1, -1)
+        p[idx] = sample(1:2, 1, prob = tbl)
+        Sys.sleep(interval)
+    }
+    p
+}
+par(mar = c(3, 3, 1, 1))
+# 一步一步来
+ecol.simu()
+# 对于急性子和眼力好以及计算机速度快的同志，试试这个暴力模拟
+ecol.simu(col.sp = c(8, 2), pch.sp = c(20, 17), nmax = 1000,
+    interval = 0.05)
+</code></pre>
+
+<p>大意是：有两种物种，每次随机死一个，后继者的概率为生者的比例。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2009-02-26">2009-02-26</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#模拟" title="模拟">模拟</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#生态学" title="生态学">生态学</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2009/02/ecological-simulation-with-r/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2009/02/self-management/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2009/02/introduction-to-john-chambers-software-award/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

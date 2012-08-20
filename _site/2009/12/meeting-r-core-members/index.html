@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>最近跟R core们经常打照面 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>最近跟R core们经常打照面</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>近来有些奇怪，有几位R core们居然给本小子写邮件，让本小子着实感到吃惊。比如，首先是Brian Ripley，这是R core中的core，前面提到过<a href="http://yihui.name/cn/2009/10/50000-revisions-committed-to-r/">他在R源代码中的突出贡献</a>，这位真人不露面、网上找不着照片的大佬，前段时间给我发封邮件说，你小子的animation包的启动消息不正规啊，因为我用<code>suppressPackageStartupMessages()</code>无法屏蔽启动消息；我一看，R里面居然还存在这么长名字的函数，顺便学习了<code>message()</code>函数，从此不再用老土的<code>cat()</code>函数了，后来考虑了一下，干脆把启动消息去掉了，<code>library(animation)</code>不会再有任何提示消息。</p>
+
+<p>然后是我发现Duncan Temple Lang这位不靠谱的大叔做着一些我很喜欢的不靠谱的事情，于是乎对Omegahat心向往之，一来二去聊了聊，将来有机会一定要会一会他。</p>
+
+<p>Sweave对注释的处理是要么完全去除，然后R代码会被整理整齐，要么完全保留，但R代码也保留原样，而我一直希望既能保留注释又能整理代码，这才诞生了<code>animation</code>包中<code>tidy.source()</code>函数（<a href="http://cos.name/bbs/read.php?tid=14056">在小邱聪明的技巧下</a>），前段时间想想给Friedrich Leisch，也就是Sweave的作者，发封邮件说了这个事情，打探一下是否能多设置一些Sweave选项，比如把<code>parse()</code>和<code>deparse()</code>函数以选项的形式抽象出来，这样就可以实现既整理代码又保留注释的功能了，不过大叔貌似很忙，回了一封邮件就再也没有音信了，后来由于Michael Friendly对Sweave的一些功能请求在R-help上发了邮件，我们一干人等通过Duncan Murdoch间接了解到Friedrich的确很忙，不过好消息是圣诞节过后Sweave可能会有更新，届时用户可以自行设置图形设备，不必局限在PDF和EPS。但整理代码的事情仍然遥遥无期……唉，还得用硬性Hack的方法。</p>
+
+<p>Martin Maechler前面提过，看到我们开R会，说要向The R Journal交报告啊，回头再跟他谈谈明年R会议的事情。</p>
+
+<p>最意想不到的是，Duncan Murdoch刚才居然给我发个邮件问问题，额滴神啊，这位大叔可是Rtools的管理者、若干个包的作者（rgl等）啊。不过大叔问的是Flash的问题，还好我知道那么一点点，算是能解决。趁此机会，干脆回问两个C语言问题，子曾经曰过：问一个够本，问两个赚一个。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2009-12-08">2009-12-08</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Life" title="Life">Life</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#Duncan Murdoch" title="Duncan Murdoch">Duncan Murdoch</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Duncan Temple Lang" title="Duncan Temple Lang">Duncan Temple Lang</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Friedrich Leisch" title="Friedrich Leisch">Friedrich Leisch</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Martin Maechler" title="Martin Maechler">Martin Maechler</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Michael Friendly" title="Michael Friendly">Michael Friendly</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Omegahat" title="Omegahat">Omegahat</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Prof Ripley" title="Prof Ripley">Prof Ripley</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R核心成员" title="R核心成员">R核心成员</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Sweave" title="Sweave">Sweave</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2009/12/meeting-r-core-members/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2009/12/snow-in-ames-and-2nd-chinese-r-conference/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2009/12/winter-solstice-dumplings/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

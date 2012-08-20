@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>统计图形和模拟视角下的模型理论解析 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>统计图形和模拟视角下的模型理论解析</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>之前在群众大学给一些客官承诺过我会把我的<a href="http://yihui.name/cn/docs/StatGraphics/Graphics-in-Stat-Models.pdf">硕士毕业论文</a>发上来，其实早就在网上了，只不过没吱声而已，用Git同步一下容易，但写几个字介绍一下就花时间了。感兴趣的客官可以去本站<a href="http://yihui.name/cn/publication/">作品页面</a>内下载：<a href="http://yihui.name/cn/publication/#GSM">http://yihui.name/cn/publication/#GSM</a></p>
+
+<p>这论文呢，自我评价可以给个80分。最大的问题在于没有花时间去整理文章的结构，所以构架上稍微有点散乱（俗称“意识流”）。内容上熟悉我的博客的客官一眼就能看出来，其实都是些博客文章的汇总，只不过用LaTeX让它们变得“人模狗样”一些而已，好在本小子平时也积攒了这些鸡零狗碎的东西，动过自己的脑子。我觉得群众大学的毕业论文，很多都是一个套路：经济/金融数据套一个神奇的模型，直到最后整个世界一片和谐，读者在最后一章都能隐约看到上帝老爷子在朝你挥手。其实也没啥，找工作不容易，地球人也都知道写论文就是忽悠——漫漫人生路上一道工序。</p>
+
+<p>由于本小子是个小人（小小的活人），所以总关心小人关心的事情（俗称“人本主义”）。这论文嘛，窃以为也没什么上下高低之分，说出你怎么想的就可以了，而不要总说“他们”怎么想怎么做。一定要有数学上的创新？一定要有人家看不懂的公式才是好论文？一定要有综述？一定要有长长的参考文献列表才是好论文？一定要板起脸？不能写八卦？不准幽默？……嗨，作茧自缚。几年前看到一篇好文章，颇具恶搞性质，建议各位客官收藏：<a href="http://www.philippeweil.com/links/BoringWriting.pdf">How to write Consistently Boring Scientific Literature</a>。</p>
+
+<p>言归正传：本文是厌倦八股文和数学理论的产物，从理论角度来说，几乎没什么价值，不过这篇文章是用Sweave写的，完全具有可重复性和100%透明度，对文中结果有怀疑的客官可以自行运行代码；其次，统计模拟和图形的声音在界内太微弱，大家都很忙，有人在忙着推公式，有人在忙着编数据，有人在忙着把公式用到不知道是不是编出来的数据上，本小子跟着瞎掺和了点别的东西，仅此而已。甭管有用没用，敬请拍砖。</p>
+
+<p>－－－－－－－－－－外一篇：坛霸是怎样练成的－－－－－－－－－－</p>
+
+<p>曾经有童鞋称呼在下为“坛霸”，这个……有时候确实有那么点意思，无图无真相（两个多月没怎么回帖了，一鼓作气）：</p>
+
+<p>[caption id="attachment_1414" align="aligncenter" width="600" caption="坛霸是怎样练成的"]<a href="http://yihui.name/cn/wp-content/uploads/2010/07/cos-bbs-landlord.gif"><img src="http://yihui.name/cn/wp-content/uploads/2010/07/cos-bbs-landlord.gif" alt="坛霸是怎样练成的" /></a>[/caption]</p>
+
+<p>接下来我会陆续写第三届中国R语言会议、《现代统计图形》书稿和useR! 2010，若时间允许，我考虑一下电视剧《九阴真经》（93版）。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2010-07-30">2010-07-30</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#硕士毕业论文" title="硕士毕业论文">硕士毕业论文</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计图形" title="统计图形">统计图形</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计模型" title="统计模型">统计模型</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计模拟" title="统计模拟">统计模拟</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计理论" title="统计理论">统计理论</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2010/07/master-thesis-graphics-and-simulation-in-stat-models/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2010/07/3rd-chinese-r-conference-beijing/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2010/08/art-of-points-in-r/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

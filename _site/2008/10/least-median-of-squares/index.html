@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>关于最小中位数平方法（Least Median of Squares） | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>关于最小中位数平方法（Least Median of Squares）</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>如果我没记错的话，Prof Lin在课堂上提到，Least Median of Squares是一个难题：它的目标是最小化误差平方的中位数。当时上课我没去考虑这个问题，晚上突然想起，这个问题不管怎么说至少可以有暴力解法，比如用BFGS等方法去优化就能算出系数了。</p>
+
+<p>但是转念一想，LMS这个东西怎么看着眼熟，打开MASS一看，原来是自己以前用过的。MASS包的lqs()可以计算各种稳健和耐抗回归，LMS是其中一种。LMS是一种稳健回归方法（下第一幅图），然而MASS的文献指出它对大量堆在中间位置上的数值敏感（下第二幅图）。</p>
+
+<p>[caption id="" align="aligncenter" width="500" caption="LMS与OLS的比较（LMS较稳健）"]<a href="http://yihui.name/cn/wp-content/uploads/1224512131_0.png"><img src="http://yihui.name/cn/wp-content/uploads/1224512131_0.png" alt="LMS与OLS的比较（LMS较稳健）" /></a>[/caption]</p>
+
+<p>图1 离群点对普通最小二乘有严重影响，LMS却没问题</p>
+
+<p>[caption id="" align="aligncenter" width="500" caption="LMS与OLS的比较（LMS对中间值敏感）"]<a href="http://yihui.name/cn/wp-content/uploads/1224512525_0.png"><img src="http://yihui.name/cn/wp-content/uploads/1224512525_0.png" alt="LMS与OLS的比较（LMS对中间值敏感）" /></a>[/caption]</p>
+
+<p>图2 大量的中间值让LMS失效，普通最小二乘却没事</p>
+
+<p><a href="http://yihui.name/cn/wp-content/uploads//1224513797_0.r">文件下载链接</a></p>
+
+<pre><code>#png("lms.png", width = 500, height = 400)
+par(mar = c(4, 4, 0.1, 0.1))
+library(MASS)
+set.seed(1)
+x = runif(50)
+set.seed(1)
+y = 2 + 3 * x + rnorm(50)
+# an outlier
+x = c(x, 2); y = c(y, 30)
+plot(x, y, pch = 20)
+abline(lqs(y ~ x, method = "lqs"), col = "blue", lty = 2)
+abline(lm(y ~ x), col = "red")
+legend("topleft", legend = c("OLS", "LMS"), col = c("red",
+    "blue"), lty = 1:2, bty = "n")
+#dev.off()
+
+#png("lms-central.png", width = 500, height = 400)
+par(mar = c(4, 4, 0.1, 0.1))
+library(MASS)
+set.seed(1)
+x = runif(50)
+set.seed(1)
+y = 2 + 3 * x + rnorm(50)
+# 500 central values
+x = c(x, jitter(rep(mean(x), 500), 3))
+y = c(y, jitter(rep(mean(y), 500), 3))
+plot(x, y, pch = 20, cex = c(rep(1, 50), rep(0.1, 500)))
+abline(lqs(y ~ x, method = "lqs"), col = "blue", lty = 2)
+abline(lm(y ~ x), col = "red")
+legend("topleft", legend = c("OLS", "LMS"), col = c("red",
+    "blue"), lty = 1:2, bty = "n")
+#dev.off()
+</code></pre>
+
+<p>应读者要求，将两幅图的数据分别附在这里。</p>
+
+<p>[notice type=download]<a href="http://yihui.name/cn/wp-content/uploads/2008/10/fig1.txt">第一幅图的数据下载</a></p>
+
+<p><a href="http://yihui.name/cn/wp-content/uploads/2008/10/fig2.txt">第二幅图的数据下载</a>[/notice]</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-10-20">2008-10-20</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#Least Median of Squares" title="Least Median of Squares">Least Median of Squares</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#LMS" title="LMS">LMS</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#lqs()" title="lqs()">lqs()</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#MASS" title="MASS">MASS</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#OLS" title="OLS">OLS</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#普通最小二乘" title="普通最小二乘">普通最小二乘</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#最小中位数平方法" title="最小中位数平方法">最小中位数平方法</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#稳健回归" title="稳健回归">稳健回归</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/10/least-median-of-squares/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/10/iplots-package-for-dynamic-graphics/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/10/useless-aggregated-data/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

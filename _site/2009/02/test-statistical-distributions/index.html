@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>统计分布的检验 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>统计分布的检验</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>根据数据检验总体的分布在我看来几乎没有什么用处，不过历史上已经出现了无数种关于分布的检验，例如Chi-square检验、KS检验、Shapiro正态性检验等等。我觉得检验没有实际用处的原因有二：</p>
+
+<p>一、若拒绝零假设，即数据不服从某种分布，那么往往会使得下面要做的工作的前提假设不成立——这显然会很惨；</p>
+
+<p>二、若不拒绝零假设——这几乎是无用的结论，因为不拒绝这个零假设，不代表能拒绝其它零假设，因此你仍然不知道数据是什么分布——这显然更惨；</p>
+
+<p>所以我们要把自己的眼睛捂上，假装看不见，像数理统计学家那样，我们假定X服从帕累托分布，然后咋地咋地。</p>
+
+<p>附1：本文是回答Renxiang Yan同志的邮件，因为我写了好半天，然后点“Reply”，发现从163返回了错误信息，说收件人拒绝收信，真是气人。我也不知道是Yan同学自己邮箱设置有问题，还是163有时候会拒绝Gmail的邮件。估计后者可能性大一些。</p>
+
+<p>附2：还要补充说明一点，关于分布的假设检验中，零假设往往是确定的分布，而不是带有未知参数的笼统的分布，即分布的参数都是确定的值。只有少数几个关于正态分布的检验除外，因为它们有渐近性质。因此，提问时最好不要抽象地问怎么检验样本是否是广义极值分布。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2009-02-27">2009-02-27</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#假设检验" title="假设检验">假设检验</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#数据" title="数据">数据</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#数理统计" title="数理统计">数理统计</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计分布" title="统计分布">统计分布</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#零假设" title="零假设">零假设</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2009/02/test-statistical-distributions/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2009/02/introduction-to-john-chambers-software-award/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2009/03/blind-faith-in-structural-equation-models/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

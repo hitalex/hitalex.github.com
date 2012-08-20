@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>用R操纵Google Documents以及其它网络操作 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>用R操纵Google Documents以及其它网络操作</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>语言与软件相比缺点在于，语言的世界对初学者来说太庞大，满眼都是代码，不知从哪儿下手，但是最大的优点也就是灵活性。客官您要是问，R语言能做什么呢？据我所知的话，答案应该是计算机世界的几乎任何事情。比如，今天看见UC Davis的<a href="http://www.stat.ucdavis.edu/%7Eduncan">Duncan Temple Lang</a>为R写了一个特别的包，叫<a href="http://www.omegahat.org/RGoogleDocs/">RGoogleDocs</a>，它可以用来读、写、上传、删除<a href="https://docs.google.com">Google Docs</a>。</p>
+
+<p>顺便提一下，他写的<a href="http://www.omegahat.org/RCurl/">RCurl</a>包可以用来获取或发送HTML表单（form），有了操纵表单的功能之后也就意味着，网络上大部分交互式操作都可以从R里面完成了，比如登录网站、提交日志、上传文件等等。</p>
+
+<p>许久以来我想利用Socket连接写一个即时聊天的包，不过至今没有发布，其实实现起来不过二十来行代码，用base里面的socketConnection()函数以及读写Socket的read.socket() &amp; write.socket()就可以完成了。我有一次在办公室两台电脑上测试了一下，嘿，还真可以。这件事情要是能结合<a href="http://simon.urbanek.info/">Simon Urbanek</a>的Rserve包来做的话就更完美了，不仅可以聊文本，还可以传文件，要是再加上tcl/tk或者RGTK包来做一个界面的话，那就完全胜似QQ、MSN了，等等。感兴趣的客官要是哪天把这个想法在R里面实现了一定通知我一声（比如写了一个包叫作RICQ，意即Ah, I seek you!）。或者您有什么疯狂的主意也赶紧操起键盘联系我。<img src="http://yihui.name/cn/wp-content/uploads/bo/emot/grin.gif" alt="" /></p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-09-25">2008-09-25</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#Google Docs" title="Google Docs">Google Docs</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#HTML表单" title="HTML表单">HTML表单</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R" title="R">R</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Socket" title="Socket">Socket</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#网络通信" title="网络通信">网络通信</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#聊天工具" title="聊天工具">聊天工具</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/09/manipulate-google-docs-with-r/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/09/multivariate-descriptive-statistics/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/09/books-on-spatial-statistics/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

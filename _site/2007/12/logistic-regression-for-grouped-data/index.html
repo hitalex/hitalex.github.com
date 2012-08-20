@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>一天不上论坛的后果（外一篇Logistic回归） | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>一天不上论坛的后果（外一篇Logistic回归）</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>昨天也不能算没上论坛，只是大致看了看，挑了几个R问题回答了一下然后就下了。导致今天上论坛一口气回了三个多小时帖子。累死了。</p>
+
+<h2>外一篇：关于Logistic回归</h2>
+
+<p>为什么计量经济学的书上至今还要赫然写着关于Logistic回归用分组的方法求频率再用自变量去拟合这些频率（OLS）？莫非Gujarati这些人不懂广义线性模型？不应该吧。Logistic回归的因变量取值是二分类的（比如0、1），表面上看来把样本分组之后计算因变量在每一组中的频率看起来更像是概率，从而拟合这些“概率”是很有道理的，但实际上问题就会出在分组上，以什么为依据分组呢？</p>
+
+<p>在统计上，只要是涉及到综合，就几乎不可避免要损失信息，这是一条被人忽视的铁律（我在<a href="https://github.com/downloads/yihui/yihui.github.com/Medicine-2007-Yihui-Xie.pdf">上周的报告</a>中特意提到了这一点）。Logistic回归若将样本分组，求得因变量频率的同时必然也损失自变量信息，一般大家都用自变量的均值代替那一组的自变量水平，显然这是很荒谬的。</p>
+
+<p>若不分组的话，可能很多人就很惊恐了：Logistic回归不是用log(p/(1-p))么？要是p=1的话岂不是这个式子就没有意义了？这样理解的人不在少数，包括我们的老杜就误解了这个问题（可能至今还没搞清楚）。</p>
+
+<p>问题出在哪儿？</p>
+
+<p>在于统计理论到应用的时候中间的一个重要连接不知道被谁搞丢了，那就是广义线性模型（GLM）。Logistic回归是广义线性模型的特例，而GLM通常都是采用极大似然估计来计算的，具体计算需要用到Newton-Raphson迭代，一般是无法求出显式解（closed-form）的。搞应用的人偏偏把这几句重要的话丢掉了，由于Logistic回归应用之广，大家纷纷跟风，忘了GLM这个祖宗。</p>
+
+<p>有人的地方就有江湖，有指数分布族的地方就有似然函数。如果能理解到这个层次，那才算是Logistic回归入了门。很多问题包括为什么连接函数是logit的形式等等就都可以大彻大悟了。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2007-12-14">2007-12-14</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#Life" title="Life">Life</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#COS论坛" title="COS论坛">COS论坛</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#Logistic回归" title="Logistic回归">Logistic回归</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#数据" title="数据">数据</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2007/12/logistic-regression-for-grouped-data/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2007/12/moonlight-box/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2007/12/warrior-king/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

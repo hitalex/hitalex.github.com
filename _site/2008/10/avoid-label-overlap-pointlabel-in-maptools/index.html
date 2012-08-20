@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>避免文本标签重叠：maptools中的pointLabel() | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>避免文本标签重叠：maptools中的pointLabel()</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p><strong>maptools</strong>包中的<code>pointLabel()</code>可以利用模拟退火算法或者遗传算法来解决图中文本标签的重叠问题。R本身提供了度量文本高度和宽度的函数<code>strwidth()</code>和<code>strheight()</code>，因此标签的放置问题本质上就是一个最优化问题，目标函数是标签所占矩形之间重叠面积之和，参数是标签的摆放位置（例如矩形的顶点坐标），问题就是求得参数使目标函数最小化。<code>pointLabel()</code>采用了模拟退火算法和遗传算法，另外，<strong>plotrix</strong>包中的<code>thigmophobe.labels()</code>利用简单的距离计算可以得出标签摆在点的下、左、上、右哪一面可以使得重叠最小化。以下是前面“<a href="/cn/2008/10/china-map-and-city-locations-with-r">用R画中国地图并标注城市位置</a>”一文中曾经用到的例子，这里我们用<code>pointLabel()</code>添加标签：</p>
+
+<p><img src="http://i.imgur.com/pRQqX.png" alt="maptools中的pointLabel()添加文本标签" /></p>
+
+<p>相比之下，<code>thigmophobe.labels()</code>的功能就差一些了：</p>
+
+<p><img src="http://i.imgur.com/JKmUh.png" alt="plotrix中的thigmophobe.labels()添加文本标签" /></p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-10-12">2008-10-12</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#maptools" title="maptools">maptools</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#plotrix" title="plotrix">plotrix</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#pointLabel()" title="pointLabel()">pointLabel()</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#thigmophobe.labels()" title="thigmophobe.labels()">thigmophobe.labels()</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#图形" title="图形">图形</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#文本标签" title="文本标签">文本标签</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#模拟退火算法" title="模拟退火算法">模拟退火算法</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#遗传算法" title="遗传算法">遗传算法</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/10/avoid-label-overlap-pointlabel-in-maptools/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/10/rgl-medal-of-valor/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/10/open-files-with-hyperlinks-in-pdf/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

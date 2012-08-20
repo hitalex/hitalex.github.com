@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>关于动画包接下来要做的几件事情 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>关于动画包接下来要做的几件事情</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>这几天不能继续写这个包了，先把预想的几件事记录在此，欢迎有兴趣的朋友们根据我的想法贡献代码。</p>
+
+<p>包中要增加的函数（与动画无关的杂项）：</p>
+
+<ol>
+<li>动态生成Highlight软件的R定义文件，很简单，结合ls()函数即可。参见<a href="http://yihui.name/en/2007/09/r-language-definition-file-for-highlight/">这里</a>。</li>
+<li>根据一个文本文件自动创建RSS feed文件，这也很简单，因为XML的语法非常容易，略懂tag即可。</li>
+<li>重命名文件。比如对一批照片重命名为<strong><em>1、</em></strong>2、……，利用file.rename()即可。</li>
+</ol>
+
+
+<p>与动画有关的函数：</p>
+
+<ol>
+<li>Boosting的过程图示，如AdaBoost等。</li>
+<li>Bootstrap。这个我其实已经写得差不多了，但我并不满意，打算重写，参见<a href="http://r.yihui.name/stat/machine_learning/bootstrapping/index.htm">这里</a>。</li>
+<li>CART。展示一个二维情况下搜索节点的过程。</li>
+<li>Arcing。暂时没想好。</li>
+<li>随机梯度下降寻找线形分割直线。</li>
+<li>最速梯度下降。一维和二维情况。</li>
+<li>Newton系列的优化算法。</li>
+<li>中心极限定理。</li>
+<li>回归分析中的诊断（离群点、杠杆值等）。</li>
+<li>置信区间的展示。参见<a href="http://yihui.name/en/2007/10/demonstration-of-confidence-intervals-using-r-animated/">这里</a>。</li>
+<li>四种基本抽样。参见<a href="http://r.yihui.name/stat/sampling_survey/index.htm">这里</a>。</li>
+</ol>
+
+
+<p>暂时就这些。现在开始干别的活儿了……另：今天拿到了我精心挑选的42本英文书，旁边书柜一层码满了，以后有的看了。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2007-11-12">2007-11-12</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Life" title="Life">Life</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#animation" title="animation">animation</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#R包" title="R包">R包</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#动画" title="动画">动画</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2007/11/todo-list-of-the-animation-package/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2007/11/1st-version-of-animation-package/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2007/11/type-iii-error/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>理解计算机中的数字 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>理解计算机中的数字</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>很多人对统计计算或数值计算不以为然，表现在他们充分相信计算机、在遇到计算问题时就是一句话，“交给软件去做就可以了”。不过我觉得稍微了解一下数字的常识还是很有必要的，一些表达式在数学上成立，在计算上未必成立。据R-FAQ介绍，在"The Elements of Programming Style"一书中有这么一句话：</p>
+
+<blockquote><p><em>10.0 times 0.1 is hardly ever 1.0</em>. （10.0乘以0.1通常不是1.0。）</p></blockquote>
+
+<p>类似地，在R里面还有这样的例子：</p>
+
+<pre><code>&gt; .17 - .6 + .43
+[1] 5.551115e-17
+&gt; .17 + .43 - .6
+[1] 0
+&gt; .6 - .17 - .43
+[1] -5.551115e-17
+</code></pre>
+
+<p>奇怪么？不奇怪（而且注意这不是R的问题），想象与现实总是有差距。以前我见有人用R求极大似然估计，直接使用了密度函数值相乘再最大化，却不知成百上千个小数乘起来在计算机中会是怎样难以表达，我换作取对数求和的形式之后，估计就稳定多了。编程的人（尤其是统计编程的人）千万莫偷懒，写代码之前一定要想好把数学问题转换一下，让计算机能够适应你要用的数字。还有一个最简单的例子就是求组合数，理论上可以用排列数（函数<code>factorial()</code>）乘乘除除得出来，但是当n取好几百的大数时，想想n的排列是多大的数、计算机能否表达？这种情况下就应该用组合数本身的函数<code>choose()</code>——理论上等价，计算上不等价。万一<code>choose()</code>本身也很难计算了，那只能考虑先求对数再求和最后求幂，这样也许损失精度，但计算上可实现。</p>
+
+<p>最近R-help里面出现过好几例类似的案子，甚至有人在优化时初始值取的是Inf（无穷大），让人哭笑不得、无可奈何。昨天又有人问<code>1 - cumsum(rep(0.1, 10))</code>的最后一个数字为什么不是0。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2008-10-04">2008-10-04</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#数值计算" title="数值计算">数值计算</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#浮点数" title="浮点数">浮点数</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#统计计算" title="统计计算">统计计算</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2008/10/understanding-numbers-in-computer/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2008/10/cross-domain-to-submit-form/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2008/10/sexy-r-graphics/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

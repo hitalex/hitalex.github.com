@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="谢益辉" />
+    <title>MySQL数据库操作笔记若干 | 谢益辉</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>MySQL数据库操作笔记若干</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
+        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
+        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
+        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
+        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
+        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
+        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>学习最好的方法莫过于实践，最快的途径莫过于示例，这段时间网站搬家，迫使我不断去看一些SQL操作方法，最终记载于此，以便将来参考。</p>
+
+<h1>1、时间操作</h1>
+
+<p>例：将GMT时间更改为GMT+8，可用<code>INTERVAL</code>把一段时间加到一个字段上。</p>
+
+<pre><code>UPDATE `wpcn_posts` SET `post_date` = `post_date_gmt` + INTERVAL 8 HOUR
+  WHERE `post_date_gmt` = `post_date`
+</code></pre>
+
+<p>本例是为了对付Bo-Blog搬家到WP时大部分时间记录都没有被正确转换到GMT+8时区的问题。</p>
+
+<h1>2、字符查找替换</h1>
+
+<p>例：将某个图片的错误文件名更改为正确文件名。</p>
+
+<pre><code>UPDATE `wpcn_comments` SET `comment_content` = REPLACE (
+`comment_content`,
+'emot/ok',
+'emot/pig'
+)
+WHERE `comment_content` LIKE '%emot/ok%'
+</code></pre>
+
+<p>本例是为了对付Bo-Blog的pig.gif图片文件名被错误替换为ok.gif的问题，用到了<code>REPLACE</code>函数和<code>LIKE</code>操作符，注意<code>LIKE</code>后面的字段用<code>%%</code>匹配，而非<code>*</code>。</p>
+
+<h1>3、用R帮忙</h1>
+
+<p>例：批量更新日志的永久链接。</p>
+
+<pre><code>cat(sprintf("UPDATE `wpen_posts` SET post_name = '%s' WHERE ID =%d;",
+    x[, 3], x[, 1]), sep = "\n")
+</code></pre>
+
+<p>由于我不知道SQL里面如何用数组或向量，因此在批量处理的时候就用笨办法执行了，即：写n条SQL语句一起执行。R一向都是向量化操作，因此只需要把日志的ID和post_name准备好，然后用一个<code>sprintf()</code>就生成所有的SQL语句了，扔到phpMyAdmin中执行一下，所有的日志链接就更新了，省得把每一篇日志打开依次修改。</p>
+
+<p>以上R语句生成如下结果：</p>
+
+<pre><code>UPDATE `wpen_posts` SET post_name = 'tidy-up-your-r-code' WHERE ID =1;
+UPDATE `wpen_posts` SET post_name = 'dare-be-defeated' WHERE ID =2;
+....
+</code></pre>
+
+<p>插一句，对于英文日志，永久链接就是把空格替换为-，用正则表达式删掉不是<code>[:alnum:]</code>的字符即可。</p>
+
+<h1>4、用<code>mysqldump</code>备份数据库</h1>
+
+<p>这个命令可以以多种形式备份MySQL数据库，这里举例将数据库备份为<code>*.sql</code>的SQL语句脚本：</p>
+
+<pre><code>mysqldump -u db_user -p -r result_filename.sql database_name
+</code></pre>
+
+<p>由于<code>mysqldump</code>命令是独立的程序，所以不要先登录进mysql界面，直接在终端或command窗口运行即可。这样的备份文件可以在将来在mysql中用<code>source</code>命令导入：</p>
+
+<pre><code>source result_filename.sql
+</code></pre>
+
+<p>这样看来备份数据库也是很容易的事情，不过导入导出的时候可能会遇到编码问题。</p>
+
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://yihui.name">谢益辉</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2009-05-22">2009-05-22</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">(CC) BY-NC-SA</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://yihui.name/cn/categories/#Technology" title="Technology">Technology</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://yihui.name/cn/tags/#INTERVAL" title="INTERVAL">INTERVAL</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#MySQL" title="MySQL">MySQL</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#REPLACE" title="REPLACE">REPLACE</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#SQL" title="SQL">SQL</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#UPDATE" title="UPDATE">UPDATE</a>&nbsp;
+  
+  <a href="http://yihui.name/cn/tags/#数据库" title="数据库">数据库</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
+    var disqus_url = 'http://yihui.name/cn/2009/05/mysql-database-manipulation-notes/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://yihui.name/cn/2009/05/rare-event-rarely-happens/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        url = 'http://yihui.name/cn/2009/05/php-301-redirect-from-bo-blog-to-wordpress/';
+        
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>
