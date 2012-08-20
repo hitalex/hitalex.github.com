@@ -1,5 +1,5 @@
 ---
-title: Keep on Fighting!
+title: Free your mind!
 layout: page
 ---
 

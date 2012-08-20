@@ -1,6 +1,19 @@
-markdown: rdiscount
-permalink: /:year/:month/:title/
-url: http://yihui.name/cn
-author: 谢益辉
-pygments: true
+auto:	          true
+
+markdown:         rdiscount
+pygments:         true
+paginate:         6
+permalink:        /:year/:month/:title/
+
+title:            AlexKong.net
+url:              http://alexkong.net
+feed:             /atom.xml
+author:
+    name:         孔明
+    twitter:      twitter.com/kqingchao
+description:      "孔明的博客"
+author_info:      <a href="http://alexkong.net/about">孔明</a>
+
+copyright:
+    - Design by <a href="http://alexkong.net/about" title="孔明 target="_blank">孔明</a> &copy; Copyright 2012
 
