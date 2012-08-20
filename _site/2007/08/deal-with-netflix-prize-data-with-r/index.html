@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="谢益辉" />
-    <title>Netflix Prize（百万美元大奖）数据预处理的一个简单R程序 | 谢益辉</title>
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
-    <link rel="stylesheet" href="/media/css/style.css">
-    <link rel="stylesheet" href="/media/css/highlight.css">
-    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <meta name="author" content="alexkong" />
+    <title>Netflix Prize（百万美元大奖）数据预处理的一个简单R程序 | alexkong</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://alexkong.net/feed/" rel="alternate" title="alexkong" type="application/atom+xml" />
+    <link rel="stylesheet" href="media/css/style.css">
+    <link rel="stylesheet" href="media/css/highlight.css">
+    <script type="text/javascript" src="media/js/jquery-1.7.1.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -17,15 +17,16 @@
         <h1>Netflix Prize（百万美元大奖）数据预处理的一个简单R程序</h1>
         </header>
         <nav>
-        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
-        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
-        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
-        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
-        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
-        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
-        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
-        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
-        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
+        <span><a title="about" class="" href="http://alexkong.net/about/">about</a></span>
+        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
+        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
+        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
+        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
+        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
+        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
         </nav>
         <article class="content">
         <section class="post">
@@ -33,12 +34,11 @@
 
 <p>当我没加入第7~8行的<code>read.csv()</code>那一句时，程序在WinXP+奔四3.0GHz+512M内存下跑了47分钟把一个2G多的CSV数据文件写完了。不过等我用SQL语句去读其中一列时，发现内存终于不够用了。</p>
 
-<p><a href="http://www.netflixprize.com">Netflix的奖金</a>是$1,000,000，呃，这么大一堆钱，做做梦吧。莫非这个奖还要比拼各家的计算机配置？国内啥时候能有这样的悬赏啊？</p>
-
+<p><a href='http://www.netflixprize.com'>Netflix的奖金</a>是$1,000,000，呃，这么大一堆钱，做做梦吧。莫非这个奖还要比拼各家的计算机配置？国内啥时候能有这样的悬赏啊？</p>
 </section>
 <section class="meta">
 <span class="author">
-  <a href="http://yihui.name">谢益辉</a>
+  <a href="http://alexkong.net">alexkong</a>
 </span>
 <span class="time">
   /
@@ -52,9 +52,9 @@
 <span class="categories">
   in categories
   
-  <a href="http://yihui.name/cn/categories/#Featured" title="Featured">Featured</a>&nbsp;
+  <a href="http://alexkong.net/categories/#Featured" title="Featured">Featured</a>&nbsp;
   
-  <a href="http://yihui.name/cn/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
+  <a href="http://alexkong.net/categories/#Statistics" title="Statistics">Statistics</a>&nbsp;
   
 </span>
 
@@ -62,13 +62,13 @@
 <span class="tags">
   tagged with 
   
-  <a href="http://yihui.name/cn/tags/#Netflix" title="Netflix">Netflix</a>&nbsp;
+  <a href="http://alexkong.net/tags/#Netflix" title="Netflix">Netflix</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#R语言" title="R语言">R语言</a>&nbsp;
+  <a href="http://alexkong.net/tags/#R语言" title="R语言">R语言</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#Windows" title="Windows">Windows</a>&nbsp;
+  <a href="http://alexkong.net/tags/#Windows" title="Windows">Windows</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#大型数据" title="大型数据">大型数据</a>&nbsp;
+  <a href="http://alexkong.net/tags/#大型数据" title="大型数据">大型数据</a>&nbsp;
   
 </span>
 
@@ -77,8 +77,8 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
-    var disqus_url = 'http://yihui.name/cn/2007/08/deal-with-netflix-prize-data-with-r/';
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://alexkong.net/2007/08/deal-with-netflix-prize-data-with-r/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -96,12 +96,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://yihui.name/cn/2007/08/my-location-in-google-maps/';
+        url = 'http://alexkong.net/2005/08/ride-to-tianjin-in-16-hours/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://yihui.name/cn/2007/08/extract-a-column-in-r-data-frame/';
+        url = 'http://alexkong.net/2007/08/extract-a-column-in-r-data-frame/';
         
         }
         if (url) {

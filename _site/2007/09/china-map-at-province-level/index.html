@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="谢益辉" />
-    <title>终于搞定了中国分省市地图 | 谢益辉</title>
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
-    <link rel="stylesheet" href="/media/css/style.css">
-    <link rel="stylesheet" href="/media/css/highlight.css">
-    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <meta name="author" content="alexkong" />
+    <title>终于搞定了中国分省市地图 | alexkong</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://alexkong.net/feed/" rel="alternate" title="alexkong" type="application/atom+xml" />
+    <link rel="stylesheet" href="media/css/style.css">
+    <link rel="stylesheet" href="media/css/highlight.css">
+    <script type="text/javascript" src="media/js/jquery-1.7.1.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -17,30 +17,30 @@
         <h1>终于搞定了中国分省市地图</h1>
         </header>
         <nav>
-        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
-        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
-        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
-        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
-        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
-        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
-        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
-        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
-        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
+        <span><a title="about" class="" href="http://alexkong.net/about/">about</a></span>
+        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
+        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
+        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
+        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
+        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
+        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
         </nav>
         <article class="content">
         <section class="post">
-<p>今天费了半天劲，才一点点从GIS数据中把中国各省市的多边形“抠”出来。问题缘起于COS论坛上的这个帖子：<a href="http://cos.name/cn/topic/785">http://cos.name/cn/topic/785</a>)，其实我后面的回复基本都跑题了，跑着跑着突然想起上学期上课的时候Prof. Peng, F曾经提到他当年是如何辛辛苦苦用作图软件去搞定地图图示的，我当时听着觉得不应该太困难，于是下课之后去告诉他用R可以很容易做出地图来，他当时问我是不是S-Plus（看来在他们脑子里还是S-Plus的名气大一点），我说类似但不完全一样，云云，最后他问能否作出重庆市的地图，我当时也没仔细注意这个问题，回来一看，<code>map("china")</code>还真没有重庆市。</p>
+<p>今天费了半天劲，才一点点从GIS数据中把中国各省市的多边形“抠”出来。问题缘起于COS论坛上的这个帖子：<a href='http://cos.name/cn/topic/785'>http://cos.name/cn/topic/785</a>)，其实我后面的回复基本都跑题了，跑着跑着突然想起上学期上课的时候Prof. Peng, F曾经提到他当年是如何辛辛苦苦用作图软件去搞定地图图示的，我当时听着觉得不应该太困难，于是下课之后去告诉他用R可以很容易做出地图来，他当时问我是不是S-Plus（看来在他们脑子里还是S-Plus的名气大一点），我说类似但不完全一样，云云，最后他问能否作出重庆市的地图，我当时也没仔细注意这个问题，回来一看，<code>map(&quot;china&quot;)</code>还真没有重庆市。</p>
 
 <p>之后我又花了很长时间找地理数据，其间联系过Victoria University of Wellington的Ray Brownrigg（<strong>maps</strong>和<strong>mapdata</strong>等包的作者），他说没有他也没有数据，告诉我要是我能搞到数据他也许可以给我一点Hints，不过我后来死活也没找到；于是开始打另一个注意，就是活生生去读一幅空白中国地图，从中获得线条（实际上是点）的坐标，然后再用坐标结合<code>plot()</code>把图形还原出来，后来发现这种方法做出来的地图太粗糙，而且面临最大的困难是很不容易把各省的坐标数据分开，这样对于地理信息展示是没有意义的。</p>
 
-<p>今天再次找数据的时候，却鬼使神差地发现了国家基础地理信息中心的网站：<a href="http://nfgis.nsdi.gov.cn">http://nfgis.nsdi.gov.cn</a>，里面可以免费下载GIS数据，我今天一眼就看见了国界与省界数据，各种数据都是一个zip压缩包，里面是<code>*.dbf</code>、<code>*.shp</code>和<code>*.shx</code>文件，这是<code>shapefile</code>的通用格式，R里面有<strong>maptools</strong>包可以读取（<code>read.shape()</code>函数），事实上作图的时候作出来是925个多边形（polygon），我到现在也没明白为什么会有那么多，不过顺利的是我已经知道哪34个多边形是我想要的了。下面是我的一个示例：</p>
+<p>今天再次找数据的时候，却鬼使神差地发现了国家基础地理信息中心的网站：<a href='http://nfgis.nsdi.gov.cn'>http://nfgis.nsdi.gov.cn</a>，里面可以免费下载GIS数据，我今天一眼就看见了国界与省界数据，各种数据都是一个zip压缩包，里面是<code>*.dbf</code>、<code>*.shp</code>和<code>*.shx</code>文件，这是<code>shapefile</code>的通用格式，R里面有<strong>maptools</strong>包可以读取（<code>read.shape()</code>函数），事实上作图的时候作出来是925个多边形（polygon），我到现在也没明白为什么会有那么多，不过顺利的是我已经知道哪34个多边形是我想要的了。下面是我的一个示例：</p>
 
-<p><img src="http://i.imgur.com/EJMNL.png" alt="中国分省市地图（借助R的maptools包实现）" /></p>
-
+<p><img alt='中国分省市地图（借助R的maptools包实现）' src='http://i.imgur.com/EJMNL.png' /></p>
 </section>
 <section class="meta">
 <span class="author">
-  <a href="http://yihui.name">谢益辉</a>
+  <a href="http://alexkong.net">alexkong</a>
 </span>
 <span class="time">
   /
@@ -54,7 +54,7 @@
 <span class="categories">
   in categories
   
-  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  <a href="http://alexkong.net/categories/#R language" title="R language">R language</a>&nbsp;
   
 </span>
 
@@ -62,19 +62,19 @@
 <span class="tags">
   tagged with 
   
-  <a href="http://yihui.name/cn/tags/#GIS" title="GIS">GIS</a>&nbsp;
+  <a href="http://alexkong.net/tags/#GIS" title="GIS">GIS</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#maps" title="maps">maps</a>&nbsp;
+  <a href="http://alexkong.net/tags/#maps" title="maps">maps</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#maptools" title="maptools">maptools</a>&nbsp;
+  <a href="http://alexkong.net/tags/#maptools" title="maptools">maptools</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#polygon()" title="polygon()">polygon()</a>&nbsp;
+  <a href="http://alexkong.net/tags/#polygon()" title="polygon()">polygon()</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#R图形" title="R图形">R图形</a>&nbsp;
+  <a href="http://alexkong.net/tags/#R图形" title="R图形">R图形</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#中国地图" title="中国地图">中国地图</a>&nbsp;
+  <a href="http://alexkong.net/tags/#中国地图" title="中国地图">中国地图</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#地图" title="地图">地图</a>&nbsp;
+  <a href="http://alexkong.net/tags/#地图" title="地图">地图</a>&nbsp;
   
 </span>
 
@@ -83,8 +83,8 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
-    var disqus_url = 'http://yihui.name/cn/2007/09/china-map-at-province-level/';
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://alexkong.net/2007/09/china-map-at-province-level/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -102,12 +102,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://yihui.name/cn/2007/09/sms-as-a-probability-problem/';
+        url = 'http://alexkong.net/2007/09/sms-as-a-probability-problem/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://yihui.name/cn/2007/09/two-animals/';
+        url = 'http://alexkong.net/2007/09/basics-of-programming/';
         
         }
         if (url) {

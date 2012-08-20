@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="谢益辉" />
-    <title>R2HTML：将R对象输出为HTML文件 | 谢益辉</title>
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link href="http://yihui.name/cn/feed/" rel="alternate" title="谢益辉" type="application/atom+xml" />
-    <link rel="stylesheet" href="/media/css/style.css">
-    <link rel="stylesheet" href="/media/css/highlight.css">
-    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <meta name="author" content="alexkong" />
+    <title>R2HTML：将R对象输出为HTML文件 | alexkong</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://alexkong.net/feed/" rel="alternate" title="alexkong" type="application/atom+xml" />
+    <link rel="stylesheet" href="media/css/style.css">
+    <link rel="stylesheet" href="media/css/highlight.css">
+    <script type="text/javascript" src="media/js/jquery-1.7.1.min.js"></script>
   </head>
   <body>
     <div id="container">
@@ -17,15 +17,16 @@
         <h1>R2HTML：将R对象输出为HTML文件</h1>
         </header>
         <nav>
-        <span><a title="home page" class="" href="http://yihui.name/cn/">home</a></span>
-        <span><a title="about" class="" href="http://yihui.name/cn/about/">about</a></span>
-        <span><a title="publication" class="" href="http://yihui.name/cn/publication/">publication</a></span>
-        <span><a title="guestbook" class="" href="http://yihui.name/cn/guestbook/">guestbook</a></span>
-        <span><a title="vitae" class="" href="http://yihui.name/cn/vitae/">vitae</a></span>
-        <span><a title="categories" class="" href="http://yihui.name/cn/categories/">categories</a></span>
-        <span><a title="tags" class="" href="http://yihui.name/cn/tags/">tags</a></span>
-        <span><a title="links" class="" href="http://yihui.name/cn/links/">links</a></span>
-        <span><a title="subscribe by RSS" class="" href="http://yihui.name/cn/feed/">subscribe</a></span>
+        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
+        <span><a title="about" class="" href="http://alexkong.net/about/">about</a></span>
+        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
+        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
+        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
+        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
+        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
+        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
         </nav>
         <article class="content">
         <section class="post">
@@ -35,26 +36,27 @@
 
 <ul>
 <li>HTML()：这是个泛型函数（generic function），会根据传入参数的类型（class）自动生成相应的HTML代码。</li>
+
 <li>HTMLbr()：熟悉HTML的人一看就知道，这是换行符<code>&lt;br&gt;</code>。</li>
+
 <li>HTMLhr()：同上，这是水平线<code>&lt;hr&gt;</code>。</li>
+
 <li>HTMLInsertGraph()：顾名思义，这是插入图片，即<code>&lt;img src=... &gt;</code>。</li>
 </ul>
-
 
 <p>其实比较好玩的是即时生成HTML的两个函数：</p>
 
 <ul>
 <li>HTMLStart()</li>
+
 <li>HTMLStop()</li>
 </ul>
 
-
 <p>它们会记录你在R中的一系列操作，最后用框架页的形式给出类似于日志（log）的报告。</p>
-
 </section>
 <section class="meta">
 <span class="author">
-  <a href="http://yihui.name">谢益辉</a>
+  <a href="http://alexkong.net">alexkong</a>
 </span>
 <span class="time">
   /
@@ -68,7 +70,7 @@
 <span class="categories">
   in categories
   
-  <a href="http://yihui.name/cn/categories/#R language" title="R language">R language</a>&nbsp;
+  <a href="http://alexkong.net/categories/#R language" title="R language">R language</a>&nbsp;
   
 </span>
 
@@ -76,13 +78,13 @@
 <span class="tags">
   tagged with 
   
-  <a href="http://yihui.name/cn/tags/#HTML" title="HTML">HTML</a>&nbsp;
+  <a href="http://alexkong.net/tags/#HTML" title="HTML">HTML</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#R语言" title="R语言">R语言</a>&nbsp;
+  <a href="http://alexkong.net/tags/#R语言" title="R语言">R语言</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#R2HTML" title="R2HTML">R2HTML</a>&nbsp;
+  <a href="http://alexkong.net/tags/#R2HTML" title="R2HTML">R2HTML</a>&nbsp;
   
-  <a href="http://yihui.name/cn/tags/#R包" title="R包">R包</a>&nbsp;
+  <a href="http://alexkong.net/tags/#R包" title="R包">R包</a>&nbsp;
   
 </span>
 
@@ -91,8 +93,8 @@
 <div id="disqus_thread"></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'yihui'; // required: replace example with your forum shortname
-    var disqus_url = 'http://yihui.name/cn/2007/08/r2html-package/';
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://alexkong.net/2007/08/r2html-package/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -110,12 +112,12 @@ $(function(){
     var url = false;
         if (e.which == 37 || e.which == 74) {  // Left arrow and J
             
-        url = 'http://yihui.name/cn/2007/08/cut-hair/';
+        url = 'http://alexkong.net/2007/08/rename-mysql-database/';
         
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
-        url = 'http://yihui.name/cn/2007/09/push-up/';
+        url = 'http://alexkong.net/2007/09/push-up/';
         
         }
         if (url) {
