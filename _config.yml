@@ -7,7 +7,7 @@ permalink:        /:year/:month/:title/
 title:            AlexKong.net
 url:              http://alexkong.net
 feed:             /atom.xml
-author: alexkong
+author: 孔明
 description:      "孔明的博客"
 author_info:      <a href="http://alexkong.net/about">孔明</a>
 
