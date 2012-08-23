@@ -11,11 +11,6 @@ tags:
 - 算法
 ---
 
-** 测试插入数学公式
-$$
-    \min  &V(\vec{w}, \vec{\xi}) = \frac{1}{2} \vec{w} \cdot \vec{w} + C\sum{\xi_{i,j,k}}
-$$
-
 英文标题：Can machines think? -- An algorithmic perspective
 序：这篇文章本来是作为自然哲学课的报告提交的，如果不出所料，必然是石沉大海。今天看到[IEEE CS 图灵百年沙龙征稿活动](http://content.alphatown.com/discussion/753089/)，我决定先把文章贴出来，大家给提提意见。非常乐于跟大家进行讨论！
 
