@@ -21,7 +21,6 @@
         </header>
         <nav>
         <span><a title="home page" class="" href="{{ site.url }}/">home</a></span>
-        <span><a title="about" class="" href="{{ site.url }}/about/">about</a></span>
         <span><a title="publication" class="" href="{{ site.url }}/publication/">publication</a></span>
         <span><a title="guestbook" class="" href="{{ site.url }}/guestbook/">guestbook</a></span>
         <!-- <span><a title="vitae" class="" href="{{ site.url }}/vitae/">vitae</a></span> -->
@@ -29,6 +28,7 @@
         <!-- <span><a title="tags" class="" href="{{ site.url }}/tags/">tags</a></span> -->
         <span><a title="links" class="" href="{{ site.url }}/links/">links</a></span>
         <span><a title="quotes" class="" href="{{ site.url }}/quotes/">quotes</a></span>
+        <span><a title="about" class="" href="{{ site.url }}/about/">about me</a></span>
         <span><a title="subscribe by RSS" class="" href="{{ site.url }}/feed/">subscribe</a></span>
         </nav>
         <article class="content">
@@ -46,5 +46,10 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
+    
+    <footer>
+    <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - {{site.time | date:"%Y"}} by <a href="http://alexkong.net">孔明</a> </small></p>
+    </footer>
+    
   </body>
 </html>
