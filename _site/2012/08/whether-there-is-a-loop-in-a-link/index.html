@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="孔明" />
+    <title>如何判断链表中是否存在环路 | 孔明</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://alexkong.net/feed/" rel="alternate" title="孔明" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>如何判断链表中是否存在环路</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
+        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
+        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
+        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
+        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
+        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
+        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
+        <span><a title="about" class="" href="http://alexkong.net/about/">about me</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>在实习面试中，这个问题出现的频度很高，我在这里总结一下。</p>
+
+<p>方法一，在链表中增加一个域visited，都初始化为0，表示此节点都未被访问。从链表的头部开始走，每走过一个链表就标记visited为1，如果要访问的下一个节点的visited域为1，那么证明链表中有环。</p>
+
+<p>方法二，先考虑另外一个问题：在未知链表长度（长度为奇数）的情况下，如何找到链表中间的节点？可以这么办，设置两个指针p和q，初始时都指向链表的头结点。然后沿着链表，p走一步而q走两步，这样当q正好到达链表的尾节点的时候，p应该在链表的中间节点。</p>
+
+<p>如何判断链表中有环也可以用这种思路，还是设置p和q两个指针，沿着链表走，p走一步而q走两步。如果链表中有环，则p和q会在某个时间相遇。我们来分析一下，在两个指针进入环路之前，肯定不会相遇，那么如果两个指针相遇，则一定是它们都在这个链表的环路之中。假设此时p点刚刚进入到链表中的环中，q在环中的某一个位置，如图所示。</p>
+
+<p><img alt='如何判断链表中是否存在环路' src='/images/loop-in-link.png' /></p>
+
+<p>设t时间后，p和q在环中的某一点相遇，初始时p和q相隔k个节点（0&lt;=k&lt;=n-1，其中n为环中的节点数，在这里为5；图中p和q相隔3个节点，而不是2个：因为假如q不动，p需要经过3步移动才可以和q重合），那么可得：t(mod n) = k + 2t(mod n)，其中t(mod n)代表t除以n所得到的余数，t为正整数。那么显然，设m为正整数，t = mn - k，所以满足要求的最小的k为2（m = 1的时候）。这也就说明了，如果链表中有环，那么p和q在某个时刻一定相遇。</p>
+
+<p>而p和q相遇，是否能说明链表有环呢？答案是肯定的，考虑其逆反命题，如果链表没有环，则p和q则永远不可能相遇。进一步说明了，在这种实验设置之下，p和q相遇是链表有环的充分必要条件。</p>
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://alexkong.net">孔明</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2012-08-25">2012-08-25</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">(CC) BY-NC-ND 3.0</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://alexkong.net/categories/#技术分享" title="技术分享">技术分享</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://alexkong.net/tags/#链表" title="链表">链表</a>&nbsp;
+  
+  <a href="http://alexkong.net/tags/#环路" title="环路">环路</a>&nbsp;
+  
+  <a href="http://alexkong.net/tags/#实习" title="实习">实习</a>&nbsp;
+  
+  <a href="http://alexkong.net/tags/#面试" title="面试">面试</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://alexkong.net/2012/08/whether-there-is-a-loop-in-a-link/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://alexkong.net/2012/08/the-great-Donald-Knuth/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+        
+        <div id="footer" style="right:0px; text-align:right"><footer>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2012 by <a href="http://alexkong.net">孔明</a> </small></p>
+        </footer></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+  </body>
+</html>
