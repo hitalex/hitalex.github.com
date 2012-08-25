@@ -8,7 +8,7 @@ import time
 
 def display_usage():
     print "Usage: ./createpost post-title dest-folder"
-    print "Example: ./createpost \"Hello World\" ../_post/"
+    print "Example: ./createpost \"hello world\" ../_posts/"
     print "Note: If dest-folder is empty(not provided), it will be set as the current folder"
     return
 
@@ -18,11 +18,11 @@ def main(argv):
         return
     
     title = argv[1]
-    print title
+    #print title
     title = title.replace("\"", "")
     title = title.replace(" ", "-")  # replace all white spaces
-    title = title.lower()
-    print title
+    #title = title.lower()
+    #print title
     if len(argv) >= 3: # which means dest-folder is not provided
         dest_folder = argv[2]
     else:
@@ -31,10 +31,10 @@ def main(argv):
     time_stamp = time.strftime('%Y-%m-%d',time.localtime(time.time())) # Get local time, the output will be like: 2012-08-24
     file_name = time_stamp + "-" + title + ".md"
     
-    print "Final file name:" + file_name
+    #print "Final file name:" + file_name
     if dest_folder[-1] != "/":
         dest_folder = dest_folder + "/"
-    print "Folder selected:" + dest_folder
+    #print "Folder selected:" + dest_folder
     
     full_path = dest_folder + file_name
     print "Full path:" + full_path
