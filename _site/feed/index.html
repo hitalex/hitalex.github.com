@@ -7,7 +7,7 @@
     <title>孔明</title>
     <link href="http://alexkong.net/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2012-08-25T19:11:03+08:00</lastBuildDate>
+    <lastBuildDate>2012-08-25T19:42:06+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
     
     <item>
@@ -138,6 +138,36 @@
     </item>
     
     <item>
+      <title>所有的三角形都是等腰三角形？！ - 推广到一般三角形的证明</title>
+      <link href="http://alexkong.net/2012/08/are-all-triangles-isosceles2/"/>
+      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2012/08/are-all-triangles-isosceles2</guid>
+      <content:encoded><![CDATA[<p>在上一篇博文（<a href=''>所有的三角形都是等腰三角形？！</a>）中，</p>]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>所有的三角形都是等腰三角形？！</title>
+      <link href="http://alexkong.net/2012/08/are-all-triangles-isosceles/"/>
+      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2012/08/are-all-triangles-isosceles</guid>
+      <content:encoded><![CDATA[<p>所有的三角形都是等腰三角形！Whant？不信你就看视频中的“证明”。</p>
+<embed align='middle' allowFullscreen='true' allowScriptAccess='sameDomain' height='400' quality='high' src='http://player.youku.com/player.php/sid/XMTAzNzYxODg0/v.swf' type='application/x-shockwave-flash' width='480' />
+<p>视频中的证明肯定是错误的，可问题在哪呢？</p>
+
+<p>其实视频中的这位老师“犯了”一个集合证明中非常常见的错误，请看下面的一个例子。</p>
+
+<p><img alt='non-isosceles triangle example' src='/images/non-isosceles-triangle-example.jpg' /></p>
+
+<p>这是个直角三角形，更特殊的是∠OAB是60度，设AO长度为1，那么AB = 2 * OA = 2。做∠AOB的角平分线，与AB相交于C。根据图中所标识的角度可知，AO &gt; AC（正弦定理）。</p>
+
+<p>那么设AB的中点为D，做AB的垂直平分线，这条平分线肯定与BO相交，设交点为E，准确来说BE的距离为2/3*sqrt(3)，也就是说E在OB的三等分点上。显然，DE和OC的交点不可能在三角形内，所以之后的“证明”就都没有意义了。</p>
+
+<p>总结：手工画图总的来说还是定性描述，显然定性描述有时候会很坑人。对于这种情况，可以采用定性+定量描述的方法来做。</p>]]></content:encoded>
+    </item>
+    
+    <item>
       <title>本科毕业论文的致谢部分</title>
       <link href="http://alexkong.net/2012/08/acknowledgements-of-my-undergraduation-paper/"/>
       <pubDate>2012-08-25T00:00:00+08:00</pubDate>
@@ -218,37 +248,6 @@
 <p>她在家休息期间心情非常差，不仅是因为来回走动不方便，而且晚上还经常失眠。于是在家里，我每天都开导她、安慰她，不过效果一直不好。有段时间，我甚至觉得我已经说完了我知道的所有事情，而她却不怎么听的进去。想想以前，她是多么想跟我说会儿话，而那时我却想多上会儿网，看会儿电影。</p>
 
 <p>这一切总算都过去了。目前的主要矛盾是“她看着别人家孩子结婚眼红”和“我至今没有女朋友”这一惨烈现状之间的矛盾。依然是我怎么安慰她都不行，我甚至向她许诺她儿子的女朋友会很漂亮、善解人意、会做饭&#8230;我明白我是在“自作孽”，不过“面包会有的，牛奶也会有的。”</p>]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>第一篇博文</title>
-      <link href="http://alexkong.net/2012/08/how-this-site-was-created/"/>
-      <pubDate>2012-08-22T00:00:00+08:00</pubDate>
-      <author>孔明</author>
-      <guid>http://alexkong.net/2012/08/how-this-site-was-created</guid>
-      <content:encoded><![CDATA[<p><strong>博客搭建</strong> 博客的基本框架算是搭建成功了，这篇文章算作是第一篇留作纪念，另外一个目的是测试一下发布系统。整个博客使用<a href='http://pages.github.com/'>Github pages</a>服务，省去了购买VPS、设置服务器等一些列繁杂的工作，当然也省了不少钱。这样一来，维护博客的唯一费用就只有域名托管。我是在Godadday申请域名：alexkong.net，每年9.99美元，使用<a href='https://www.dnspod.cn/'>DNSPOD</a>提供的DNS服务，评论则是采用的<a href='http://www.disqus.com/'>Disqus</a>。关于Github博客搭建的详细过程，可以参展<a href='http://beiyuu.com/github-pages/' title='使用Github Pages建独立博客'>BeiYuu的文章</a>。</p>
-
-<p><strong>一些细节</strong> 假设你已经按照BeiYuu的步骤在搭建自己的博客。其中一步是安装Github所支持的<a href='https://github.com/mojombo/jekyll'>Jekyll</a>静态发布系统，在这之前还要安装Rubygem（Ruby的包管理器）。需要提醒的是，Jekyll对Ruby版本要求是1.9.x，并要求1.9.x版本Ruby所对应的Rubygem。我的操作系统是Ubuntu 10.10（我知道这个版本很老&#8230;），在系统的源中的Ruby和Rubygem都不满足安装Jekyll的要求。我的建议是到Ruby和Rubygem的官方网站下载最新的版本并安装。</p>
-
-<p>对于Windows用户，Jekyll有可能出现编码问题，请参照<a href='http://chxt6896.github.com/blog/2012/02/13/blog-jekyll-native.html' title='Jekyll 本地调试之若干问题'>这里</a></p>
-
-<p>Jekyll同样是作为开源软件提供给大家使用（并托管在Github上），所以Bug在所难免，希望大家能有包容的心态。如果在安装或者使用的过程中出了问题，我建议：</p>
-
-<ul>
-<li>详细阅读控制台的错误输出，并Google之，查看是否还有人有同样的问题。相信90%的问题到这里应该都已经被解决了。</li>
-
-<li>如果没有找到相似的问题，自己尝试阅读出问题的代码（Jekyll使用Ruby写成），自己动手解决。</li>
-
-<li>如果自己无法解决，可以浏览Jekyll在Gibhub上的Issue页面，查看此问题是否已经在被讨论；如果自己确实找到了Jekyll的Bug，可以fork Jekyll项目，然后铲除Bug，为开源社区做些贡献。</li>
-</ul>
-
-<p>本博客的模板是在<a href='http://yihui.name' title='Yihui Xie'>Yihui Xie</a>博客的基础上修改而成，在此想yihui表示感谢！</p>
-
-<p><strong>Markdown写作环境</strong> Jekyll支持Markdown语法，对我来说，Markdown是最理想的写作环境。为什么这么说呢？因为Markdown将外部干扰降到了最低，其语法也简单简洁。作为史上最成功的排版系统，LaTex的语法的确要复杂一些，源文件看起来更乱，不过，至少现在看来，它的排版能力要比Markdown强。我无意于比较Markdown和LaTex孰优孰劣，而是关注与两者都尽可能的将“外部干扰”降到最低 &#8211; 你只需要按照语法写文本文档即可。你简直无法想象，将宝贵的时间花在：用鼠标小心奕奕地调整图片或文本框大小、设置页码、用Mathtype输入公式、调整行距等等这些，是多么不明智！而这其中最关键的是，这些琐事无法让你<strong>集中精神在写作内容上</strong>，而内容本身，包括用词、思路和逻辑，才是最重要的。</p>
-
-<p><strong>关于今后的博文</strong> 这个博客将是我人生的记录，今后可能会包括一些看法见解，技术分享还有学习总结，其中有一部分肯定是关于论文阅读心得。贵在坚持，并希望大家监督！</p>
-
-<p>今后几天，我将会从人人网、cnblog和豆瓣中搬过来几篇之前写的东西，希望大家多多批评！</p>]]></content:encoded>
     </item>
     
   </channel>
