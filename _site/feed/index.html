@@ -7,8 +7,29 @@
     <title>孔明</title>
     <link href="http://alexkong.net/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2012-08-25T16:50:32+08:00</lastBuildDate>
+    <lastBuildDate>2012-08-25T19:11:03+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
+    
+    <item>
+      <title>如何判断链表中是否存在环路</title>
+      <link href="http://alexkong.net/2012/08/whether-there-is-a-loop-in-a-link/"/>
+      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2012/08/whether-there-is-a-loop-in-a-link</guid>
+      <content:encoded><![CDATA[<p>在实习面试中，这个问题出现的频度很高，我在这里总结一下。</p>
+
+<p>方法一，在链表中增加一个域visited，都初始化为0，表示此节点都未被访问。从链表的头部开始走，每走过一个链表就标记visited为1，如果要访问的下一个节点的visited域为1，那么证明链表中有环。</p>
+
+<p>方法二，先考虑另外一个问题：在未知链表长度（长度为奇数）的情况下，如何找到链表中间的节点？可以这么办，设置两个指针p和q，初始时都指向链表的头结点。然后沿着链表，p走一步而q走两步，这样当q正好到达链表的尾节点的时候，p应该在链表的中间节点。</p>
+
+<p>如何判断链表中有环也可以用这种思路，还是设置p和q两个指针，沿着链表走，p走一步而q走两步。如果链表中有环，则p和q会在某个时间相遇。我们来分析一下，在两个指针进入环路之前，肯定不会相遇，那么如果两个指针相遇，则一定是它们都在这个链表的环路之中。假设此时p点刚刚进入到链表中的环中，q在环中的某一个位置，如图所示。</p>
+
+<p><img alt='如何判断链表中是否存在环路' src='/images/loop-in-link.png' /></p>
+
+<p>设t时间后，p和q在环中的某一点相遇，初始时p和q相隔k个节点（0&lt;=k&lt;=n-1，其中n为环中的节点数，在这里为5；图中p和q相隔3个节点，而不是2个：因为假如q不动，p需要经过3步移动才可以和q重合），那么可得：t(mod n) = k + 2t(mod n)，其中t(mod n)代表t除以n所得到的余数，t为正整数。那么显然，设m为正整数，t = mn - k，所以满足要求的最小的k为2（m = 1的时候）。这也就说明了，如果链表中有环，那么p和q在某个时刻一定相遇。</p>
+
+<p>而p和q相遇，是否能说明链表有环呢？答案是肯定的，考虑其逆反命题，如果链表没有环，则p和q则永远不可能相遇。进一步说明了，在这种实验设置之下，p和q相遇是链表有环的充分必要条件。</p>]]></content:encoded>
+    </item>
     
     <item>
       <title>The Great Donald E. Knuth</title>
@@ -220,6 +241,8 @@
 
 <li>如果自己无法解决，可以浏览Jekyll在Gibhub上的Issue页面，查看此问题是否已经在被讨论；如果自己确实找到了Jekyll的Bug，可以fork Jekyll项目，然后铲除Bug，为开源社区做些贡献。</li>
 </ul>
+
+<p>本博客的模板是在<a href='http://yihui.name' title='Yihui Xie'>Yihui Xie</a>博客的基础上修改而成，在此想yihui表示感谢！</p>
 
 <p><strong>Markdown写作环境</strong> Jekyll支持Markdown语法，对我来说，Markdown是最理想的写作环境。为什么这么说呢？因为Markdown将外部干扰降到了最低，其语法也简单简洁。作为史上最成功的排版系统，LaTex的语法的确要复杂一些，源文件看起来更乱，不过，至少现在看来，它的排版能力要比Markdown强。我无意于比较Markdown和LaTex孰优孰劣，而是关注与两者都尽可能的将“外部干扰”降到最低 &#8211; 你只需要按照语法写文本文档即可。你简直无法想象，将宝贵的时间花在：用鼠标小心奕奕地调整图片或文本框大小、设置页码、用Mathtype输入公式、调整行距等等这些，是多么不明智！而这其中最关键的是，这些琐事无法让你<strong>集中精神在写作内容上</strong>，而内容本身，包括用词、思路和逻辑，才是最重要的。</p>
 
