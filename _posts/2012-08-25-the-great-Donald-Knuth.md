@@ -9,9 +9,9 @@ tags:
 - TAOCP
 ---
 
-Note: This is a 5-minute speech script given on my English class.
-
 ![Donald Knuth\[1\]](/images/Donald-Knuth.jpg "Donald Knuth")
+
+Note: This is a 5-minute speech script given on my English class.
 
 Good morning, everybody! I am XXX, and you can call me Alex. I’m very honored to introduce you today one of the most respected and fruitful scholars in computer science: [Donald E. Knuth](http://en.wikipedia.org/wiki/Donald_Knuth "Donald E. Knuth"). Interestingly, he also has a Chinese name: 高德纳.
 

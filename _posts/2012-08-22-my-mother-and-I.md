@@ -2,7 +2,7 @@
 layout: post
 title: 我和我妈
 categories:
-- Life
+- 生活
 tags:
 - 母亲
 - 豆瓣
