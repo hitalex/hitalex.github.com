@@ -32,3 +32,4 @@ tags:
 2. From dimension reduction to LDA，关于LSA、PLSA和LDA
 3. Gibbs sampling，以及其C语言实现
 4. Bayesian non-parametircs
+5. 读*Unix编程的艺术*有感
