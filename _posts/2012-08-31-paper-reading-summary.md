@@ -16,8 +16,6 @@ tags:
 
 这篇文章的主要贡献为建立了一个topic model的[可视化系统TMVE](http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html)。训练topic model采用的代码为[David Blei](http://www.cs.princeton.edu/~blei/)的[lda-c](http://www.cs.princeton.edu/~blei/lda-c/index.html)。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。
 
-![Topic Model Visualization](/images/topic-model-visualization.png)
-
 *Probabilistic Latent Semantic Visualization: Topic Model for Visualizing Documents* by Tomoharu Iwata, *et al.* （WWW2006）
 
 假定一个visualization space（2维或者3维，之后称作“可视空间”），认为topic和document都在可视空间中存在latent coordinates，这样其实是将topic和document放在同一个空间中，然后再利用欧几里德距离计算它们之间的相似度。在文章中，作者为了得到topic和document在可视空间的坐标，参照LDA的文档生成过程，提出了一种文档生成过程，其中topic和document的坐标都服从多元高斯分布，最后用EM算法求解。
