@@ -55,3 +55,8 @@ TwitterRank基于PageRank，但与PageRank不同的是，重新定义了两个�
 * posts from social friends
 * users' intrinsic interest
 作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。
+
+
+**总结**
+
+目前看论文存在的问题是：贪多，看论文不仔细，没有能够及时总结论文思想，提取idea。
