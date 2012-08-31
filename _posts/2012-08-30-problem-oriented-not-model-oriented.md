@@ -30,7 +30,6 @@ KDD不愧为“盛会”，今年参加会议的人大约在1000人以上。这�
 **Future posts**
 
 现在我心里还有几篇博文在“孕育”，写下来防止未来自己不认帐:
-
 * 近几天所看的论文的总结，无论如何都要停下来回顾一下自己看的文章，消化一下。
 * From dimension reduction to LDA，关于LSA、PLSA和LDA
 * Gibbs sampling，以及其C语言实现
