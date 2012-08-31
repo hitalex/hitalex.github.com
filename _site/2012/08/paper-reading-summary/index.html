@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="孔明" />
+    <title>论文阅读总结 | 孔明</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="http://alexkong.net/feed/" rel="alternate" title="孔明" type="application/atom+xml" />
+    <link rel="stylesheet" href="/media/css/style.css">
+    <link rel="stylesheet" href="/media/css/highlight.css">
+    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+  <body>
+    <div id="container">
+      <div id="main" role="main">
+        <header>
+        <h1>论文阅读总结</h1>
+        </header>
+        <nav>
+        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
+        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
+        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
+        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
+        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
+        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
+        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
+        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
+        <span><a title="about" class="" href="http://alexkong.net/about/">about me</a></span>
+        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
+        </nav>
+        <article class="content">
+        <section class="post">
+<p>以下列出从8月16号以来直到现在所阅读的论文的总结。</p>
+
+<p><strong>Topic visualization</strong></p>
+
+<p><em>Visualizing Topic Models</em> by Allison J.B. Chaney and David M. Blei（AAAI2012）</p>
+
+<p>这篇文章的主要贡献为建立了一个topic model的<a href='http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html'>可视化系统TMVE</a>。训练topic model采用的代码为<a href='http://www.cs.princeton.edu/~blei/'>David Blei</a>的<a href='http://www.cs.princeton.edu/~blei/lda-c/index.html'>lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
+
+<p><img alt='Topic Model Visualization' src='/images/topic-model-visualization.png' /></p>
+
+<p><em>Probabilistic Latent Semantic Visualization: Topic Model for Visualizing Documents</em> by Tomoharu Iwata, <em>et al.</em> （WWW2006）</p>
+
+<p>假定一个visualization space（2维或者3维，之后称作“可视空间”），认为topic和document都在可视空间中存在latent coordinates，这样其实是将topic和document放在同一个空间中，然后再利用欧几里德距离计算它们之间的相似度。在文章中，作者为了得到topic和document在可视空间的坐标，参照LDA的文档生成过程，提出了一种文档生成过程，其中topic和document的坐标都服从多元高斯分布，最后用EM算法求解。</p>
+
+<p><strong>Bayesian nonparametircs</strong></p>
+
+<p><em>A tutorial on Bayesian nonparametric models</em> by Samuel J. Gershman and David M. Blei （Journal of Mathematical Psychology 2011）</p>
+
+<p>贝叶斯非参数（Bayesian nonparametircs）方法其实是一种自动模型选择方法，采用Bayes理论，让训练数据来决定模型参数，比如高斯混合模型中cluster的数量。这篇文章主要介绍了高斯混合模型（Gaussian mixture models）、Chinese restaurant process（CRP）以及Indian buffet process（IBP）。问题：目前已经了解了CRP，但还并不了解IBP，对于CRP和Dirichlet process(mixtures) 之间的关系还不明白。</p>
+
+<p><em>The Infinite Gaussian Mixture Model</em> by Carl Edward Rasmussen （NIPS2000）</p>
+
+<p>这篇论文主要讨论的是无穷高斯混合模型，该模型中假设cluster的数量无穷多。CRP和无穷高斯混合模型有一定的联系：在cluster的数目K趋于无穷时，新来的数据点选择cluster的概率值定义非常相似。它们之间具体的联系之后讨论。</p>
+
+<p><em>Markov Chain Sampling Methods for Dirichlet Process Mixture Models</em> by Radford M. Neal</p>
+
+<p>这篇论文主要讨论Dirichlet process mixture model以及Gibbs sampling。</p>
+
+<p><strong>Topic model application</strong></p>
+
+<p><em>TwitterRank: Finding Topic-sensitive Influential Twitters</em> by Jianshu Weng, <em>et al.</em> （WSDM2010）</p>
+
+<p>TwitterRank基于PageRank，但与PageRank不同的是，重新定义了两个节点间的转移概率，而这个概率和两个节点（两个Twitter用户）在某个topic相似度有关。</p>
+
+<p><em>Social-Network Analysis Using Topic Models</em> by Youngchul Cha and Junghoo Cho （SIGIR2012）</p>
+
+<p>这篇论文声称可以很好的解决popular nodes（具有较多的incoming link，即粉丝很多）问题。其中最引人注目的是<em>Edge generative model</em>：将每个follower看作是一个document，每个followed user看作是word，这样对于某个用户document，他所follow的用户就构成了这个文档中的word，其中的隐变量即为topic或者兴趣。</p>
+
+<blockquote>
+<p>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z|f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g|z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z|f)$ and $P(g|z)$, respectively.</p>
+</blockquote>
+
+<p><em>Modeling User Posting Behavior on Social Media</em> by Zhiheng Xu, <em>et al.</em>（SIGIR2012）</p>
+
+<p>文章认为Twitter用户的转发行为与以下三个方面有关：</p>
+
+<ul>
+<li>Breaking news</li>
+
+<li>posts from social friends</li>
+
+<li>users&#8217; intrinsic interest 作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</li>
+</ul>
+</section>
+<section class="meta">
+<span class="author">
+  <a href="http://alexkong.net">孔明</a>
+</span>
+<span class="time">
+  /
+  <time datetime="2012-08-31">2012-08-31</time>
+</span>
+<br />
+<span class="license">
+  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">(CC) BY-NC-ND 3.0</a>
+</span>
+
+<span class="categories">
+  in categories
+  
+  <a href="http://alexkong.net/categories/#学术" title="学术">学术</a>&nbsp;
+  
+</span>
+
+
+<span class="tags">
+  tagged with 
+  
+  <a href="http://alexkong.net/tags/#论文" title="论文">论文</a>&nbsp;
+  
+  <a href="http://alexkong.net/tags/#总结" title="总结">总结</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://alexkong.net/2012/08/paper-reading-summary/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+<script type="text/javascript">
+$(function(){
+  $(document).keydown(function(e) {
+    var url = false;
+        if (e.which == 37 || e.which == 74) {  // Left arrow and J
+            
+        url = 'http://alexkong.net/2012/08/problem-oriented-not-model-oriented/';
+        
+        }
+        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
+            
+        }
+        if (url) {
+            window.location = url;
+        }
+  });
+})
+</script>
+
+
+        </article>
+        
+        <div id="footer" style="right:0px; text-align:right"><footer>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2012 by <a href="http://alexkong.net">孔明</a> </small></p>
+        </footer></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    
+  </body>
+</html>

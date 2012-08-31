@@ -7,8 +7,69 @@
     <title>孔明</title>
     <link href="http://alexkong.net/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2012-08-31T09:15:30+08:00</lastBuildDate>
+    <lastBuildDate>2012-08-31T11:28:10+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
+    
+    <item>
+      <title>论文阅读总结</title>
+      <link href="http://alexkong.net/2012/08/paper-reading-summary/"/>
+      <pubDate>2012-08-31T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2012/08/paper-reading-summary</guid>
+      <content:encoded><![CDATA[<p>以下列出从8月16号以来直到现在所阅读的论文的总结。</p>
+
+<p><strong>Topic visualization</strong></p>
+
+<p><em>Visualizing Topic Models</em> by Allison J.B. Chaney and David M. Blei（AAAI2012）</p>
+
+<p>这篇文章的主要贡献为建立了一个topic model的<a href='http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html'>可视化系统TMVE</a>。训练topic model采用的代码为<a href='http://www.cs.princeton.edu/~blei/'>David Blei</a>的<a href='http://www.cs.princeton.edu/~blei/lda-c/index.html'>lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
+
+<p><img alt='Topic Model Visualization' src='/images/topic-model-visualization.png' /></p>
+
+<p><em>Probabilistic Latent Semantic Visualization: Topic Model for Visualizing Documents</em> by Tomoharu Iwata, <em>et al.</em> （WWW2006）</p>
+
+<p>假定一个visualization space（2维或者3维，之后称作“可视空间”），认为topic和document都在可视空间中存在latent coordinates，这样其实是将topic和document放在同一个空间中，然后再利用欧几里德距离计算它们之间的相似度。在文章中，作者为了得到topic和document在可视空间的坐标，参照LDA的文档生成过程，提出了一种文档生成过程，其中topic和document的坐标都服从多元高斯分布，最后用EM算法求解。</p>
+
+<p><strong>Bayesian nonparametircs</strong></p>
+
+<p><em>A tutorial on Bayesian nonparametric models</em> by Samuel J. Gershman and David M. Blei （Journal of Mathematical Psychology 2011）</p>
+
+<p>贝叶斯非参数（Bayesian nonparametircs）方法其实是一种自动模型选择方法，采用Bayes理论，让训练数据来决定模型参数，比如高斯混合模型中cluster的数量。这篇文章主要介绍了高斯混合模型（Gaussian mixture models）、Chinese restaurant process（CRP）以及Indian buffet process（IBP）。问题：目前已经了解了CRP，但还并不了解IBP，对于CRP和Dirichlet process(mixtures) 之间的关系还不明白。</p>
+
+<p><em>The Infinite Gaussian Mixture Model</em> by Carl Edward Rasmussen （NIPS2000）</p>
+
+<p>这篇论文主要讨论的是无穷高斯混合模型，该模型中假设cluster的数量无穷多。CRP和无穷高斯混合模型有一定的联系：在cluster的数目K趋于无穷时，新来的数据点选择cluster的概率值定义非常相似。它们之间具体的联系之后讨论。</p>
+
+<p><em>Markov Chain Sampling Methods for Dirichlet Process Mixture Models</em> by Radford M. Neal</p>
+
+<p>这篇论文主要讨论Dirichlet process mixture model以及Gibbs sampling。</p>
+
+<p><strong>Topic model application</strong></p>
+
+<p><em>TwitterRank: Finding Topic-sensitive Influential Twitters</em> by Jianshu Weng, <em>et al.</em> （WSDM2010）</p>
+
+<p>TwitterRank基于PageRank，但与PageRank不同的是，重新定义了两个节点间的转移概率，而这个概率和两个节点（两个Twitter用户）在某个topic相似度有关。</p>
+
+<p><em>Social-Network Analysis Using Topic Models</em> by Youngchul Cha and Junghoo Cho （SIGIR2012）</p>
+
+<p>这篇论文声称可以很好的解决popular nodes（具有较多的incoming link，即粉丝很多）问题。其中最引人注目的是<em>Edge generative model</em>：将每个follower看作是一个document，每个followed user看作是word，这样对于某个用户document，他所follow的用户就构成了这个文档中的word，其中的隐变量即为topic或者兴趣。</p>
+
+<blockquote>
+<p>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z|f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g|z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z|f)$ and $P(g|z)$, respectively.</p>
+</blockquote>
+
+<p><em>Modeling User Posting Behavior on Social Media</em> by Zhiheng Xu, <em>et al.</em>（SIGIR2012）</p>
+
+<p>文章认为Twitter用户的转发行为与以下三个方面有关：</p>
+
+<ul>
+<li>Breaking news</li>
+
+<li>posts from social friends</li>
+
+<li>users&#8217; intrinsic interest 作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</li>
+</ul>]]></content:encoded>
+    </item>
     
     <item>
       <title>Problem oriented, not model oriented -- 阶段总结</title>
@@ -281,23 +342,6 @@
 <p>那么设AB的中点为D，做AB的垂直平分线，这条平分线肯定与BO相交，设交点为E，准确来说BE的距离为2/3*sqrt(3)，也就是说E在OB的三等分点上。显然，DE和OC的交点不可能在三角形内，所以之后的“证明”就都没有意义了。</p>
 
 <p>总结：手工画图总的来说还是定性描述，显然定性描述有时候会很坑人。对于这种情况，可以采用定性+定量描述的方法来做。</p>]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>本科毕业论文的致谢部分</title>
-      <link href="http://alexkong.net/2012/08/acknowledgements-of-my-undergraduation-paper/"/>
-      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
-      <author>孔明</author>
-      <guid>http://alexkong.net/2012/08/acknowledgements-of-my-undergraduation-paper</guid>
-      <content:encoded><![CDATA[<p>首先应该感谢郭长勇老师，也就是我的毕设指导老师。在我做毕设期间，我经常会去找郭老师讨论毕设思路，郭老师也给我提供了很多有价值的论文，并很乐意与我讨论毕设相关的问题。其中最重要的一点是，郭老师给了我很多自由空间，让我可以按照我自己的意志做事情。结果就是，在这半年中，我不仅将毕设很好的完成，还学习了很多关于Android和Python等相关的知识。</p>
-
-<p>还应该感谢程远志老师，程老师在一些重要的概念上帮助了我，使我做毕设的时候思路清晰。还有，我可以在程远志老师的实验室中做毕设，而不用每天去“按手印”，所以时间比较自由：早上中午都可以睡懒觉，晚上还可以待得时间比较长。</p>
-
-<p>“独学而无友，则孤陋而寡闻”。在毕设期间，我可以同实验室中做相关题目的同学能够交流经验和进度，在这里要特别感谢苏鹏和董淑照。苏鹏为我提供了关于PSF的一篇论文，董淑照则在这期间架设了一个高性能服务器，我最后的Model-based方法的椭圆拟合程序就是在那里运行的，否则我可能要等上一晚上了。另外，感谢实验室中本科的同学，是他们营造了一个很好的气氛。</p>
-
-<p>在这段时间里，我还给很多其他同学帮忙解答毕设相关的问题，大多是关于Java和Jsp的，我想说：帮大家也是在帮我自己，所以从某种意义上来说，也要谢谢你们。</p>
-
-<p>最后，感谢威海一直以来的好天气！</p>]]></content:encoded>
     </item>
     
   </channel>

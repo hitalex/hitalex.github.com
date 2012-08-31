@@ -2,7 +2,7 @@
 layout: post
 title: Problem oriented, not model oriented -- 阶段总结
 categories: 
-- 学术研究
+- 学术
 - 生活
 tags: 
 - 问题导向
