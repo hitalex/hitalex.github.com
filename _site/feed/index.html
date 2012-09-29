@@ -7,8 +7,29 @@
     <title>孔明</title>
     <link href="http://alexkong.net/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2012-08-31T11:37:13+08:00</lastBuildDate>
+    <lastBuildDate>2012-09-29T17:14:41+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
+    
+    <item>
+      <title>Appplying Gibbs sampling inference to Naive Bayes classification</title>
+      <link href="http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification/"/>
+      <pubDate>2012-09-09T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification</guid>
+      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href='http://en.wiktionary.org/wiki/na%C3%AFve'>这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\[P(w_2 | w_1)\]</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+
+<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：</p>
+
+<ul>
+<li><strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。</li>
+
+<li><strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</li>
+</ul>
+
+<p>如果你已经读了至少Gibbs sampling for the unitialiated这篇文章，或者本来理解Gibss sampling，我建议你继续阅读。</p>
+
+<p>我将Naive Bayes应用于文本分类（采用的数据集在<a href='http://web.ist.utl.pt/~acardoso/datasets/'>这里</a>），并尝试使用Gibbs sampling推导模型参数，参照Unitialiated这篇文章中的伪代码。</p>]]></content:encoded>
+    </item>
     
     <item>
       <title>论文阅读总结</title>
@@ -323,27 +344,6 @@
 <p><img alt='另外一种画三角形的方法' src='/images/non-isosceles-triangle-prove3.jpg' /></p>
 
 <p>综上，OD与线段AB的垂直平分线的交点肯定不在三角形内。</p>]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>所有的三角形都是等腰三角形？！</title>
-      <link href="http://alexkong.net/2012/08/are-all-triangles-isosceles/"/>
-      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
-      <author>孔明</author>
-      <guid>http://alexkong.net/2012/08/are-all-triangles-isosceles</guid>
-      <content:encoded><![CDATA[<p>所有的三角形都是等腰三角形！Whant？不信你就看视频中的“证明”。</p>
-<embed align='middle' allowFullscreen='true' allowScriptAccess='sameDomain' height='400' quality='high' src='http://player.youku.com/player.php/sid/XMTAzNzYxODg0/v.swf' type='application/x-shockwave-flash' width='480' />
-<p>视频中的证明肯定是错误的，可问题在哪呢？</p>
-
-<p>其实视频中的这位老师“犯了”一个集合证明中非常常见的错误，请看下面的一个例子。</p>
-
-<p><img alt='non-isosceles triangle example' src='/images/non-isosceles-triangle-example.jpg' /></p>
-
-<p>这是个直角三角形，更特殊的是∠OAB是60度，设AO长度为1，那么AB = 2 * OA = 2。做∠AOB的角平分线，与AB相交于C。根据图中所标识的角度可知，AO &gt; AC（正弦定理）。</p>
-
-<p>那么设AB的中点为D，做AB的垂直平分线，这条平分线肯定与BO相交，设交点为E，准确来说BE的距离为2/3*sqrt(3)，也就是说E在OB的三等分点上。显然，DE和OC的交点不可能在三角形内，所以之后的“证明”就都没有意义了。</p>
-
-<p>总结：手工画图总的来说还是定性描述，显然定性描述有时候会很坑人。对于这种情况，可以采用定性+定量描述的方法来做。</p>]]></content:encoded>
     </item>
     
   </channel>
