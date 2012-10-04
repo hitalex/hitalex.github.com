@@ -12,6 +12,25 @@
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <!-- MathJax Section -->
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  <script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+  </script>
+    
   </head>
   <body>
     <div id="container">
@@ -111,7 +130,7 @@
 
 <a href='#阶段总结' rel='1' title='阶段总结'>阶段总结</a>
 
-<a href='#论文' rel='1' title='论文'>论文</a>
+<a href='#论文' rel='2' title='论文'>论文</a>
 
 <a href='#总结' rel='1' title='总结'>总结</a>
 
@@ -122,6 +141,8 @@
 <a href='#text categorization' rel='1' title='text categorization'>text categorization</a>
 
 <a href='#semi-supervised learning' rel='1' title='semi-supervised learning'>semi-supervised learning</a>
+
+<a href='#格式' rel='1' title='格式'>格式</a>
 
 </div><ul class='listing'>
 
@@ -447,6 +468,11 @@
   <li class='listing-seperator' id='论文'>论文</li>
 
   <li class='listing-item'>
+  <time datetime='2012-10-04'>2012-10-04</time>
+  <a href='http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/' title='关于中文学术论文的格式问题 -- 我的一些看法'>关于中文学术论文的格式问题 -- 我的一些看法</a>
+  </li>
+
+  <li class='listing-item'>
   <time datetime='2012-08-31'>2012-08-31</time>
   <a href='http://alexkong.net/2012/08/paper-reading-summary/' title='论文阅读总结'>论文阅读总结</a>
   </li>
@@ -489,6 +515,14 @@
   <li class='listing-item'>
   <time datetime='2012-09-09'>2012-09-09</time>
   <a href='http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification/' title='Appplying Gibbs sampling inference to Naive Bayes classification'>Appplying Gibbs sampling inference to Naive Bayes classification</a>
+  </li>
+
+
+  <li class='listing-seperator' id='格式'>格式</li>
+
+  <li class='listing-item'>
+  <time datetime='2012-10-04'>2012-10-04</time>
+  <a href='http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/' title='关于中文学术论文的格式问题 -- 我的一些看法'>关于中文学术论文的格式问题 -- 我的一些看法</a>
   </li>
 
 

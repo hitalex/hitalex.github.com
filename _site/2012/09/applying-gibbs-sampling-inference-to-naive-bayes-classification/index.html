@@ -12,6 +12,25 @@
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <!-- MathJax Section -->
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  <script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+  </script>
+    
   </head>
   <body>
     <div id="container">
@@ -33,7 +52,7 @@
         </nav>
         <article class="content">
         <section class="post">
-<p>Naive Bayes（naive的另外一种写法为naïve，见<a href='http://en.wiktionary.org/wiki/na%C3%AFve'>这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\[P(w_2 | w_1)\]</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+<p>Naive Bayes（naive的另外一种写法为naïve，见<a href='http://en.wiktionary.org/wiki/na%C3%AFve'>这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
 <p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：</p>
 
@@ -112,6 +131,8 @@ $(function(){
         }
         else if (e.which == 39 || e.which == 75) {  // Right arrow and K
             
+        url = 'http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/';
+        
         }
         if (url) {
             window.location = url;

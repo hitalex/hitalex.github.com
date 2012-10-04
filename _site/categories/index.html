@@ -12,6 +12,25 @@
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
+    <!-- MathJax Section -->
+
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  <script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+  </script>
+    
   </head>
   <body>
     <div id="container">
@@ -39,9 +58,9 @@
 
 <a href='#生活' rel='5' title='生活'>生活 (5)</a>
 
-<a href='#观点' rel='5' title='观点'>观点 (5)</a>
+<a href='#观点' rel='6' title='观点'>观点 (6)</a>
 
-<a href='#学术' rel='4' title='学术'>学术 (4)</a>
+<a href='#学术' rel='5' title='学术'>学术 (5)</a>
 
 </div><ul class='listing'>
 
@@ -99,6 +118,11 @@
   <li class='listing-seperator' id='观点'>观点</li>
 
   <li class='listing-item'>
+  <time datetime='2012-10-04'>2012-10-04</time>
+  <a href='http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/' title='关于中文学术论文的格式问题 -- 我的一些看法'>关于中文学术论文的格式问题 -- 我的一些看法</a>
+  </li>
+
+  <li class='listing-item'>
   <time datetime='2012-08-25'>2012-08-25</time>
   <a href='http://alexkong.net/2012/08/the-great-Donald-Knuth/' title='The Great Donald E. Knuth'>The Great Donald E. Knuth</a>
   </li>
@@ -125,6 +149,11 @@
 
 
   <li class='listing-seperator' id='学术'>学术</li>
+
+  <li class='listing-item'>
+  <time datetime='2012-10-04'>2012-10-04</time>
+  <a href='http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/' title='关于中文学术论文的格式问题 -- 我的一些看法'>关于中文学术论文的格式问题 -- 我的一些看法</a>
+  </li>
 
   <li class='listing-item'>
   <time datetime='2012-09-09'>2012-09-09</time>
