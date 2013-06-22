@@ -1,5 +1,5 @@
 ---
-title: Free your mind!
+title: Bridging from research to engineering
 layout: page
 ---
 
