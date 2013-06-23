@@ -58,7 +58,7 @@
 
 <p><em>Visualizing Topic Models</em> by Allison J.B. Chaney and David M. Blei（AAAI2012）</p>
 
-<p>这篇文章的主要贡献为建立了一个topic model的<a href='http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html'>可视化系统TMVE</a>。训练topic model采用的代码为<a href='http://www.cs.princeton.edu/~blei/'>David Blei</a>的<a href='http://www.cs.princeton.edu/~blei/lda-c/index.html'>lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
+<p>这篇文章的主要贡献为建立了一个topic model的<a href="http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html">可视化系统TMVE</a>。训练topic model采用的代码为<a href="http://www.cs.princeton.edu/~blei/">David Blei</a>的<a href="http://www.cs.princeton.edu/~blei/lda-c/index.html">lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
 
 <p><em>Probabilistic Latent Semantic Visualization: Topic Model for Visualizing Documents</em> by Tomoharu Iwata, <em>et al.</em> （WWW2006）</p>
 
@@ -89,24 +89,31 @@
 <p>这篇论文声称可以很好的解决popular nodes（具有较多的incoming link，即粉丝很多）问题。其中最引人注目的是<em>Edge generative model</em>：将每个follower看作是一个document，每个followed user看作是word，这样对于某个用户document，他所follow的用户就构成了这个文档中的word，其中的隐变量即为topic或者兴趣。</p>
 
 <blockquote>
-<p>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z|f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g|z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z|f)$ and $P(g|z)$, respectively.</p>
+  <table>
+    <tbody>
+      <tr>
+        <td>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z</td>
+        <td>f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g</td>
+        <td>z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z</td>
+        <td>f)$ and $P(g</td>
+        <td>z)$, respectively.</td>
+      </tr>
+    </tbody>
+  </table>
 </blockquote>
 
 <p><em>Modeling User Posting Behavior on Social Media</em> by Zhiheng Xu, <em>et al.</em>（SIGIR2012）</p>
 
-<p>文章认为Twitter用户的转发行为与以下三个方面有关：</p>
-
-<ul>
-<li>Breaking news</li>
-
-<li>posts from social friends</li>
-
-<li>users&#8217; intrinsic interest 作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</li>
-</ul>
+<p>文章认为Twitter用户的转发行为与以下三个方面有关：
+* Breaking news
+* posts from social friends
+* users’ intrinsic interest
+作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</p>
 
 <p><strong>总结</strong></p>
 
 <p>目前看论文存在的问题是：贪多，看论文不仔细，没有能够及时总结论文思想，提取idea。</p>
+
 </section>
 <section class="meta">
 <span class="author">
@@ -181,7 +188,7 @@ $(function(){
         </article>
         
         <div id="footer" style="right:0px; text-align:right"><footer>
-        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2012 by <a href="http://alexkong.net">孔明</a> </small></p>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2013 by <a href="http://alexkong.net">孔明</a> </small></p>
         </footer></div>
       </div>
     </div>

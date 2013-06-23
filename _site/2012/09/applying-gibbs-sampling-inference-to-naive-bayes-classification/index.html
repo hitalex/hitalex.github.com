@@ -52,19 +52,16 @@
         </nav>
         <article class="content">
         <section class="post">
-<p>Naive Bayes（naive的另外一种写法为naïve，见<a href='http://en.wiktionary.org/wiki/na%C3%AFve'>这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
-<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：</p>
-
-<ul>
-<li><strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。</li>
-
-<li><strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</li>
-</ul>
+<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：
+* <strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。
+* <strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</p>
 
 <p>如果你已经读了至少Gibbs sampling for the unitialiated这篇文章，或者本来理解Gibss sampling，我建议你继续阅读。</p>
 
-<p>我将Naive Bayes应用于文本分类（采用的数据集在<a href='http://web.ist.utl.pt/~acardoso/datasets/'>这里</a>），并尝试使用Gibbs sampling推导模型参数，参照Unitialiated这篇文章中的伪代码。</p>
+<p>我将Naive Bayes应用于文本分类（采用的数据集在<a href="http://web.ist.utl.pt/~acardoso/datasets/">这里</a>），并尝试使用Gibbs sampling推导模型参数，参照Unitialiated这篇文章中的伪代码。</p>
+
 </section>
 <section class="meta">
 <span class="author">
@@ -145,7 +142,7 @@ $(function(){
         </article>
         
         <div id="footer" style="right:0px; text-align:right"><footer>
-        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2012 by <a href="http://alexkong.net">孔明</a> </small></p>
+        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2013 by <a href="http://alexkong.net">孔明</a> </small></p>
         </footer></div>
       </div>
     </div>

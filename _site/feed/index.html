@@ -7,8 +7,95 @@
     <title>孔明</title>
     <link href="http://alexkong.net/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2012-10-04T20:39:42+08:00</lastBuildDate>
+    <lastBuildDate>2013-06-23T11:47:00+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
+    
+    <item>
+      <title>ROC和AUC介绍以及如何计算AUC</title>
+      <link href="http://alexkong.net/2013/06/introduction-to-auc-and-roc/"/>
+      <pubDate>2013-06-22T00:00:00+08:00</pubDate>
+      <author>孔明</author>
+      <guid>http://alexkong.net/2013/06/introduction-to-auc-and-roc</guid>
+      <content:encoded><![CDATA[<p>ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见<a href="http://bubblexc.com/y2011/148/">这里</a>。这篇博文简单介绍ROC和AUC的特点，以及更为深入地，讨论如何作出ROC曲线图以及计算AUC。</p>
+
+<h2 id="roc">ROC曲线</h2>
+<p>需要提前说明的是，我们这里只讨论二值分类器。对于分类器，或者说分类算法，评价指标主要有precision，recall，F-score<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>，以及我们今天要讨论的ROC和AUC。下图是一个ROC曲线的示例<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>。</p>
+
+<p><img src="/images/Roccurves.png" alt="ROC曲线示例" /></p>
+
+<p>正如我们在这个ROC曲线的示例图中看到的那样，ROC曲线的横坐标为false positive rate（FPR），纵坐标为true positive rate（TPR）。下图中详细说明了FPR和TPR是如何定义的。</p>
+
+<p><img src="/images/fpr-and-tpr.png" alt="FPR和TPR定义" /></p>
+
+<p>接下来我们考虑ROC曲线图中的四个点和一条线。第一个点，(0,1)，即FPR=0, TPR=1，这意味着FN（false negative）=0，并且FP（false positive）=0。Wow，这是一个完美的分类器，它将所有的样本都正确分类。第二个点，(1,0)，即FPR=1，TPR=0，类似地分析可以发现这是一个最糟糕的分类器，因为它成功避开了所有的正确答案。第三个点，(0,0)，即FPR=TPR=0，即FP（false positive）=TP（true positive）=0，可以发现该分类器预测所有的样本都为负样本（negative）。类似的，第四个点（1,1），分类器实际上预测所有的样本都为正样本。经过以上的分析，我们可以断言，ROC曲线越接近左上角，该分类器的性能越好。</p>
+
+<p>下面考虑ROC曲线图中的虚线y=x上的点。这条对角线上的点其实表示的是一个采用随机猜测策略的分类器的结果，例如(0.5,0.5)，表示该分类器随机对于一半的样本猜测其为正样本，另外一半的样本为负样本。</p>
+
+<h2 id="roc-1">如何画ROC曲线</h2>
+<p>对于一个特定的分类器和测试数据集，显然只能得到一个分类结果，即一组FPR和TPR结果，而要得到一个曲线，我们实际上需要一系列FPR和TPR的值，这又是如何得到的呢？我们先来看一下<a href="http://en.wikipedia.org/wiki/Receiver_operating_characteristic">Wikipedia</a>上对ROC曲线的定义：</p>
+
+<blockquote>
+  <p>In signal detection theory, a receiver operating characteristic (ROC), or simply ROC curve, is a graphical plot which illustrates the performance of a binary classifier system as its discrimination threshold is varied. </p>
+</blockquote>
+
+<p>问题在于“as its discrimination threashold is varied”。如何理解这里的“discrimination threashold”呢？我们忽略了分类器的一个重要功能“概率输出”，即表示分类器认为某个样本具有多大的概率属于正样本（或负样本）。通过更深入地了解各个分类器的内部机理，我们总能想办法得到一种概率输出。通常来说，是将一个实数范围通过某个变换映射到(0,1)区间<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup>。</p>
+
+<p>假如我们已经得到了所有样本的概率输出（属于正样本的概率），现在的问题是如何改变“discrimination threashold”？我们根据每个测试样本属于正样本的概率值从大到小排序。下图是一个示例，图中共有20个测试样本，“Class”一栏表示每个测试样本真正的标签（p表示正样本，n表示负样本），“Score”表示每个测试样本属于正样本的概率<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup>。</p>
+
+<p><img src="/images/score-ranking.png" alt="按照概率排序" /></p>
+
+<p>接下来，我们从高到低，依次将“Score”值作为阈值threshold，当测试样本属于正样本的概率大于或等于这个threshold时，我们认为它为正样本，否则为负样本。举例来说，对于图中的第4个样本，其“Score”值为0.6，那么样本1，2，3，4都被认为是正样本，因为它们的“Score”值都大于等于0.6，而其他样本则都认为是负样本。每次选取一个不同的threshold，我们就可以得到一组FPR和TPR，即ROC曲线上的一点。这样一来，我们一共得到了20组FPR和TPR的值，将它们画在ROC曲线的结果如下图：</p>
+
+<p><img src="/images/roc-example.png" alt="ROC曲线举例" /></p>
+
+<p>当我们将threshold设置为1和0时，分别可以得到ROC曲线上的(0,0)和(1,1)两个点。将这些(FPR,TPR)对连接起来，就得到了ROC曲线。当threshold取值越多，ROC曲线越平滑。</p>
+
+<p>其实，我们并不一定要得到每个测试样本是正样本的概率值，只要得到这个分类器对该测试样本的“评分值”即可（评分值并不一定在(0,1)区间）。评分越高，表示分类器越肯定地认为这个测试样本是正样本，而且同时使用各个评分值作为threshold。我认为将评分值转化为概率更易于理解一些。</p>
+
+<h2 id="auc">AUC值的计算</h2>
+<p>AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积的数值不会大于1。又由于ROC曲线一般都处于y=x这条直线的上方，所以AUC的取值范围在0.5和1之间。使用AUC值作为评价标准是因为很多时候ROC曲线并不能清晰的说明哪个分类器的效果更好，而作为一个数值，对应AUC更大的分类器效果更好。</p>
+
+<p>在了解了ROC曲线的构造过程后，编写代码实现并不是一件困难的事情。相比自己编写代码，有时候阅读其他人的代码收获更多，当然过程也更痛苦些。在此推荐<a href="http://scikit-learn.org/stable/">scikit-learn</a>中关于<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/metrics/metrics.py#L479">计算AUC的代码</a>。</p>
+
+<h2 id="roc-2">为什么使用ROC曲线</h2>
+<p>既然已经这么多评价标准，为什么还要使用ROC和AUC呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup>的对比：</p>
+
+<p><img src="/images/roc-and-precall.png" alt="ROC曲线 vs. Precision-Recall曲线" /></p>
+
+<p>上图中，(a)和(c)为ROC曲线，(b)和(d)为Precision-Recall曲线。(a)和(b)展示的是分类其在原始测试集（正负样本分布平衡）的结果，(c)和(d)是将测试集中负样本的数量增加到原来的10倍后，分类器的结果。可以明显的看出，ROC曲线基本保持原貌，而Precision-Recall曲线则变化较大。</p>
+
+<p>说明，文中除了第一张图来自Wikipedia外，其他的图都来自论文(Fawcett, 2006)<sup id="fnref:6"><a href="#fn:6" class="footnote">6</a></sup>截图. </p>
+
+<p>引用及其他链接：</p>
+
+<ul>
+  <li>维基百科中对ROC的介绍: http://en.wikipedia.org/wiki/Receiver_operating_characteristic</li>
+  <li>ROC曲线及AUC评价指标 by 冒泡的崔：http://bubblexc.com/y2011/148/</li>
+</ul>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>我避免将precision，recall等评价指标翻译成中文，因为它们可能对应多个中文解释，极易产生混淆。<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>图片来源：http://en.wikipedia.org/wiki/File:Roccurves.png<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p>这种映射不一定都是可靠的，即你不一定真的得到了某个样本是正样本的概率。<a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p>注意这里使用了“Score”，而不是概率，我们暂且可以认为“Score”值就是是正样本的概率。<a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM.<a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:6">
+      <p>Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874.<a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+]]></content:encoded>
+    </item>
     
     <item>
       <title>关于中文学术论文的格式问题 -- 我的一些看法</title>
@@ -16,7 +103,7 @@
       <pubDate>2012-10-04T00:00:00+08:00</pubDate>
       <author>孔明</author>
       <guid>http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese</guid>
-      <content:encoded><![CDATA[<p>先说一下我为什么会关注这个问题。就在几天前，导师给了我一篇中文论文，让我帮忙评审（review）。拿到论文后，我竟然有些兴奋 &#8211; 的确，我的桌子上几乎不看任何中文论文。造成这种局面的原因比较尴尬和复杂，我们改日再讨论。在仔细读完论文后，除去内容不谈，我发现在此篇论文在书写格式方面有很大的问题，比如错误使用标点符号、断句、中英文和公式混排等。这其中有些问题也是我在写本科毕业论文的时候注意到的。</p>
+      <content:encoded><![CDATA[<p>先说一下我为什么会关注这个问题。就在几天前，导师给了我一篇中文论文，让我帮忙评审（review）。拿到论文后，我竟然有些兴奋 – 的确，我的桌子上几乎不看任何中文论文。造成这种局面的原因比较尴尬和复杂，我们改日再讨论。在仔细读完论文后，除去内容不谈，我发现在此篇论文在书写格式方面有很大的问题，比如错误使用标点符号、断句、中英文和公式混排等。这其中有些问题也是我在写本科毕业论文的时候注意到的。</p>
 
 <p>究其原因，可能是大家平时读写英文论文、英文E-mail太多，反而忽视或者忘记了中文书写的规范。下面我就谈一谈出现的问题以及我的看法。</p>
 
@@ -24,7 +111,7 @@
 
 <p>有两个特殊的标点符号要特别提醒一下：1）现在无论是论文还是教科书等出版物，对于句号的使用，我见到更多的是用句点，像这样“.”。这实际上是英文中的句号，而中文的句号是圆圈，像这样“。”。我并不清楚关于句号的书写有什么更为特别的规定，也不明白为什么这个错误如此流行；2）关于括号的使用。我的建议是，除了数学公式中的括号，都应该统一使用中文括号，比如“（”和“）”。如果坚持这个原则，有时候看起来括号占的地方确实有些大，不过如果坚持使用英文的括号，比如“(”和“)”，书写过程中则必须频繁的切换中/英文输入法。</p>
 
-<p>（2）段落缩进。中文的段落前要有两个汉字宽度的空间&#8211;相必这个大家都清楚。不过，我现在还没有见到哪个在线的编辑器，比如豆瓣日记、人人网日志发布器支持这个特性，而且默认都是没有缩进。所以如果想要缩进的效果，则必须手动在每个段落前加入空格。问题又来了，我到底需要键入多少个空格（这里说的是英文空格）才能看着像是“两个汉字的宽度”，四个还是六个？还是看心情？</p>
+<p>（2）段落缩进。中文的段落前要有两个汉字宽度的空间–相必这个大家都清楚。不过，我现在还没有见到哪个在线的编辑器，比如豆瓣日记、人人网日志发布器支持这个特性，而且默认都是没有缩进。所以如果想要缩进的效果，则必须手动在每个段落前加入空格。问题又来了，我到底需要键入多少个空格（这里说的是英文空格）才能看着像是“两个汉字的宽度”，四个还是六个？还是看心情？</p>
 
 <p>（3）或许还是受英文书写习惯的影响，我审的这篇文章中频繁出现在一个句子后、下一个句子前，加入一个空格。这显然是不必要的。另外，还有一些文章中出现顿号和逗号混用的情况，比如“豆瓣，人人，新浪微博等都是社交网站”，表示列举应该使用顿号“、”。英文中因为没有顿号，所以使用逗号来代替。</p>
 
@@ -34,7 +121,8 @@
 
 <p>（6）避免中英文混用，这种情况多出现于口头表达，比如“By the way，我觉得这个problem还cover的不够，有些detail还没有讨论清楚。”似乎这种说话方式能让人感觉很高端的样子，只是有些装叉的嫌疑。</p>
 
-<p>每个人都希望自己的文字赏心悦目（pleasing to the eyes），我觉得排版和格式则是为达到这个目的付出的第一份努力。如果大家觉得还有其他常见的问题，欢迎补充！</p>]]></content:encoded>
+<p>每个人都希望自己的文字赏心悦目（pleasing to the eyes），我觉得排版和格式则是为达到这个目的付出的第一份努力。如果大家觉得还有其他常见的问题，欢迎补充！</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -43,19 +131,16 @@
       <pubDate>2012-09-09T00:00:00+08:00</pubDate>
       <author>孔明</author>
       <guid>http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification</guid>
-      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href='http://en.wiktionary.org/wiki/na%C3%AFve'>这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
-<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：</p>
-
-<ul>
-<li><strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。</li>
-
-<li><strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</li>
-</ul>
+<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：
+* <strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。
+* <strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</p>
 
 <p>如果你已经读了至少Gibbs sampling for the unitialiated这篇文章，或者本来理解Gibss sampling，我建议你继续阅读。</p>
 
-<p>我将Naive Bayes应用于文本分类（采用的数据集在<a href='http://web.ist.utl.pt/~acardoso/datasets/'>这里</a>），并尝试使用Gibbs sampling推导模型参数，参照Unitialiated这篇文章中的伪代码。</p>]]></content:encoded>
+<p>我将Naive Bayes应用于文本分类（采用的数据集在<a href="http://web.ist.utl.pt/~acardoso/datasets/">这里</a>），并尝试使用Gibbs sampling推导模型参数，参照Unitialiated这篇文章中的伪代码。</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -70,7 +155,7 @@
 
 <p><em>Visualizing Topic Models</em> by Allison J.B. Chaney and David M. Blei（AAAI2012）</p>
 
-<p>这篇文章的主要贡献为建立了一个topic model的<a href='http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html'>可视化系统TMVE</a>。训练topic model采用的代码为<a href='http://www.cs.princeton.edu/~blei/'>David Blei</a>的<a href='http://www.cs.princeton.edu/~blei/lda-c/index.html'>lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
+<p>这篇文章的主要贡献为建立了一个topic model的<a href="http://www.princeton.edu/~achaney/tmve/wiki100k/browse/topic-presence.html">可视化系统TMVE</a>。训练topic model采用的代码为<a href="http://www.cs.princeton.edu/~blei/">David Blei</a>的<a href="http://www.cs.princeton.edu/~blei/lda-c/index.html">lda-c</a>。系统中分别计算了每个topic在整个系统中所占的比例，每个topic中words的分布，topic和topic之间的相似度，每个文档包含某个topic的多少（比例），文档与文档之间的相似度。</p>
 
 <p><em>Probabilistic Latent Semantic Visualization: Topic Model for Visualizing Documents</em> by Tomoharu Iwata, <em>et al.</em> （WWW2006）</p>
 
@@ -101,24 +186,31 @@
 <p>这篇论文声称可以很好的解决popular nodes（具有较多的incoming link，即粉丝很多）问题。其中最引人注目的是<em>Edge generative model</em>：将每个follower看作是一个document，每个followed user看作是word，这样对于某个用户document，他所follow的用户就构成了这个文档中的word，其中的隐变量即为topic或者兴趣。</p>
 
 <blockquote>
-<p>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z|f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g|z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z|f)$ and $P(g|z)$, respectively.</p>
+  <table>
+    <tbody>
+      <tr>
+        <td>We use the same notation with LDA. $z$ denotes a labeling of a followed user $g$ with a topic (interest), or simply a topic, $P(z</td>
+        <td>f)$ denotes the multinomial distribution of topics given a follower $f$, and $P(g</td>
+        <td>z)$ denotes the multinomial distribution of followed users given a topic. $\alpha$ and $\beta$ are Dirichlet priors, constraining $P(z</td>
+        <td>f)$ and $P(g</td>
+        <td>z)$, respectively.</td>
+      </tr>
+    </tbody>
+  </table>
 </blockquote>
 
 <p><em>Modeling User Posting Behavior on Social Media</em> by Zhiheng Xu, <em>et al.</em>（SIGIR2012）</p>
 
-<p>文章认为Twitter用户的转发行为与以下三个方面有关：</p>
-
-<ul>
-<li>Breaking news</li>
-
-<li>posts from social friends</li>
-
-<li>users&#8217; intrinsic interest 作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</li>
-</ul>
+<p>文章认为Twitter用户的转发行为与以下三个方面有关：
+* Breaking news
+* posts from social friends
+* users’ intrinsic interest
+作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</p>
 
 <p><strong>总结</strong></p>
 
-<p>目前看论文存在的问题是：贪多，看论文不仔细，没有能够及时总结论文思想，提取idea。</p>]]></content:encoded>
+<p>目前看论文存在的问题是：贪多，看论文不仔细，没有能够及时总结论文思想，提取idea。</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -129,13 +221,13 @@
       <guid>http://alexkong.net/2012/08/problem-oriented-not-model-oriented</guid>
       <content:encoded><![CDATA[<p><strong>阶段总结</strong></p>
 
-<p>8月4号回到北京，5号休息了一天，之后的一周（6号到10号）就开始在清华听<a href='http://bigeye.au.tsinghua.edu.cn/DragonStar2012/registration.html'>龙星计划</a>，讲课的两位老师分别是余凯和张瞳。余凯目前在百度做多媒体相关的研究，相较于张瞳，他更偏向于工业界的应用（余凯本人也非常幽默），而张瞳则是Rutgers大学教授，Stanford博士毕业，统计学的大牛。对于机器学习这个研究领域来说，5天的暑期课程远远不够，课程期间，余凯主要是介绍了机器学习的一些相关概念，比如<a href='http://deeplearning.net/'>deep learning</a>（我之前则从未听说），张瞳则主要介绍了优化算法、统计理论方面的知识。其实细想起来，整个课程的知识性收获并不太多，主要是开拓了自己的眼界，多认识了几个大牛，比如清华的<a href='http://www.ml-thu.net/~jun/'>朱军</a>，微软的<a href='http://research.microsoft.com/en-us/people/tyliu/'>Tie-Yan Liu</a>，计算所的常虹，香港科大的<a href='http://www.cse.ust.hk/~qyang/'>杨强</a>。非常巧合的是，杨强就是随后在国际会议中心举办的KDD（Knowledge Discovery and Data Mining） 2012的主席（General Chair）。</p>
+<p>8月4号回到北京，5号休息了一天，之后的一周（6号到10号）就开始在清华听<a href="http://bigeye.au.tsinghua.edu.cn/DragonStar2012/registration.html">龙星计划</a>，讲课的两位老师分别是余凯和张瞳。余凯目前在百度做多媒体相关的研究，相较于张瞳，他更偏向于工业界的应用（余凯本人也非常幽默），而张瞳则是Rutgers大学教授，Stanford博士毕业，统计学的大牛。对于机器学习这个研究领域来说，5天的暑期课程远远不够，课程期间，余凯主要是介绍了机器学习的一些相关概念，比如<a href="http://deeplearning.net/">deep learning</a>（我之前则从未听说），张瞳则主要介绍了优化算法、统计理论方面的知识。其实细想起来，整个课程的知识性收获并不太多，主要是开拓了自己的眼界，多认识了几个大牛，比如清华的<a href="http://www.ml-thu.net/~jun/">朱军</a>，微软的<a href="http://research.microsoft.com/en-us/people/tyliu/">Tie-Yan Liu</a>，计算所的常虹，香港科大的<a href="http://www.cse.ust.hk/~qyang/">杨强</a>。非常巧合的是，杨强就是随后在国际会议中心举办的KDD（Knowledge Discovery and Data Mining） 2012的主席（General Chair）。</p>
 
-<p>10号中午在清华吃完饭后又跑到计算所听了<a href='http://cs.stanford.edu/people/jure/'>Jure Leskovec</a>关于社交网络（Social Network）的讲座，回去查找他的主页的时候又一次被震惊：顶级会议（top-tier conference）的paper一堆堆，还加杂着各种best paper。后来才知道，Jure也在KDD 2012的Summer School中也有讲座。</p>
+<p>10号中午在清华吃完饭后又跑到计算所听了<a href="http://cs.stanford.edu/people/jure/">Jure Leskovec</a>关于社交网络（Social Network）的讲座，回去查找他的主页的时候又一次被震惊：顶级会议（top-tier conference）的paper一堆堆，还加杂着各种best paper。后来才知道，Jure也在KDD 2012的Summer School中也有讲座。</p>
 
-<p>各路大牛齐聚北京，为的就是第一次在中国召开的数据挖掘方面的顶级会议<a href='http://kdd2012.sigkdd.org/'>KDD2012</a>。从周日开始，我又开始出现在国际会议中心里，听KDD的报告。</p>
+<p>各路大牛齐聚北京，为的就是第一次在中国召开的数据挖掘方面的顶级会议<a href="http://kdd2012.sigkdd.org/">KDD2012</a>。从周日开始，我又开始出现在国际会议中心里，听KDD的报告。</p>
 
-<p>KDD不愧为“盛会”，今年参加会议的人大约在1000人以上。这次我也是开足了眼界，见到了很多书中和paper中的大牛，简单罗列几个：孙茂松、Jiawei Han、 余凯、杨强、周志华、唐洁、<a href='http://www.cs.berkeley.edu/~jordan/'>Michael Jordan</a>、Michael Kearns、李彦宏、Tie-yan Liu、林智仁、Xiaojin Zhu。这次的KDD和<a href='http://www.sigir.org/sigir2012/'>SIGIR2012</a>会议时间上几乎完全重叠，否则还能见到更多的大牛。在这些大牛中给我留下最深刻印象的是林智仁，他在Industry Practice Expo中做了一个报告：<a href='http://kdd2012.sigkdd.org/indexpo.shtml#lin'>Experiences and Lessons in Developing Industry-Strength Machine Learning and Data Mining Software</a>，主要介绍了他们开发LIBSVM的经历。林教授非常和蔼、幽默，就像个小孩子一般，让人感觉很亲近，整个报告的气氛也非常轻松。</p>
+<p>KDD不愧为“盛会”，今年参加会议的人大约在1000人以上。这次我也是开足了眼界，见到了很多书中和paper中的大牛，简单罗列几个：孙茂松、Jiawei Han、 余凯、杨强、周志华、唐洁、<a href="http://www.cs.berkeley.edu/~jordan/">Michael Jordan</a>、Michael Kearns、李彦宏、Tie-yan Liu、林智仁、Xiaojin Zhu。这次的KDD和<a href="http://www.sigir.org/sigir2012/">SIGIR2012</a>会议时间上几乎完全重叠，否则还能见到更多的大牛。在这些大牛中给我留下最深刻印象的是林智仁，他在Industry Practice Expo中做了一个报告：<a href="http://kdd2012.sigkdd.org/indexpo.shtml#lin">Experiences and Lessons in Developing Industry-Strength Machine Learning and Data Mining Software</a>，主要介绍了他们开发LIBSVM的经历。林教授非常和蔼、幽默，就像个小孩子一般，让人感觉很亲近，整个报告的气氛也非常轻松。</p>
 
 <p>从KDD回来，就开始看论文。经过龙星课程和KDD2012的连番轰炸，我开始真正认识到学术圈子（research community），开始关注一些大牛，开始想着如何才能发高质量的论文。这其中也要感谢杨逍的帮忙，整个KDD期间，我都在跟他讨论、请教。我也必须感到庆幸，这些经历都正好发生在我即将开始真正的实验室学术生活的“前一天”。</p>
 
@@ -145,17 +237,13 @@
 
 <p><strong>Future posts</strong></p>
 
-<p>现在我心里还有几篇博文在“孕育”，写下来防止未来自己不认帐: * 近几天所看的论文的总结，无论如何都要停下来回顾一下自己看的文章，消化一下。</p>
-
-<ul>
-<li>From dimension reduction to LDA，关于LSA、PLSA和LDA</li>
-
-<li>Gibbs sampling，以及其C语言实现</li>
-
-<li>Bayesian non-parametircs</li>
-
-<li>读 <em>Unix编程的艺术</em> 有感</li>
-</ul>]]></content:encoded>
+<p>现在我心里还有几篇博文在“孕育”，写下来防止未来自己不认帐:
+* 近几天所看的论文的总结，无论如何都要停下来回顾一下自己看的文章，消化一下。
+* From dimension reduction to LDA，关于LSA、PLSA和LDA
+* Gibbs sampling，以及其C语言实现
+* Bayesian non-parametircs
+* 读 <em>Unix编程的艺术</em> 有感</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -172,11 +260,12 @@
 
 <p>如何判断链表中有环也可以用这种思路，还是设置p和q两个指针，沿着链表走，p走一步而q走两步。如果链表中有环，则p和q会在某个时间相遇。我们来分析一下，在两个指针进入环路之前，肯定不会相遇，那么如果两个指针相遇，则一定是它们都在这个链表的环路之中。假设此时p点刚刚进入到链表中的环中，q在环中的某一个位置，如图所示。</p>
 
-<p><img alt='如何判断链表中是否存在环路' src='/images/loop-in-link.png' /></p>
+<p><img src="/images/loop-in-link.png" alt="如何判断链表中是否存在环路" /></p>
 
 <p>设t时间后，p和q在环中的某一点相遇，初始时p和q相隔k个节点（0&lt;=k&lt;=n-1，其中n为环中的节点数，在这里为5；图中p和q相隔3个节点，而不是2个：因为假如q不动，p需要经过3步移动才可以和q重合），那么可得：t(mod n) = k + 2t(mod n)，其中t(mod n)代表t除以n所得到的余数，t为正整数。那么显然，设m为正整数，t = mn - k，所以满足要求的最小的k为2（m = 1的时候）。这也就说明了，如果链表中有环，那么p和q在某个时刻一定相遇。</p>
 
-<p>而p和q相遇，是否能说明链表有环呢？答案是肯定的，考虑其逆反命题，如果链表没有环，则p和q则永远不可能相遇。进一步说明了，在这种实验设置之下，p和q相遇是链表有环的充分必要条件。</p>]]></content:encoded>
+<p>而p和q相遇，是否能说明链表有环呢？答案是肯定的，考虑其逆反命题，如果链表没有环，则p和q则永远不可能相遇。进一步说明了，在这种实验设置之下，p和q相遇是链表有环的充分必要条件。</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -185,23 +274,24 @@
       <pubDate>2012-08-25T00:00:00+08:00</pubDate>
       <author>孔明</author>
       <guid>http://alexkong.net/2012/08/the-great-Donald-Knuth</guid>
-      <content:encoded><![CDATA[<p><img alt='Donald Knuth[1]' src='/images/Donald-Knuth.jpg' /></p>
+      <content:encoded><![CDATA[<p><img src="/images/Donald-Knuth.jpg" alt="Donald Knuth\[1\]" title="Donald Knuth" /></p>
 
 <p>Note: This is a 5-minute speech script given on my English class.</p>
 
-<p>Good morning, everybody! I am XXX, and you can call me Alex. I’m very honored to introduce you today one of the most respected and fruitful scholars in computer science: <a href='http://en.wikipedia.org/wiki/Donald_Knuth' title='Donald E. Knuth'>Donald E. Knuth</a>. Interestingly, he also has a Chinese name: 高德纳.</p>
+<p>Good morning, everybody! I am XXX, and you can call me Alex. I’m very honored to introduce you today one of the most respected and fruitful scholars in computer science: <a href="http://en.wikipedia.org/wiki/Donald_Knuth" title="Donald E. Knuth">Donald E. Knuth</a>. Interestingly, he also has a Chinese name: 高德纳.</p>
 
 <p>Knuth was born on January 10, 1938 in Milwaukee, Wisconsin. He was studying physics at Case Institute of Technology and then switched to mathematics. In 1960, he received his Bachelor of Science degree and at the same time received his Master of Science degree because of his excellent work. After 3 years, in 1963, he graduated from California Institute of Technology with a Ph.D degree in mathematics and began to work there as an associate professor.Now he has retired from Stanford University and concentrated on his 7-volumn book: The Art of Computer Programming, known as TAOCP, which I will talk about later on.</p>
 
-<p>Knuth is considered the “father of algorithm analysis”. You all know what an algorithm means, do you? An algorithm is basically a way of doing a certain kind of things; in computer science, it means, taking the advantage of the speed of CPU, how your computer code or software solves problems, which will take a man much more time to do it. Knuth had received so many awards: John von Neumann Medal and Harvey Prize in 1995 and Kyoto Prize in 1996, and the “NuoBeiEr prize in computing”- Turing award in 1974 at the age of 36, for his contributions to the analysis of algorithms and the design of programming languages.</p>
+<p>Knuth is considered the “father of algorithm analysis”. You all know what an algorithm means, do you? An algorithm is basically a way of doing a certain kind of things; in computer science, it means, taking the advantage of the speed of CPU, how your computer code or software solves problems, which will take a man much more time to do it. Knuth had received so many awards: John von Neumann Medal and Harvey Prize in 1995 and Kyoto Prize in 1996, and the “NuoBeiEr prize in computing”- Turing award in 1974 at the age of 36, for his contributions to the analysis of algorithms and the design of programming languages. </p>
 
-<p>His Turing award was particularly for his life-long project: TAOCP – the 7 volume book which I have just mentioned. In fact, at the time he received the award, he had just finished the first 3 volumes. Volume 4 has just come out and the rest are in preparation. TAOCP is such a great serial book and soon became the &#8220;Shengjing&#8221; for computer programmers worldwide. Bill Gates once said, “If you think you&#8217;re a really good programmer… read (Knuth&#8217;s) Art of Computer Programming… You should definitely send me a résumé if you can read the whole thing.” Knuth is even more ambitious: he wanted his book to be something like Newton’s The Mathematical Principle of Natural Philosophy.</p>
+<p>His Turing award was particularly for his life-long project: TAOCP – the 7 volume book which I have just mentioned. In fact, at the time he received the award, he had just finished the first 3 volumes. Volume 4 has just come out and the rest are in preparation. TAOCP is such a great serial book and soon became the “Shengjing” for computer programmers worldwide. Bill Gates once said, “If you think you’re a really good programmer… read (Knuth’s) Art of Computer Programming… You should definitely send me a résumé if you can read the whole thing.” Knuth is even more ambitious: he wanted his book to be something like Newton’s The Mathematical Principle of Natural Philosophy. </p>
 
 <p>Not only does Knuth have so much theoretical achievements, he is also one of the best programmers. After he published his first 3 volumes of TAOCP, he thought his printed books look very bad. Then he decided to study typesetting and font. Eventually he developed his own computer typesetting system Tex which has become the best known typesetting system so far. One thing to add, Tex is open-source, which means everybody can use it free of charge or improve it at one’s own will.</p>
 
 <p>Apart from writing the great serial TAOCP books and several public speeches a year, now he spends most of his time with his family. When asked about his unfinished masterpiece, he said:”The journey is more important than the destination—that’s part of life.” Then he added, “If I had been good at making estimates of how long something was going to take, I never would have started”.</p>
 
-<p>[1] Image source: http://alumni.stanford.edu/get/page/magazine/article/?article_id=33888</p>]]></content:encoded>
+<p>[1] Image source: http://alumni.stanford.edu/get/page/magazine/article/?article_id=33888</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -212,13 +302,14 @@
       <guid>http://alexkong.net/2012/08/save-images-using-R</guid>
       <content:encoded><![CDATA[<p>这篇博文的重点不在与如何使用plot做图，也不在于如何使用plotrix库画圆，而是如何使用R保存已经绘制得到的图。</p>
 
-<p>如果不指定做图的“设备“，R会默认打开一个窗口，而图也就显示在这个窗口上。而R中的“设备”又是什么含义呢？其实设备就是一个文件，比如pdf文件可以认为是一个设备，如果希望在pdf中做图，那么可以先输入&#8221;pdf()&#8221;命令打开设备文件，这样接着在R中的使用的做图操作所产生的结果就会绘制在pdf文件中（文件默认会放在R的工作空间，文件名为Rplot.pdf）。在查看pdf前，需要dev.off()关闭文件。</p>
+<p>如果不指定做图的“设备“，R会默认打开一个窗口，而图也就显示在这个窗口上。而R中的“设备”又是什么含义呢？其实设备就是一个文件，比如pdf文件可以认为是一个设备，如果希望在pdf中做图，那么可以先输入”pdf()”命令打开设备文件，这样接着在R中的使用的做图操作所产生的结果就会绘制在pdf文件中（文件默认会放在R的工作空间，文件名为Rplot.pdf）。在查看pdf前，需要dev.off()关闭文件。</p>
 
 <p>那么，很容易将这种方法扩展到jpg、postscript等文件设备中。如果使用jpg文件，那么也就解决了“如何使用R做图”的问题。另外，可以使用“?dev“命令查看R支持哪些设备，一般有pdf,postscript,bmp,jpg,xfig等。怎么样，已经够丰富的了吧？</p>
 
 <p>这种设计思想非常精妙，在pdf上和jpg上做图的方法肯定相差不小，但是有R这样一个接口，你只需要学会了如何在R中绘图，那么也就搞定其他的设备文件的做图。这才是统一接口的力量。</p>
 
-<p>补充：使用savePlot()函数也可以保存R生成的图像。</p>]]></content:encoded>
+<p>补充：使用savePlot()函数也可以保存R生成的图像。</p>
+]]></content:encoded>
     </item>
     
     <item>
@@ -227,31 +318,35 @@
       <pubDate>2012-08-25T00:00:00+08:00</pubDate>
       <author>孔明</author>
       <guid>http://alexkong.net/2012/08/remembering-steve-jobs</guid>
-      <content:encoded><![CDATA[<p><strong>“不幸的是，这一天已经到来。”</strong> “十一”黄金周，遵照父母旨意回了趟家。某天早上起床后，习惯性地打开电视，转到新闻频道才发现他们已经在一遍又一遍地播放纪念乔布斯的新闻短片了。我并不是非常惊讶，因为早已耳闻乔布斯的病情已经恶化，只是没有料到这一天来得这么早。</p>
+      <content:encoded><![CDATA[<p>**“不幸的是，这一天已经到来。” **
+“十一”黄金周，遵照父母旨意回了趟家。某天早上起床后，习惯性地打开电视，转到新闻频道才发现他们已经在一遍又一遍地播放纪念乔布斯的新闻短片了。我并不是非常惊讶，因为早已耳闻乔布斯的病情已经恶化，只是没有料到这一天来得这么早。 </p>
 
-<p>让我们把时间向前推移。8月24日，乔布斯在一封给苹果董事会的公开信中提出自己将辞去CEO一职，并推荐原首席运营官蒂姆库克(Tim Cook)接任CEO。人们已经可以察觉到这次乔布斯的情况可能真的变糟糕了，紧接着乔布斯就从公众眼中消失了。人们一边猜疑着乔布斯的身体状况，一边翘首以待“iPhone 5”。一些人们失望了，不仅是因为没有等到“iPhone 5”，同样没有在发布会上发现乔布斯的身影。不错，库克可能更帅一些，但是他的演讲实在太令人犯困。第二天，噩耗传来，仿佛冥冥之中自有天意。</p>
+<p>让我们把时间向前推移。8月24日，乔布斯在一封给苹果董事会的公开信中提出自己将辞去CEO一职，并推荐原首席运营官蒂姆库克(Tim Cook)接任CEO。人们已经可以察觉到这次乔布斯的情况可能真的变糟糕了，紧接着乔布斯就从公众眼中消失了。人们一边猜疑着乔布斯的身体状况，一边翘首以待“iPhone 5”。一些人们失望了，不仅是因为没有等到“iPhone 5”，同样没有在发布会上发现乔布斯的身影。不错，库克可能更帅一些，但是他的演讲实在太令人犯困。第二天，噩耗传来，仿佛冥冥之中自有天意。 </p>
 
-<p>我对我妈说：乔布斯在我现在的年龄已经是一个亿万富翁了！我妈显然不了解我想说什么，她回答道：才56岁就死了，还是难治的胰腺癌，所以你要注意身体啊！</p>
+<p>我对我妈说：乔布斯在我现在的年龄已经是一个亿万富翁了！我妈显然不了解我想说什么，她回答道：才56岁就死了，还是难治的胰腺癌，所以你要注意身体啊！ </p>
 
-<p><strong>乔布斯的理想主义</strong> 我有时会想：乔布斯和苹果，除了我那个二手的iPod video，跟我有半毛钱关系！但真的是这样么？</p>
+<p>**乔布斯的理想主义 **
+我有时会想：乔布斯和苹果，除了我那个二手的iPod video，跟我有半毛钱关系！但真的是这样么？ </p>
 
-<p>现在几乎所有人都在推崇乔布斯，把他作为好朋友、人生导师，甚至是神一般的人物。然而，恐怕很多人是叶公好龙：乔布斯自私、固执、心胸狭窄是在硅谷出了名的。乔布斯觉得产品是什么样的，它就应该是什么样的，iMac和iPad也都证明了这一点。有人半开玩笑的说“乔布斯的所谓的市场调查就是早上起来看看镜子中的自己”。</p>
+<p>现在几乎所有人都在推崇乔布斯，把他作为好朋友、人生导师，甚至是神一般的人物。然而，恐怕很多人是叶公好龙：乔布斯自私、固执、心胸狭窄是在硅谷出了名的。乔布斯觉得产品是什么样的，它就应该是什么样的，iMac和iPad也都证明了这一点。有人半开玩笑的说“乔布斯的所谓的市场调查就是早上起来看看镜子中的自己”。 </p>
 
-<p>乔布斯的人生也极富传奇色彩：苹果上市后，23岁的乔布斯立刻成为亿万富翁，30岁时因和斯卡利(John Sculley)不合（其实是跟很多人不合）被董事会赶出苹果。后来乔布斯创建NeXT，又收购了Pixar。值得一提的是，NeXT并不成功，而Pixar在上市前都还没有盈利，所以离开苹果后的乔布斯几乎成为了硅谷的笑柄，被贴上失败者的标签。这一切在12年后乔布斯作为顾问回到苹果后开始发生转变，接下来的事情你已经都知道了。</p>
+<p>乔布斯的人生也极富传奇色彩：苹果上市后，23岁的乔布斯立刻成为亿万富翁，30岁时因和斯卡利(John Sculley)不合（其实是跟很多人不合）被董事会赶出苹果。后来乔布斯创建NeXT，又收购了Pixar。值得一提的是，NeXT并不成功，而Pixar在上市前都还没有盈利，所以离开苹果后的乔布斯几乎成为了硅谷的笑柄，被贴上失败者的标签。这一切在12年后乔布斯作为顾问回到苹果后开始发生转变，接下来的事情你已经都知道了。 </p>
 
-<p>所以，乔布斯给人留下的不仅是设计出色的产品、独创的商业模式和营销手段，更重要的是他向人们传递了一种信念：如果你喜欢什么，不管你的想法有多疯狂，放手去做吧！坚持不懈，你就可以成功！</p>
+<p>所以，乔布斯给人留下的不仅是设计出色的产品、独创的商业模式和营销手段，更重要的是他向人们传递了一种信念：如果你喜欢什么，不管你的想法有多疯狂，放手去做吧！坚持不懈，你就可以成功！ </p>
 
-<p><strong>自信和改变</strong> 或许你以为我想说的就这么多了，并非如此。你可以宣称自己很固执、自信以及听不进任何人的建议，我想相对于乔布斯，你可能是“小巫见大巫”。乔布斯在斯坦福大学的著名演讲中也提到：“getting fired from Apple was the best thing that could have ever happened to me”。在离开苹果的12年中，他变了：他变成了一个丈夫，变成了一个父亲，在NeXT和Pixar积累着管理经验，在失败中反思着人们到底喜欢什么样的产品。</p>
+<p>**自信和改变 **
+或许你以为我想说的就这么多了，并非如此。你可以宣称自己很固执、自信以及听不进任何人的建议，我想相对于乔布斯，你可能是“小巫见大巫”。乔布斯在斯坦福大学的著名演讲中也提到：“getting fired from Apple was the best thing that could have ever happened to me”。在离开苹果的12年中，他变了：他变成了一个丈夫，变成了一个父亲，在NeXT和Pixar积累着管理经验，在失败中反思着人们到底喜欢什么样的产品。 </p>
 
-<p>我忽然领悟，原来自信不是“永不改变”，而是相信自己能够找到需要改变的地方，并做得更好。你是否是正确的并不重要，重要的是什么是正确的。</p>
+<p>我忽然领悟，原来自信不是“永不改变”，而是相信自己能够找到需要改变的地方，并做得更好。你是否是正确的并不重要，重要的是什么是正确的。 </p>
 
-<p>Now everyone, think forward.</p>
+<p>Now everyone, think forward. </p>
 
-<p><img alt='Steve Jobs' src='/images/stevejobs.jpeg' /></p>
+<p><img src="/images/stevejobs.jpeg" alt="Steve Jobs" title="Steve Jobs" /></p>
 
 <blockquote>
-<p>Apple has lost a visionary and creative genius, and the world has lost an amazing human being. Those of us who have been fortunate enough to know and work with Steve have lost a dear friend and an inspiring mentor. Steve leaves behind a company that only he could have built, and his spirit will forever be the foundation of Apple. &#8211; Tim Cook</p>
-</blockquote>]]></content:encoded>
+  <p>Apple has lost a visionary and creative genius, and the world has lost an amazing human being. Those of us who have been fortunate enough to know and work with Steve have lost a dear friend and an inspiring mentor. Steve leaves behind a company that only he could have built, and his spirit will forever be the foundation of Apple. – Tim Cook</p>
+</blockquote>
+]]></content:encoded>
     </item>
     
     <item>
@@ -260,25 +355,25 @@
       <pubDate>2012-08-25T00:00:00+08:00</pubDate>
       <author>孔明</author>
       <guid>http://alexkong.net/2012/08/marriage-proposal-in-pride-and-prejudice</guid>
-      <content:encoded><![CDATA[<p>下面是《<a href='http://movie.douban.com/subject/1418200/'>傲慢与偏见</a>》中Mr Collins向Lizzie求婚时的台词。其实词倒是很好，只是人差了点，请欣赏！</p>
+      <content:encoded><![CDATA[<p>下面是《<a href="http://movie.douban.com/subject/1418200/">傲慢与偏见</a>》中Mr Collins向Lizzie求婚时的台词。其实词倒是很好，只是人差了点，请欣赏！</p>
 
 <p>(Mr Collins在Lizzie身前的餐桌上放了一束浅紫色的小花。)</p>
 
-<p><em>Mr Collins</em>: Dear Miss Elizabeth, my attentions have been too marked to be mistaken. Almost as soon as I entered the house, I singled you out as the companion of my future life. But before I am run away with my feelings, perhaps I may state my reasons for marrying.</p>
+<p><em>Mr Collins</em>: Dear Miss Elizabeth, my attentions have been too marked to be mistaken. Almost as soon as I entered the house, I singled you out as the companion of my future life. But before I am run away with my feelings, perhaps I may state my reasons for marrying. </p>
 
 <p>Firstly, that is the duty of a clergyman (神职人员) to set the example of matrimony in his parish.</p>
 
 <p>Secondly, I am convinced it will add greatly to my happiness.</p>
 
-<p>And thirdly, that it is at the urging of my esteemed patroness(资助人), Lady Catherine, that I select a wife.</p>
+<p>And thirdly, that it is at the urging  of my esteemed patroness(资助人), Lady Catherine, that I select a wife.</p>
 
-<p>My object in coming to Longbourn was to choose such a one from among Mr Bennet&#8217;s daughters, for I am to inherit the estate and such an alliance will surely suit everyone.</p>
+<p>My object in coming to Longbourn was to choose such a one from among Mr Bennet’s daughters, for I am to inherit the estate and such an alliance will surely suit everyone.</p>
 
 <p>And now nothing remains but for me to assure you in the most animated language of the violence of my affections.</p>
 
 <p><em>Miss Lizzie</em>: Mr Collins!</p>
 
-<p><em>Mr Collins</em>: And no reproach on the subject of fortune will cross my lips once we&#8217;re married.</p>
+<p><em>Mr Collins</em>: And no reproach on the subject of fortune will cross my lips once we’re married.</p>
 
 <p><em>Miss Lizzie</em>: You forget I have given no answer.</p>
 
@@ -286,50 +381,21 @@
 
 <p><em>Miss Lizzie</em>: Sir, I am honoured by your proposal, but I regret that I must decline it.</p>
 
-<p><em>Mr Collins</em>: I know ladies don&#8217;t seek to seem too eager&#8230;</p>
+<p><em>Mr Collins</em>: I know ladies don’t seek to seem too eager…</p>
 
-<p><em>Miss Lizzie</em>: Mr Collins, I am perfectly serious. You could not make me happy. And I am convinced that I&#8217;m the last woman in the world who could make you happy.</p>
+<p><em>Miss Lizzie</em>: Mr Collins, I am perfectly serious. You could not make me happy. And I am convinced that I’m the last woman in the world who could make you happy.</p>
 
-<p><em>Mr Collins</em>: I flatter myself that your refusal is merely a nature delicacy. Besides, despite manifold(各种各样的) attractions, it is by no means certain another offer of marriage will ever be made to you.</p>
+<p><em>Mr Collins</em>: I flatter myself that your refusal is merely a nature delicacy. Besides, despite manifold(各种各样的) attractions, it is by no means certain another offer of marriage will ever be made to you. </p>
 
 <p>So I must conclude that you simply seek to increase my love by suspense, according to the usual practice of elegant females.</p>
 
-<p><em>Miss Lizzie</em>: Sir! I am not the sort of female to torment(折磨) a respectable man. Please understand me, I can&#8217;t accept you.（Miss Lizzie 跑出屋子，她母亲推门而入。）</p>
+<p><em>Miss Lizzie</em>: Sir! I am not the sort of female to torment(折磨) a respectable man. Please understand me, I can’t accept you.（Miss Lizzie 跑出屋子，她母亲推门而入。）</p>
 
-<p><em>Mrs Bennet</em>: Headstrong, foolish child!</p>
+<p><em>Mrs Bennet</em>: Headstrong, foolish child! </p>
 
-<p><img alt='marriage proposal' src='/images/marriage-proposal.jpg' /></p>]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>假如生活欺骗了你</title>
-      <link href="http://alexkong.net/2012/08/if-you-are-deceived-by-life/"/>
-      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
-      <author>孔明</author>
-      <guid>http://alexkong.net/2012/08/if-you-are-deceived-by-life</guid>
-      <content:encoded><![CDATA[<p>假如生活欺骗了你 &#8212; 普希金（俄）</p>
+<p><img src="/images/marriage-proposal.jpg" alt="marriage proposal" title="marriage proposal" /></p>
 
-<p>假如生活欺骗了你，</p>
-
-<p>不要悲伤，不要心急！</p>
-
-<p>忧郁的日子里需要镇静，</p>
-
-<p>相信吧，快乐的日子将会来临。</p>
-
-<p>心儿永远向往着未来；</p>
-
-<p>现在却常是忧郁。</p>
-
-<p>一切都是瞬息，</p>
-
-<p>一切都将会过去，</p>
-
-<p>而那过去了的，</p>
-
-<p>就会成为亲切的怀恋。</p>
-
-<p><img alt='普希金' src='/images/Pushkin.jpg' /></p>]]></content:encoded>
+]]></content:encoded>
     </item>
     
   </channel>

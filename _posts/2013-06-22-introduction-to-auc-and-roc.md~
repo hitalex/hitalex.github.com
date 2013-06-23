@@ -52,7 +52,7 @@ AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积�
 
 ![ROC曲线 vs. Precision-Recall曲线](/images/roc-and-precall.png)
 
-上图中，(a)和(c)为ROC曲线，(b)和(d)为Precision-Recall曲线。(a)和(b)展示的是分类其在原始测试集（正负样本分布平衡）的结果，(c)和(d)是将测试集中负样本的数量增加到原来的10倍后，分类器的结果。可以明显的看出，ROC曲线基本保持原貌，而Precision-Recall曲线则变化较大。
+上图中，(a)和(c)为ROC曲线，(b)和(d)为Precision-Recall曲线。(a)和(b)展示的是分类其在原始测试集（正负样本分布平衡）的结果，(c)和(d)是将测试集中负样本的数量增加到原来的10倍后，分类器的结果。
 
 说明，文中除了第一张图来自Wikipedia外，其他的图都来自论文(Fawcett, 2006)[^6]截图. 
 
