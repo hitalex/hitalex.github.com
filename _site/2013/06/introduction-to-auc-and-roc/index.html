@@ -93,12 +93,18 @@
 
 <p>在了解了ROC曲线的构造过程后，编写代码实现并不是一件困难的事情。相比自己编写代码，有时候阅读其他人的代码收获更多，当然过程也更痛苦些。在此推荐<a href="http://scikit-learn.org/stable/">scikit-learn</a>中关于<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/metrics/metrics.py#L479">计算AUC的代码</a>。</p>
 
+<h2 id="auc-1">AUC意味着什么</h2>
+<p>那么AUC值的含义是什么呢？根据(Fawcett, 2006)，AUC的值的含义是：
+&gt; The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+
+<p>这句话有些绕，我尝试解释一下：首先AUC值是一个概率值，当你随机挑选一个正样本以及一个负样本，当前的分类算法根据计算得到的Score值将这个正样本排在负样本前面的概率就是AUC值。当然，AUC值越大，当前的分类算法越有可能将正样本排在负样本前面，即能够更好的分类。</p>
+
 <h2 id="roc-2">为什么使用ROC曲线</h2>
 <p>既然已经这么多评价标准，为什么还要使用ROC和AUC呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup>的对比：</p>
 
 <p><img src="/images/roc-and-precall.png" alt="ROC曲线 vs. Precision-Recall曲线" /></p>
 
-<p>上图中，(a)和(c)为ROC曲线，(b)和(d)为Precision-Recall曲线。(a)和(b)展示的是分类其在原始测试集（正负样本分布平衡）的结果，(c)和(d)是将测试集中负样本的数量增加到原来的10倍后，分类器的结果。可以明显的看出，ROC曲线基本保持原貌，而Precision-Recall曲线则变化较大。</p>
+<p>在上图中，(a)和(c)为ROC曲线，(b)和(d)为Precision-Recall曲线。(a)和(b)展示的是分类其在原始测试集（正负样本分布平衡）的结果，(c)和(d)是将测试集中负样本的数量增加到原来的10倍后，分类器的结果。可以明显的看出，ROC曲线基本保持原貌，而Precision-Recall曲线则变化较大。</p>
 
 <p>说明，文中除了第一张图来自Wikipedia外，其他的图都来自论文(Fawcett, 2006)<sup id="fnref:6"><a href="#fn:6" class="footnote">6</a></sup>截图. </p>
 
@@ -126,7 +132,7 @@
       <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM.<a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874.<a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+      <p>(Fawcett, 2006)，Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874.<a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
