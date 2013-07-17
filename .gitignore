@@ -1,0 +1,7 @@
+
+
+# backup files
+*.gitignore~
+*.md~
+*.py~
+*.log~
