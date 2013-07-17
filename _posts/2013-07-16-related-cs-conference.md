@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 一些计算机方向的会议介绍
+title: 一些计算机方向的学术会议整理
 categories: 
 - 学术
 tags: 
@@ -14,9 +14,9 @@ tags:
 
 从我最喜欢的会议开始说起。
 
-* **SIGIR** SIGIR(Special Interest Group on Information Retrieval)是信息检索领域的顶级会议，但近年来也包含一些社交网络、推荐系统和行为建模的文章。[SIGIR 2013](http://sigir2013.ie/)举办地在爱尔兰的Dublin，时间为7月28日。
-* **WWW** WWW(World Wide Web)包含的topic就更多更广泛一些，理论上关于互联网的研究都可以投稿，[WWW 2013](http://www2013.org/)的CFP参见[这里](http://www2013.org/authors/call-for-papers/)。WWW的论文质量还是比较高的，我的一个理想就是在这个会议上发一篇长文。
-* **WSDM** WSDM(Web Search and Data Mining)的主题主要关于搜索和数据挖掘。会议举办的时间不长，到今年才是第6届，但是文章质量却不低。[WSDM 2013]的举办地在意大利罗马，时间为今年的二月份。
+* **SIGIR** SIGIR是信息检索领域的顶级会议，但近年来也包含一些社交网络、推荐系统和行为建模的文章。[SIGIR 2013](http://sigir2013.ie/)举办地在爱尔兰的Dublin，时间为7月28日。
+* **WWW** WWW包含的topic就更多更广泛一些，理论上关于互联网的研究都可以投稿，[WWW 2013](http://www2013.org/)的CFP参见[这里](http://www2013.org/authors/call-for-papers/)。WWW的论文质量还是比较高的，我的一个理想就是在这个会议上发一篇长文。
+* **WSDM** WSDM的主题主要关于搜索和数据挖掘。会议举办的时间不长，到今年才是第6届，但是文章质量却不低。[WSDM 2013](https://www.wsdm2013.org)的举办地在意大利罗马，时间为今年的二月份。
 
 以上三个会议都无可争议地属于领域顶级会议，这些会议接收的论文中既包含比较传统的研究问题，也有新问题，偏向于应用，不是纯理论推导。如果对纯的理论推到感兴趣，推荐以下几个会议：**ICML**，**NIPS**和**ICDM**，或许还可以加上**KDD**。这些会议我等只有仰望的份儿。
 
