@@ -10,8 +10,8 @@ safe: false
 title: AlexKong.net
 description: "孔明的博客"
 author: 孔明
-author_info:      <a href="http://alexkong.net/about">孔明</a>
-url:              http://alexkong.net
+author_info: <a href="http://alexkong.net/about">孔明</a>
+url: http://localhost:4000
 feed: /atom.xml
 
 #菜单配置
@@ -49,4 +49,4 @@ page:
     last: false
 
 author:
-  name: PIZn
+  name: 孔明
