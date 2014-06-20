@@ -1,66 +1,113 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="孔明" />
-    <title>机器能思考吗？ -- 一种算法的观点 | 孔明</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link href="http://alexkong.net/feed/" rel="alternate" title="孔明" type="application/atom+xml" />
-    <link rel="stylesheet" href="/media/css/style.css">
-    <link rel="stylesheet" href="/media/css/highlight.css">
-    <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
-    
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <!-- MathJax Section -->
+<html id="J-html" class="">
+<head>
+     <!--
+     **
+     * Author:         掌心
+     * Contact:        zhanxin.info@gmail.com
+     * Theme Name:     iLotus
+     **
+    -->
+    <meta charset="UTF-8" />
+    <title>
+        
+            机器能思考吗？ -- 一种算法的观点
+        
+    </title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="PIZn" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" media="all" href="http://alexkong.net/static/style.css" />
+    <!--[if lt IE 9]>
+    <script src="http://alexkong.net/static/js/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="http://alexkong.net/static/js/jquery.js" type="text/javascript"></script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" class="home blog lotus index">
+    <nav class="lotus-nav">
+        <ul>
+            
+            
+            
+            
+            
+                
+            
+            <li class="home ">
+                <a href="/index.html" rel="bookmark" title="首页">
+                    <i class="icon-home"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="/archives.html" rel="bookmark" title="文章归档">
+                    <i class="icon-reorder"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="/contact.html" rel="bookmark" title="关于我">
+                    <i class="icon-envelope-alt"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="http://www.alexkong.net/contact.html" rel="bookmark" title="联系我">
+                    <i class="icon-heart"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="https://github.com/pizn/iLotus" rel="bookmark" title="博客源代码">
+                    <i class="icon-github"></i>
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
 
-    <script type="text/javascript"
-      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>
-  <script>
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-      }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-  </script>
-    
-  </head>
-  <body>
-    <div id="container">
-      <div id="main" role="main">
-        <header>
-        <h1>机器能思考吗？ -- 一种算法的观点</h1>
-        </header>
-        <nav>
-        <span><a title="home page" class="" href="http://alexkong.net/">home</a></span>
-        <span><a title="publication" class="" href="http://alexkong.net/publication/">publication</a></span>
-        <span><a title="guestbook" class="" href="http://alexkong.net/guestbook/">guestbook</a></span>
-        <!-- <span><a title="vitae" class="" href="http://alexkong.net/vitae/">vitae</a></span> -->
-        <span><a title="categories" class="" href="http://alexkong.net/categories/">categories</a></span>
-        <!-- <span><a title="tags" class="" href="http://alexkong.net/tags/">tags</a></span> -->
-        <span><a title="links" class="" href="http://alexkong.net/links/">links</a></span>
-        <span><a title="quotes" class="" href="http://alexkong.net/quotes/">quotes</a></span>
-        <span><a title="about" class="" href="http://alexkong.net/about/">about me</a></span>
-        <span><a title="subscribe by RSS" class="" href="http://alexkong.net/feed/">subscribe</a></span>
-        </nav>
-        <article class="content">
-        <section class="post">
-<p>英文标题：Can machines think? &#8211; An algorithmic perspective</p>
+    <p class="lotus-breadcrub">
+    <a href="http://alexkong.net/index.html" rel="nofollow" rel="nofollow" title="首页">Home</a>
+    <span> &gt; </span>
+    <a href="http://alexkong.net/archives.html" rel="nofollow" >Archives</a>
+    <span> &gt; </span>
+    机器能思考吗？ -- 一种算法的观点
+</p>
+<h1 class="lotus-pagetit">机器能思考吗？ -- 一种算法的观点</h1>
+<p class="lotus-meta">Publish: <time class="date" pubdate="August 23, 2012">August 23, 2012</time></p>
+<article  itemscope itemtype="http://schema.org/Article" class="lotus-post">
+<p>英文标题：Can machines think? – An algorithmic perspective</p>
 
-<p>序：这篇文章本来是作为自然哲学课的报告提交的，如果不出所料，必然是石沉大海。今天看到<a href='http://content.alphatown.com/discussion/753089/'>IEEE CS 图灵百年沙龙征稿活动</a>，我决定先把文章贴出来，大家给提提意见。非常乐于跟大家进行讨论！</p>
+<p>序：这篇文章本来是作为自然哲学课的报告提交的，如果不出所料，必然是石沉大海。今天看到<a href="http://content.alphatown.com/discussion/753089/">IEEE CS 图灵百年沙龙征稿活动</a>，我决定先把文章贴出来，大家给提提意见。非常乐于跟大家进行讨论！</p>
 
 <p>《黑客帝国》是我最喜欢的科幻系列电影，没有之一。影片中酷炫的武术动作、激烈的对打场面，甚至男女主角所佩戴的黑色墨镜，都已成为一段记忆的标签。实际上，电影导演融入其中的对现代社会，尤其是对电脑时代的种种思考才真正让整部影片上升了一个层次。人们不禁开始思考：机器，或者说电脑，是否有一天能够思考，然后凭借其极快的运算速度和巨大的能量，征服人类，接管地球？到那时，我们是否会被机器“圈养”起来，为机器提供能量？</p>
 
 <p>计算机的先驱们早就开始思考这个问题，比如被誉为“计算机之父”的图灵（“计算机界的诺贝尔奖”图灵奖就是以此人命名）。图灵提出这样一个测试，来判断一种机器是否具有智能，这个测试就是鼎鼎大名的“图灵测试”。测试过程如下：假设有两个角色，测试者T，“被测试者”A和B，A和B两者中有一个是人，另外一个则是机器，测试者T并不知道A和B谁是人谁是机器。图灵测试按照如下进行：测试者T提问，A和B分别回答。如果测试者T不能从两者的答案中分辨出到底A和B那个是人，那么则认为机器具有智能。（下图为阿兰•图灵）</p>
 
-<p><img alt='阿兰•图灵' src='/images/Alan_Turing_photo.jpg' /></p>
+<p><img src="/images/Alan_Turing_photo.jpg" alt="阿兰•图灵" title="图1 阿兰•图灵" /></p>
 
 <p>这个测试无论如何都太粗糙了，就像数学中集合的定义一样，实际上并没有告诉我们什么有用的信息。比如我可以写一个程序，将朗文词典中的所有单词及其释义存储到机器中，然后测试者T提的问题是解释某个单词的含义。可以保证，机器总可以给出正确的结果，并且提供结果所用时间的期望肯定比人的小。按照“图灵测试”的定义，我们其实可以说这段程序有“智能”，但其实我知道，你可能并不这么想。看来，判断机器是否拥有智能或者机器能否拥有智能，并不是一个简单的问题。</p>
 
@@ -68,9 +115,9 @@
 
 <p>我们希望机器拥有“智能”，最容易想到的方法就是让机器按照人的思维方式去“思考”，人工神经网络（Artificial Neural Network, ANN）就是其中一种“仿生学”算法（需要注意的是，ANN并不是计算机学家发明的算法）。ANN模拟人身体中神经元的活动，将每个神经元看作是一个个运算的节点，神经元之间的突触连接则看作是节点之间的相互作用。ANN接受输入，通过一层一层的计算，最终将结果输出。经过反复的训练，并在训练中不断调整节点之间的连接权重，最终得到一个稳定的模型。ANN曾经“红极一时”，被认为是解决问题的不二法宝。不过，很快人们发现这个模型存在着太多的缺陷：没有确定模型结构的算法，比如设计多少个隐藏层以及隐藏层包含多少个节点，训练时间长，模型不精确，节点连接初始状态难以确定等等。最重要的是，ANN是线性模型，无法解决非线性问题，比如异或问题。（下图为 包含一个隐藏层（Hidden layer）的ANN模型）</p>
 
-<p><img alt='ANN模型' src='/images/ANN-model.jpg' /></p>
+<p><img src="/images/ANN-model.jpg" alt="ANN模型" title="图2 包含一个隐藏层（Hidden layer）的ANN模型" /></p>
 
-<p>还有另外一种“仿生学”的算法也曾经得到计算机研究者的青睐：遗传算法（Genetic Algorithm）。顾名思义，遗传算法模拟人类基因的遗传变异过程，按照达尔文的理论“优胜劣汰，物竞天择”，遗传算法将每次更适合“生存”&#8211;在实际问题中也就是更有可能是问题的解的部分保留下来，这样通过迭代，就可以越来越接近真正问题的解。遗传算法引入了“变异”这一环节，也就是以某种概率突变，某种意义上增加了程序的不确定性，希望使得算法可以更加快速的收敛，得到最终的解。遗传算法在某种程度上与ANN有同样的缺陷：求解过程时间长，同样无法保证得到的解就是全局最优解。所以，这种“仿生学”的算法就像是买彩票一样，中奖率或许要高一些，但其实无法保证收回“成本”。</p>
+<p>还有另外一种“仿生学”的算法也曾经得到计算机研究者的青睐：遗传算法（Genetic Algorithm）。顾名思义，遗传算法模拟人类基因的遗传变异过程，按照达尔文的理论“优胜劣汰，物竞天择”，遗传算法将每次更适合“生存”–在实际问题中也就是更有可能是问题的解的部分保留下来，这样通过迭代，就可以越来越接近真正问题的解。遗传算法引入了“变异”这一环节，也就是以某种概率突变，某种意义上增加了程序的不确定性，希望使得算法可以更加快速的收敛，得到最终的解。遗传算法在某种程度上与ANN有同样的缺陷：求解过程时间长，同样无法保证得到的解就是全局最优解。所以，这种“仿生学”的算法就像是买彩票一样，中奖率或许要高一些，但其实无法保证收回“成本”。</p>
 
 <p>那么除了“仿生学”算法，还有没有其他“智能算法”呢？从某种程度上来说，这种算法是有的，并且很多，我们也天天在享受着它们带给我们的方便。比如，在我们在逛网上商城的时候，推荐算法可以根据你已经买到的和曾经浏览的图书，向你推荐其它的图书。又比如，当你在搜索框中键入你的问题，搜索引擎（大多数情况下）就会返回你想要的结果。我们或许有可以自信满满的说：我们使得计算机拥有了“智能”。可真的是这样么？</p>
 
@@ -89,44 +136,18 @@
 <p>图1：Image courtesy: http://en.wikipedia.org/wiki/File:Alan_Turing_photo.jpg</p>
 
 <p>图2：Image courtesy: http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg</p>
+
+</article>
+<p class="lotus-anno">声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" rel="nofollow" target="_blank" title="自由转载-非商用-非衍生-保持署名">BY-NC-SA</a> 授权。转载请注明转自: <a href="" title="" rel="nofollow">PIZn</a></p>
+<section class="lotus-nextpage fn-clear">
+    
+    <div class="lotus-nextpage-left"><a class="prev" href="/2012/08/my-mother-and-I/" rel="prev">&laquo;&nbsp;我和我妈</a></div>
+    
+    
+    <div class="lotus-nextpage-right"><a class="next" href="/2012/08/acknowledgements-of-my-undergraduation-paper/" rel="next">本科毕业论文的致谢部分&nbsp;&raquo;</a></div>
+    
 </section>
-<section class="meta">
-<span class="author">
-  <a href="http://alexkong.net">孔明</a>
-</span>
-<span class="time">
-  /
-  <time datetime="2012-08-23">2012-08-23</time>
-</span>
-<br />
-<span class="license">
-  Published under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">(CC) BY-NC-ND 3.0</a>
-</span>
 
-<span class="categories">
-  in categories
-  
-  <a href="http://alexkong.net/categories/#观点" title="观点">观点</a>&nbsp;
-  
-</span>
-
-
-<span class="tags">
-  tagged with 
-  
-  <a href="http://alexkong.net/tags/#图灵" title="图灵">图灵</a>&nbsp;
-  
-  <a href="http://alexkong.net/tags/#人工智能" title="人工智能">人工智能</a>&nbsp;
-  
-  <a href="http://alexkong.net/tags/#机器学习" title="机器学习">机器学习</a>&nbsp;
-  
-  <a href="http://alexkong.net/tags/#图灵测试" title="图灵测试">图灵测试</a>&nbsp;
-  
-  <a href="http://alexkong.net/tags/#算法" title="算法">算法</a>&nbsp;
-  
-</span>
-
-</section>
 <section class="comment">
 <div id="disqus_thread"></div>
 <script type="text/javascript">
@@ -144,45 +165,12 @@
 </section>
 
 
-<script type="text/javascript">
-$(function(){
-  $(document).keydown(function(e) {
-    var url = false;
-        if (e.which == 37 || e.which == 74) {  // Left arrow and J
-            
-        url = 'http://alexkong.net/2012/08/my-mother-and-I/';
-        
-        }
-        else if (e.which == 39 || e.which == 75) {  // Right arrow and K
-            
-        url = 'http://alexkong.net/2012/08/acknowledgements-of-my-undergraduation-paper/';
-        
-        }
-        if (url) {
-            window.location = url;
-        }
-  });
-})
-</script>
 
 
-        </article>
-        
-        <div id="footer" style="right:0px; text-align:right"><footer>
-        <p><small>Powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a> on GitHub | Copyright 2012 - 2012 by <a href="http://alexkong.net">孔明</a> </small></p>
-        </footer></div>
-      </div>
-    </div>
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-1988641-2']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-    
-  </body>
+<footer class="lotus-footer">
+	<p>Copyright © 2010–2014 AlexKong.net All rights reserved. Design by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
+</footer>
+<script src="http://alexkong.net/static/js/jquery.scrollTo.js" type="text/javascript"></script>
+<script src="http://alexkong.net/static/js/iLotus.js" type="text/javascript"></script>
+</body>
 </html>
