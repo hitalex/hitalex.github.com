@@ -7,8 +7,55 @@
     <title>{"name"=>"孔明"}</title>
     <link href="http://localhost:4000/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2014-06-20T19:25:17+08:00</lastBuildDate>
+    <lastBuildDate>2014-06-21T20:47:17+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
+    
+    <item>
+      <title>论文阅读笔记 - 2014.6.21</title>
+      <link href="http://localhost:4000/2014/06/paper-reading-notes/"/>
+      <pubDate>2014-06-21T00:00:00+08:00</pubDate>
+      <author>{"name"=>"孔明"}</author>
+      <guid>http://localhost:4000/2014/06/paper-reading-notes</guid>
+      <content:encoded><![CDATA[<h1 id="section">引言</h1>
+<p>从本周开始，坚持每周至少写一篇论文阅读笔记。要求精读，详细说明论文方法，并分析该篇文章的优点和缺点。如有可能，提出自己的观点。</p>
+
+<p>这篇博文主要讨论两篇文章，第一作者都是Xiangnan He，<a href="http://www.comp.nus.edu.sg/~xiangnan/">这里</a>是他的主页。这两篇文章分别是：“Comment-based Multi-View Clustering of Web 2.0 Items”，发表在WWW 2014上，以及“Predicting the Popularity of Web 2.0 Items Based on User Comments”，发表在SIGIR 2014上。两篇文章都和用户评论相关，正好也是我的主要研究内容。</p>
+
+<h1 id="comment-based-multi-view-clustering-of-web-20-items">Comment-based Multi-View Clustering of Web 2.0 Items</h1>
+<p>我们先来分析WWW 2014上的这篇，其核心idea是：用户评论，包括评论内容和参与评论的用户能够辅助对web 2.0 items（以后简称items）的聚类。以上两者，再加上items本身的信息共构成三个信息源，所以本文的工作属于多视图聚类（Multi-view clustering）。为了解决多视图聚类问题，作者使用了非负矩阵分解（Non-negative Matrix Factorization, NMF）技术。</p>
+
+<p>进行非负矩阵分解之前，首先需要准备item-feature矩阵<script type="math/tex">V \in \mathbb{R}^{m \times n}</script>，其中<script type="math/tex">m</script>表示item的个数，<script type="math/tex">n</script>表示特征的个数。对于三个视图来说，即item本身、评论内容和评论用户，前两者使用word count，后者使用0-1特征（如果用户存在记为1，不存在记为0）。为了展示三个视图对于item聚类的有效性，作者分别用三个视图进行聚类（包括对特征进行过滤、转换、降维等），并对比分析了聚类结果。</p>
+
+<p>对于多视图聚类问题，本文应用NMF的思路是：在基本的NMF框架下，添加对多个视图下聚类结果的约束，例如添加约束条件使得多个视图下的聚类结果相差不大。根据以上思路写出优化目标函数：
+$$
+J = \sum_{s=1}^{n_v} \lambda_s \Vert V^{(s)} - W^{(s)}H^{(s)} \Vert + R, s.t. W^{(s)} \ge 0, H^{(s)} \ge 0
+$$
+其中，<script type="math/tex">n_s</script>表示视图的个数，矩阵<script type="math/tex">W^{(s)}</script>和<script type="math/tex">H^{(s)}</script>的大小分别为<script type="math/tex">m \times k</script>和<script type="math/tex">k \times n</script>，<script type="math/tex">R</script>是附加的约束条件。</p>
+
+<h2 id="pair-wise-conmf">Pair-wise CoNMF</h2>
+<p>Pair-wise CoNMF要求对于任意两个视图的$W$之间相差不应该太大，所以此时的附加约束为：</p>
+
+<script type="math/tex; mode=display">
+R_1 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)} - W^{(t)}\Vert
+</script>
+
+<p>本文详尽地提供了目标函数的优化算法推导，其中主要涉及的技术有：<script type="math/tex">\Vert A \Vert = Tr\(A^T A\)</script>, <script type="math/tex">Tr(AB) = Tr(BA)</script>, 矩阵求导和Lagrange乘数法。</p>
+
+<h2 id="cluster-wise-conmf">Cluster-wise CoNMF</h2>
+<p>第二个思路则是考察$W$的L2 norm: <script type="math/tex">W^T W</script>。因为$W$的每列表示一个cluster中每个item的分布，所以<script type="math/tex">W^T W</script>实际上表示每个cluster之间的相似度。基于此，第二种附加约束为：</p>
+
+<script type="math/tex; mode=display">
+R_2 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)T}W^{(s)} - W^{(t)T}W^{(t)}\Vert
+</script>
+
+<p>目标函数的优化求解方法同上。</p>
+
+<p><script type="math/tex">W</script>和<script type="math/tex">H</script>的初始化：运行k-means聚类，将其聚类结果作为初始化输入。</p>
+
+<p>总结：这是一篇规矩踏实的好文章，写作清晰，论文调研充分，虽是沿用了前人的算法框架，但是也提出了自己的新约束。对于算法模型，文章详细给出了求解步骤，并解决了一个在实际应用中出现的问题，其他还包括算法初始化输入、时间复杂度分析，以及实现了多个基准工作。总的来说，工作比较完整。</p>
+
+]]></content:encoded>
+    </item>
     
     <item>
       <title>一些计算机方向的学术会议整理</title>
@@ -169,7 +216,7 @@
       <pubDate>2012-09-09T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
       <guid>http://localhost:4000/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification</guid>
-      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
 <p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：
 * <strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。
@@ -347,43 +394,6 @@
 <p>这种设计思想非常精妙，在pdf上和jpg上做图的方法肯定相差不小，但是有R这样一个接口，你只需要学会了如何在R中绘图，那么也就搞定其他的设备文件的做图。这才是统一接口的力量。</p>
 
 <p>补充：使用savePlot()函数也可以保存R生成的图像。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>随感 -- 纪念史蒂夫·乔布斯</title>
-      <link href="http://localhost:4000/2012/08/remembering-steve-jobs/"/>
-      <pubDate>2012-08-25T00:00:00+08:00</pubDate>
-      <author>{"name"=>"孔明"}</author>
-      <guid>http://localhost:4000/2012/08/remembering-steve-jobs</guid>
-      <content:encoded><![CDATA[<p>**“不幸的是，这一天已经到来。” **
-“十一”黄金周，遵照父母旨意回了趟家。某天早上起床后，习惯性地打开电视，转到新闻频道才发现他们已经在一遍又一遍地播放纪念乔布斯的新闻短片了。我并不是非常惊讶，因为早已耳闻乔布斯的病情已经恶化，只是没有料到这一天来得这么早。 </p>
-
-<p>让我们把时间向前推移。8月24日，乔布斯在一封给苹果董事会的公开信中提出自己将辞去CEO一职，并推荐原首席运营官蒂姆库克(Tim Cook)接任CEO。人们已经可以察觉到这次乔布斯的情况可能真的变糟糕了，紧接着乔布斯就从公众眼中消失了。人们一边猜疑着乔布斯的身体状况，一边翘首以待“iPhone 5”。一些人们失望了，不仅是因为没有等到“iPhone 5”，同样没有在发布会上发现乔布斯的身影。不错，库克可能更帅一些，但是他的演讲实在太令人犯困。第二天，噩耗传来，仿佛冥冥之中自有天意。 </p>
-
-<p>我对我妈说：乔布斯在我现在的年龄已经是一个亿万富翁了！我妈显然不了解我想说什么，她回答道：才56岁就死了，还是难治的胰腺癌，所以你要注意身体啊！ </p>
-
-<p>**乔布斯的理想主义 **
-我有时会想：乔布斯和苹果，除了我那个二手的iPod video，跟我有半毛钱关系！但真的是这样么？ </p>
-
-<p>现在几乎所有人都在推崇乔布斯，把他作为好朋友、人生导师，甚至是神一般的人物。然而，恐怕很多人是叶公好龙：乔布斯自私、固执、心胸狭窄是在硅谷出了名的。乔布斯觉得产品是什么样的，它就应该是什么样的，iMac和iPad也都证明了这一点。有人半开玩笑的说“乔布斯的所谓的市场调查就是早上起来看看镜子中的自己”。 </p>
-
-<p>乔布斯的人生也极富传奇色彩：苹果上市后，23岁的乔布斯立刻成为亿万富翁，30岁时因和斯卡利(John Sculley)不合（其实是跟很多人不合）被董事会赶出苹果。后来乔布斯创建NeXT，又收购了Pixar。值得一提的是，NeXT并不成功，而Pixar在上市前都还没有盈利，所以离开苹果后的乔布斯几乎成为了硅谷的笑柄，被贴上失败者的标签。这一切在12年后乔布斯作为顾问回到苹果后开始发生转变，接下来的事情你已经都知道了。 </p>
-
-<p>所以，乔布斯给人留下的不仅是设计出色的产品、独创的商业模式和营销手段，更重要的是他向人们传递了一种信念：如果你喜欢什么，不管你的想法有多疯狂，放手去做吧！坚持不懈，你就可以成功！ </p>
-
-<p>**自信和改变 **
-或许你以为我想说的就这么多了，并非如此。你可以宣称自己很固执、自信以及听不进任何人的建议，我想相对于乔布斯，你可能是“小巫见大巫”。乔布斯在斯坦福大学的著名演讲中也提到：“getting fired from Apple was the best thing that could have ever happened to me”。在离开苹果的12年中，他变了：他变成了一个丈夫，变成了一个父亲，在NeXT和Pixar积累着管理经验，在失败中反思着人们到底喜欢什么样的产品。 </p>
-
-<p>我忽然领悟，原来自信不是“永不改变”，而是相信自己能够找到需要改变的地方，并做得更好。你是否是正确的并不重要，重要的是什么是正确的。 </p>
-
-<p>Now everyone, think forward. </p>
-
-<p><img src="/images/stevejobs.jpeg" alt="Steve Jobs" title="Steve Jobs" /></p>
-
-<blockquote>
-  <p>Apple has lost a visionary and creative genius, and the world has lost an amazing human being. Those of us who have been fortunate enough to know and work with Steve have lost a dear friend and an inspiring mentor. Steve leaves behind a company that only he could have built, and his spirit will forever be the foundation of Apple. – Tim Cook</p>
-</blockquote>
 ]]></content:encoded>
     </item>
     

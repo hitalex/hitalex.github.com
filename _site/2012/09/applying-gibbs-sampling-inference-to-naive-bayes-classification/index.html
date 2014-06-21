@@ -24,6 +24,28 @@
     <script src="http://localhost:4000/static/js/html5.js" type="text/javascript"></script>
     <![endif]-->
     <script src="http://localhost:4000/static/js/jquery.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <!-- MathJax Section -->
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  <script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+  </script>
+  
+    
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" class="home blog lotus index">
     <nav class="lotus-nav">
@@ -69,7 +91,7 @@
             
             
             <li class="">
-                <a href="http://www.alexkong.net/contact.html" rel="bookmark" title="联系我">
+                <a href="contact.html" rel="bookmark" title="联系我">
                     <i class="icon-heart"></i>
                 </a>
                 
@@ -99,7 +121,7 @@
 <h1 class="lotus-pagetit">Appplying Gibbs sampling inference to Naive Bayes classification</h1>
 <p class="lotus-meta"> <time class="date" pubdate="September  9, 2012">September  9, 2012</time></p>
 <article  itemscope itemtype="http://schema.org/Article" class="lotus-post">
-<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（，所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
 <p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：
 * <strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。
@@ -140,9 +162,21 @@
 
 
 <footer class="lotus-footer">
-	<p>Copyright © 2010–2014 AlexKong.net All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
+	<p>Copyright © 2010–2014 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
 </footer>
 <script src="http://localhost:4000/static/js/jquery.scrollTo.js" type="text/javascript"></script>
 <script src="http://localhost:4000/static/js/iLotus.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+
 </body>
 </html>

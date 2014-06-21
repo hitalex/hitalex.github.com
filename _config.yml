@@ -7,8 +7,9 @@ permalink:        /:year/:month/:title/
 safe: false
 
 #站点基础配置
-title: AlexKong.net
-description: "孔明的博客"
+title: 孔明的博客
+subTitle: Embrace Uncertainty!
+description: 孔明的博客
 author: 孔明
 author_info: <a href="http://alexkong.net/about">孔明</a>
 url: http://localhost:4000
@@ -29,7 +30,7 @@ nav:
     icon: icon-envelope-alt
     class: none
   - text: 联系我
-    url: http://www.alexkong.net/contact.html
+    url: contact.html
     icon: icon-heart
     class: none
   - text: 博客源代码
