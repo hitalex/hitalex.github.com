@@ -171,9 +171,10 @@ p(\mathbf{\mbox{x}}) = \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{z}}) p(\mathbf{\
 </script>
 
 <h1 id="em">EM算法登场</h1>
-<p>我们首先给出EM算法的一般步骤，然后将其应用于GMM的参数求解。
-## EM算法的一般步骤
-给定观测数据<script type="math/tex">\mathbf{\mbox{X}}</script>，其中第<script type="math/tex">n</script>行<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>表示第<script type="math/tex">n</script>个观测数据，列的个数为数据的维数。正如我们之前所介绍的，每个观测数据都对应一个隐变量的取值–采用<script type="math/tex">\mathbf{\mbox{Z}}</script>表示，<script type="math/tex">\mathbf{\mbox{z}}_n^T</script>表示对应<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>的隐变量取值，经常称<script type="math/tex">\{ \mathbf{\mbox{X,Z}} \}</script>为完整数据（complete data）。在加入隐变量之后，似然函数变为（<script type="math/tex">\mathbf{\theta}</script>表示模型的未知参数集合）：</p>
+<p>我们首先给出EM算法的一般步骤，然后将其应用于GMM的参数求解。</p>
+
+<h2 id="em-1">EM算法的一般步骤</h2>
+<p>给定观测数据<script type="math/tex">\mathbf{\mbox{X}}</script>，其中第<script type="math/tex">n</script>行<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>表示第<script type="math/tex">n</script>个观测数据，列的个数为数据的维数。正如我们之前所介绍的，每个观测数据都对应一个隐变量的取值–采用<script type="math/tex">\mathbf{\mbox{Z}}</script>表示，<script type="math/tex">\mathbf{\mbox{z}}_n^T</script>表示对应<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>的隐变量取值，经常称<script type="math/tex">\{ \mathbf{\mbox{X,Z}} \}</script>为完整数据（complete data）。在加入隐变量之后，似然函数变为（<script type="math/tex">\mathbf{\theta}</script>表示模型的未知参数集合）：</p>
 
 <script type="math/tex; mode=display">
 \ln p(\mathbf{\mbox{X}} | \mathbf{\theta}) = \ln \left\{ \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta}) \right\}
