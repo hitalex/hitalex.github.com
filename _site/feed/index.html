@@ -7,7 +7,7 @@
     <title>{"name"=>"孔明"}</title>
     <link href="http://localhost:4000/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2014-07-22T11:47:59+08:00</lastBuildDate>
+    <lastBuildDate>2014-07-22T14:36:07+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
     
     <item>
@@ -137,20 +137,26 @@ p(\mathbf{\mbox{Z} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi}) \propto \prod_{n=
 
 <p>从上式中可以看出，<script type="math/tex">\{ \mathbf{\mbox{z}}_n \}</script>之间是相互独立的。回想EM算法的E-step，接下来我们利用<script type="math/tex">\ln p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi})</script>和<script type="math/tex">p(\mathbf{\mbox{Z} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi})</script>来计算<script type="math/tex">\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})</script>，具体过程如下：</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
+<script type="math/tex; mode=display">
+\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})  =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} | \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}}) \ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta})
+</script>
 
-\begin{array}{cc}
-\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})  & =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} | \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}}) \ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta}) \\
-& =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z \vert X}}, \mathbf{\mu, \Sigma, \pi}) \left{ \Sigma_{n=1}^N \Sigma_{k=1}^K z_nk \{ \ln pi_k + \ln \mathcal{N}(\mathbf{\mbox{x_n}} \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \} \right} \\
-& =  \Sigma_{n=1}^N \Sigma_{k=1}^K \Sigma_{z_{nk}} p(\mathbf{\mbox{z}_{nk} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi}) z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \} \\
-& =  \Sigma_{n=1}^N \Sigma_{k=1}^K \mathbb{E}[z_{nk}] \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
-\end{array}
- %]]></script>
+<script type="math/tex; mode=display">
+ =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} \vert \mathbf{\mbox{X}}, \mathbf{\mu, \Sigma, \pi}) \left( \sum_{n=1}^N \sum_{k=1}^K z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x_n}} \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \} \right)
+</script>
+
+<script type="math/tex; mode=display">
+ =  \sum_{n=1}^N \sum_{k=1}^K \sum_{z_{nk}} p(z_{nk} \vert \mathbf{\mbox{X}}, \mathbf{\mu, \Sigma, \pi}) z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
+ </script>
+
+<script type="math/tex; mode=display">
+ =  \sum_{n=1}^N \sum_{k=1}^K \mathbb{E}[z_{nk}] \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
+</script>
 
 <p>其中，<script type="math/tex">\mathbb{E}[z_{nk}]</script>的计算如下：</p>
 
 <script type="math/tex; mode=display">
-\mathbb{E}[z_{nk}] = \frac{\Sigma_{z_{nk}} z_{nk} [\pi_k \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k})]^{z_{nk}}}{\Sigma_{z_{nj}}[\pi_j \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_j, \mathbf{\Sigma}_j})]^{z_{nj}}} = \gamma(z_{nk})
+\mathbb{E}[z_{nk}] = \frac{\Sigma_{z_{nk}} z_{nk} [\pi_k \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k)]^{z_{nk}}} {\Sigma_{z_{nj}}[\pi_j \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_j, \mathbf{\Sigma}_j)]^{z_{nj}}} = \gamma(z_{nk})
 </script>
 
 <p>此时，计算<script type="math/tex">\gamma(z_{nk})</script>已经成为EM算法迭代的一个中间变量，稍后关于其他参数的迭代计算都会依赖这个值。另外，计算这个中间变量时使用的是上一轮中的参数，即<script type="math/tex">\theta^{\mbox{old}}</script>。</p>
@@ -159,10 +165,10 @@ p(\mathbf{\mbox{Z} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi}) \propto \prod_{n=
 
 <script type="math/tex; mode=display">
 \mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}}) = \mathbb{E}_{\mathbf{\mbox{z}}} [\ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} \vert \mathbf{\theta}) ] \\
-= \gamma(z_{nk}) \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k}) \}
+= \gamma(z_{nk}) \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
 </script>
 
-<p>在得到上式后便可以使用拉格朗日乘数法分别对<script type="math/tex">\pi_k, \mathbf{\mu}_k, \mathbf{\Sigma}_k}</script>偏导求解，具体过程略过。<em>强烈</em>建议读者自行推导这个优化过程，这其中涉及到拉格朗日乘数法、多元高斯概率密度函数对均值和协方差矩阵的求导等–你真的可能不了解其中的一些细节，除非你自己推导过n遍。</p>
+<p>在得到上式后便可以使用拉格朗日乘数法分别对<script type="math/tex">\pi_k, \mathbf{\mu}_k, \mathbf{\Sigma}_k</script>偏导求解，具体过程略过。<em>强烈</em>建议读者自行推导这个优化过程，这其中涉及到拉格朗日乘数法、多元高斯概率密度函数对均值和协方差矩阵的求导等–你真的可能不了解其中的一些细节，除非你自己推导过n遍。</p>
 
 <p>在经历了较为繁琐的推导过程后，你将发现结果的形式却相对简单。我们定义：<script type="math/tex">N_k = \sum_{n=1}^N\gamma(z_{nk})</script>。其含义可以理解为：平均而言，第<script type="math/tex">k</script>个聚类中所含有的样本的个数。M-step中其他参数的迭代计算方法如下：</p>
 
