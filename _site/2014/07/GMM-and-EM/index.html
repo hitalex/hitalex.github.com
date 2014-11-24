@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html id="J-html" class="">
+<head>
+     <!--
+     **
+     * Author:         掌心
+     * Contact:        zhanxin.info@gmail.com
+     * Theme Name:     iLotus
+     **
+    -->
+    <meta charset="UTF-8" />
+    <title>
+        
+            高斯混合模型和期望最大化算法
+        
+    </title>
+    <meta name="generator" content="Jekyll" />
+    <meta name="author" content="孔明" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" media="all" href="/static/style.css" />
+    <!--[if lt IE 9]>
+    <script src="http://localhost:4000/static/js/html5.js" type="text/javascript"></script>
+    <![endif]-->
+    <script src="http://localhost:4000/static/js/jquery.js" type="text/javascript"></script>
+    
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <!-- MathJax Section -->
+    <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+  <script>
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+  </script>
+  
+    
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" class="home blog lotus index">
+    <nav class="lotus-nav">
+        <ul>
+            
+            
+            
+            
+            
+                
+            
+            <li class="home ">
+                <a href="/index.html" rel="bookmark" title="首页">
+                    <i class="icon-home"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="/archives.html" rel="bookmark" title="文章归档">
+                    <i class="icon-reorder"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="/contact.html" rel="bookmark" title="关于我">
+                    <i class="icon-envelope-alt"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="contact.html" rel="bookmark" title="联系我">
+                    <i class="icon-heart"></i>
+                </a>
+                
+            </li>
+            
+            
+            
+            
+            
+            <li class="">
+                <a href="https://github.com/pizn/iLotus" rel="bookmark" title="博客源代码">
+                    <i class="icon-github"></i>
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+
+    <p class="lotus-breadcrub">
+    <a href="/index.html" rel="nofollow" rel="nofollow" title="首页">Home</a>
+    <span> &gt; </span>
+    <a href="/archives.html" rel="nofollow" >Archives</a>
+    <span> &gt; </span>
+    高斯混合模型和期望最大化算法
+</p>
+<h1 class="lotus-pagetit">高斯混合模型和期望最大化算法</h1>
+<p class="lotus-meta"> <time class="date" pubdate="July 14, 2014">July 14, 2014</time></p>
+<article  itemscope itemtype="http://schema.org/Article" class="lotus-post">
+<h1 id="section">概述</h1>
+<p>在这篇博文中，我们将讨论高斯混合模型（Gaussian Mixture Models，GMM）以及它的求解方法–期望最大化（Expectation-Maximization，EM）算法。GMM是经典的无监督聚类模型，它假设数据是从多个高斯分布中得到。我们在GMM的模型求解过程中引入“隐变量”（latent variable）的概念，并基于此使用EM算法求解模型参数。GMM在语音识别技术中有应用。</p>
+
+<h1 id="section-1">求解高斯混合模型：初尝败果</h1>
+<p>在线性判别分析（Linear Discriminant Analysis, LDA）中，我们假设每类中的数据服从高斯分布，通过计算两类之间的判别超平面得到分类函数。注意，在线性判别分析中，数据是有类别标签的，也就是属于有监督的分类问题。GMM与线性判别分析模型具有同样的数据生成假设，不同的是，GMM的训练数据中没有类别标签，即为无监督模型。一般地，GMM的定义如下：</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{x}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)
+</script>
+
+<p>其中，<script type="math/tex">\mathcal{N}</script>表示（多元）高斯分布，<script type="math/tex">K</script>表示混合高斯的个数，<script type="math/tex">\pi_k</script>表示混合参数（mixing coefficient），满足<script type="math/tex">0 \le \pi_k \le 1</script>和<script type="math/tex">\sum_{k=1}^K \pi_k = 1</script>。我们首先尝试使用最大似然方法求解，那么目标就是最大化下式：</p>
+
+<script type="math/tex; mode=display">
+\ln p(\mathbf{\mbox{X}}|\mathbf{\pi}, \mathbf{\mu}, \mathbf{\Sigma}) = \sum_{n=1}^{N} \ln \left\{ \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}}_n | \mathbf{\mu}_k, \mathbf{\Sigma}_k) \right\}
+</script>
+
+<p>如果此时试图使用<a href="http://en.wikipedia.org/wiki/Lagrange_multiplier">拉格朗日乘数法</a>来求解，那么遇到的最大麻烦将是<script type="math/tex">\ln \{ \cdots \}</script>这一部分，导致根本无法继续求解。</p>
+
+<h1 id="section-2">引入隐变量</h1>
+<p>接下来，我们将引入“隐变量”。我们假设，对于数据点<script type="math/tex">\mathbf{\mbox{x}}</script>来说存在一个隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>，也就意味着对于每个数据点的取值都存在一个相应的隐变量的取值，但是无法观测得到。隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>的定义如下：<script type="math/tex">\mathbf{\mbox{z}}</script>为<script type="math/tex">K</script>维变量，满足<script type="math/tex">z_k \in \{0, 1\}</script>而且<script type="math/tex">\sum_k z_k = 1</script>，也就意味着隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>中有且仅有一位为1，其他位置都为0。<script type="math/tex">\mathbf{\mbox{z}}</script>和<script type="math/tex">\pi_k</script>的关系如下：</p>
+
+<script type="math/tex; mode=display">
+p(z_k = 1) = \pi_k
+</script>
+
+<p>那么，</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{z}}) = \prod_k^K \pi_k^{z_k}
+</script>
+
+<p>注意，这是一个向量的概率密度定义，你可能需要仔细琢磨一下其中的含义。隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>的含义为：如果<script type="math/tex">z_k = 1</script>，那么表示观测值<script type="math/tex">\mathbf{\mbox{x}}</script>就来自第<script type="math/tex">k</script>个聚类（cluster）。基于以上定义，可以得到：</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{x}}|z_k = 1) = \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)
+</script>
+
+<p>以及</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{x}} | \mathbf{\mbox{z}}) = \prod_{k=1}^K \mathcal{N} (\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)^{z_k}
+</script>
+
+<p>读者可以尝试利用已经得到的<script type="math/tex">p(\mathbf{\mbox{z}})</script>和<script type="math/tex">p(\mathbf{\mbox{x}} \vert \mathbf{\mbox{z}})</script>重新表示<script type="math/tex">p(\mathbf{\mbox{x}})</script>，验证下式：</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{x}}) = \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{z}}) p(\mathbf{\mbox{x}} | \mathbf{\mbox{z}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)
+</script>
+
+<h1 id="em">EM算法登场</h1>
+<p>我们首先给出EM算法的一般步骤，然后将其应用于GMM的参数求解。</p>
+
+<h2 id="em-1">EM算法的一般步骤</h2>
+<p>给定观测数据<script type="math/tex">\mathbf{\mbox{X}}</script>，其中第<script type="math/tex">n</script>行<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>表示第<script type="math/tex">n</script>个观测数据，列的个数为数据的维数。正如我们之前所介绍的，每个观测数据都对应一个隐变量的取值–采用<script type="math/tex">\mathbf{\mbox{Z}}</script>表示，<script type="math/tex">\mathbf{\mbox{z}}_n^T</script>表示对应<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>的隐变量取值，经常称<script type="math/tex">\{ \mathbf{\mbox{X,Z}} \}</script>为完整数据（complete data）。在加入隐变量之后，似然函数变为（<script type="math/tex">\mathbf{\theta}</script>表示模型的未知参数集合）：</p>
+
+<script type="math/tex; mode=display">
+\ln p(\mathbf{\mbox{X}} | \mathbf{\theta}) = \ln \left\{ \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta}) \right\}
+</script>
+
+<p>直接使用上式对参数<script type="math/tex">\mathbf{\theta}</script>求导还是会遇到前面所遇到的问题，接下来介绍EM算法如何求解。</p>
+
+<p>假定已经给定了一组模型参数的初始取值<script type="math/tex">\mathbf{\theta}^{\mbox{old}}</script>，我们可以先计算隐变量<script type="math/tex">\mathbf{\mbox{Z}}</script>的后验概率，即<script type="math/tex">p(\mathbf{\mbox{Z}} \vert \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}})</script>。因为<script type="math/tex">p(\mathbf{\mbox{X}} \vert \mathbf{\theta})</script>的形式较为复杂，我们转而考虑完整数据的似然：<script type="math/tex">p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} \vert \mathbf{\theta})</script>。</p>
+
+<p>EM算法的E-step如下，计算：</p>
+
+<script type="math/tex; mode=display">
+\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}}) = \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} | \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}}) \ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta})
+</script>
+
+<p>对于E-step，有以下几点需要注意：</p>
+
+<ul>
+  <li>
+    <p><script type="math/tex">\mathcal{Q}</script>本质上是关于变量<script type="math/tex">\mathbf{\mbox{Z}}</script>的期望，即<script type="math/tex">\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}}) = \mathbb{E}_{\mathbf{\mbox{z}}} [\ln p(\mathbf{\mbox{X}}), \mathbf{\mbox{Z}} \vert \mathbf{\theta} ] </script>，其中<script type="math/tex">\mathbf{\mbox{Z}}</script>的概率密度由<script type="math/tex">p(\mathbf{\mbox{Z}} \vert \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}})</script>给定（在这里我们假设<script type="math/tex">\mathbf{\mbox{Z}}</script>是离散变量，如果<script type="math/tex">\mathbf{\mbox{Z}}</script>是连续值，那么仅需要将期望中的求和改为积分便可）。</p>
+  </li>
+  <li>
+    <p><script type="math/tex">\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})</script>中，<script type="math/tex">\mathbf{\theta}</script>是变量，而<script type="math/tex">\mathbf{\theta}^{\mbox{old}}</script>是已经给定参数值。由于EM是迭代求解算法，这里的<script type="math/tex">\mathbf{\theta}^{\mbox{old}}</script>实际上是上一轮中模型参数的取值。</p>
+  </li>
+  <li>
+    <p>一般来说，模型中的参数不止一个，即<script type="math/tex">\mathbf{\theta}</script>是各个参数构成的向量（此处假设各个参数之间是独立的）。在实际应用中则需要分别计算不同参数的<script type="math/tex">\mathcal{Q} (\mathbf{\theta}_i, \mathbf{\theta}_{\neg i}, \mathbf{\theta}^{\mbox{old}})</script>。</p>
+  </li>
+</ul>
+
+<p>EM算法的M-step为：</p>
+
+<script type="math/tex; mode=display">
+\mathbf{\theta}^{\mbox{new}} = \mbox{argmax}_{\mathbf{\theta}} \mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})
+</script>
+
+<p>对于M-step，有以下几点需要注意：</p>
+
+<ul>
+  <li>
+    <p>M-step实际上是一个优化问题，所以必须要求<script type="math/tex">\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})</script>的形式不能太复杂，也就意味着<script type="math/tex">\mathbf{\mbox{Z}}</script>的后验概率以及<script type="math/tex">\{ \mathbf{\mbox{X}},\mathbf{\mbox{Z}} \}</script>的全概率公式的形式不能太复杂。</p>
+  </li>
+  <li>
+    <p>由于模型参数通常有其他约束，例如GMM中的<script type="math/tex">\pi_k</script>，所以求解优化算法时通常使用拉格朗日乘数法。</p>
+  </li>
+</ul>
+
+<h2 id="emgmm">将EM算法应用于GMM</h2>
+<p>首先，根据<script type="math/tex">p(\mathbf{\mbox{z}})</script>和<script type="math/tex">p(\mathbf{\mbox{x}} \vert \mathbf{\mbox{z}})</script>计算<script type="math/tex">p(\mathbf{\mbox{x,z}})</script>，进而计算完整数据<script type="math/tex">\{\mathbf{\mbox{X,Z}}\}</script>的似然。计算后可得：</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi}) = \prod_{n=1}^N \prod_{k=1}^K \pi_k^{z_{nk}} \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu_k, \Sigma_k})^{z_{nk}}
+</script>
+
+<p>将上式取log后的结果为：</p>
+
+<script type="math/tex; mode=display">
+\ln p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi}) = \sum_{n=1}^N \sum_{k=1}^K z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu_k, \Sigma_k}) \}
+</script>
+
+<p>根据贝叶斯公式，由<script type="math/tex">p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi})</script>可以得到<script type="math/tex">\mathbf{\mbox{Z}}</script>的后验概率（除以 <script type="math/tex">p(\mathbf{\mbox{X}} \vert \mathbf{\mu, \Sigma, \pi})</script>）：</p>
+
+<script type="math/tex; mode=display">
+p(\mathbf{\mbox{Z} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi}) \propto \prod_{n=1}^N \prod_{k=1}^K [ \pi_k \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu_k, \Sigma_k})]^{z_{nk}}
+</script>
+
+<p>从上式中可以看出，<script type="math/tex">\{ \mathbf{\mbox{z}}_n \}</script>之间是相互独立的。回想EM算法的E-step，接下来我们利用<script type="math/tex">\ln p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi})</script>和<script type="math/tex">p(\mathbf{\mbox{Z} \vert \mbox{X}}, \mathbf{\mu, \Sigma, \pi})</script>来计算<script type="math/tex">\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})</script>，具体过程如下：</p>
+
+<script type="math/tex; mode=display">
+\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}})  =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} | \mathbf{\mbox{X}}, \mathbf{\theta}^{\mbox{old}}) \ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta})
+</script>
+
+<script type="math/tex; mode=display">
+ =  \sum_{\mathbf{\mbox{Z}}} p(\mathbf{\mbox{Z}} \vert \mathbf{\mbox{X}}, \mathbf{\mu, \Sigma, \pi}) \left\{ \sum_{n=1}^N \sum_{k=1}^K z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x_n}} \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \} \right\}
+</script>
+
+<script type="math/tex; mode=display">
+ =  \sum_{n=1}^N \sum_{k=1}^K \sum_{z_{nk}} p(z_{nk} \vert \mathbf{\mbox{X}}, \mathbf{\mu, \Sigma, \pi}) z_{nk} \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
+ </script>
+
+<script type="math/tex; mode=display">
+ =  \sum_{n=1}^N \sum_{k=1}^K \mathbb{E}[z_{nk}] \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
+</script>
+
+<p>其中，<script type="math/tex">\mathbb{E}[z_{nk}]</script>的计算如下：</p>
+
+<script type="math/tex; mode=display">
+\mathbb{E}[z_{nk}] = \frac{\Sigma_{z_{nk}} z_{nk} [\pi_k \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k)]^{z_{nk}}} {\Sigma_{z_{nj}}[\pi_j \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_j, \mathbf{\Sigma}_j)]^{z_{nj}}} = \gamma(z_{nk})
+</script>
+
+<p>此时，计算<script type="math/tex">\gamma(z_{nk})</script>已经成为EM算法迭代的一个中间变量，稍后关于其他参数的迭代计算都会依赖这个值。另外，计算这个中间变量时使用的是上一轮中的参数，即<script type="math/tex">\theta^{\mbox{old}}</script>。</p>
+
+<p>接下来是EM算法中的M-step：</p>
+
+<script type="math/tex; mode=display">
+\mathcal{Q} (\mathbf{\theta}, \mathbf{\theta}^{\mbox{old}}) = \mathbb{E}_{\mathbf{\mbox{z}}} [\ln p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} \vert \mathbf{\theta}) ] \\
+= \gamma(z_{nk}) \{ \ln \pi_k + \ln \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu}_k, \mathbf{\Sigma}_k) \}
+</script>
+
+<p>在得到上式后便可以使用拉格朗日乘数法分别对<script type="math/tex">\pi_k, \mathbf{\mu}_k, \mathbf{\Sigma}_k</script>偏导求解，具体过程略过。<em>强烈</em>建议读者自行推导这个优化过程，这其中涉及到拉格朗日乘数法、多元高斯概率密度函数对均值和协方差矩阵的求导等–你真的可能不了解其中的一些细节，除非你自己推导过n遍。</p>
+
+<p>在经历了较为繁琐的推导过程后，你将发现结果的形式却相对简单。我们定义：<script type="math/tex">N_k = \sum_{n=1}^N\gamma(z_{nk})</script>。其含义可以理解为：平均而言，第<script type="math/tex">k</script>个聚类中所含有的样本的个数。M-step中其他参数的迭代计算方法如下：</p>
+
+<script type="math/tex; mode=display">
+\mathbf{\mu}_k^{\mbox{new}} = \frac{1}{N_k} \sum_{n=1}^N \gamma(z_{nk}) \mathbf{\mbox{x}}_n
+</script>
+
+<script type="math/tex; mode=display">
+\mathbf{\Sigma}_k^{\mbox{new}} = \frac{1}{N_k} \sum_{n=1}^N \gamma(z_{nk}) (\mathbf{\mbox{x}}_n - \mathbf{\mu}_k^{\mbox{new}}) (\mathbf{\mbox{x}}_n - \mathbf{\mu}_k^{\mbox{new}})^T
+</script>
+
+<script type="math/tex; mode=display">
+\mathbf{\pi}_k^{\mbox{new}} = \frac{N_k}{N}
+</script>
+
+</article>
+<p class="lotus-anno">声明: 本文采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" rel="nofollow" target="_blank" title="自由转载-非商用-非衍生-保持署名">BY-NC-SA</a> 授权。转载请注明转自: <a href="" title="" rel="nofollow">孔明</a></p>
+<section class="lotus-nextpage fn-clear">
+    
+    <div class="lotus-nextpage-left"><a class="prev" href="/2014/06/paper-reading-notes/" rel="prev">&laquo;&nbsp;论文阅读笔记 - 2014.6.21</a></div>
+    
+    
+</section>
+
+<section class="comment">
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
+    var disqus_url = 'http://localhost:4000/2014/07/GMM-and-EM/';
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+<footer class="lotus-footer">
+	<p>Copyright © 2010–2014 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
+</footer>
+<script src="http://localhost:4000/static/js/jquery.scrollTo.js" type="text/javascript"></script>
+<script src="http://localhost:4000/static/js/iLotus.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-1988641-2']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+
+</body>
+</html>

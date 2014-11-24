@@ -1,15 +1,53 @@
-auto:	          true
-
-markdown:         kramdown
-pygments:         true
+markdown: kramdown
+pygments: true
+plugins: ./_plugins
+paginate: 8
 permalink:        /:year/:month/:title/
 
-title:            AlexKong.net
-url:              http://alexkong.net
-feed:             /atom.xml
-author: 孔明
-description:      "孔明的博客"
-author_info:      <a href="http://alexkong.net/about">孔明</a>
+safe: false
 
-copyright:
-    - Created by <a href="http://alexkong.net/about" title="孔明" target="_blank">孔明</a> &copy; Copyright 2013
+#站点基础配置
+title: 孔明的博客
+subTitle: Embrace Uncertainty!
+description: 孔明的博客
+author: 孔明
+author_info: <a href="http://alexkong.net/about">孔明</a>
+url: http://alexkong.net
+feed: /atom.xml
+
+#菜单配置
+nav:
+  - text: 首页
+    url: /index.html
+    icon: icon-home
+    class: home
+  - text: 文章归档
+    url: /archives.html
+    icon: icon-reorder
+    class: none
+  - text: 关于我
+    url: /contact.html
+    icon: icon-envelope-alt
+    class: none
+  - text: 联系我
+    url: contact.html
+    icon: icon-heart
+    class: none
+  - text: 博客源代码
+    url: https://github.com/pizn/iLotus
+    icon: icon-github
+    class: none
+
+page:
+  - text: 文章分类
+    url: /archives.html
+    last: true
+  - text: 友情链接
+    url: /links.html
+    last: true
+  - text: 关于我
+    url: /contact.html
+    last: false
+
+author:
+  name: 孔明

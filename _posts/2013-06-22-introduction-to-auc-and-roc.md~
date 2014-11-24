@@ -1,12 +1,18 @@
 ---
 layout: post
+<<<<<<< HEAD
+title: AUC和ROC介绍
+=======
 title: ROC和AUC介绍以及如何计算AUC
+>>>>>>> 31738c4da94e03edcf8799864be91c405d5392a2
 categories:
 - 学术
 tags: 
 - AUC
 - ROC
 ---
+<<<<<<< HEAD
+=======
 
 ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见[这里](http://bubblexc.com/y2011/148/)。这篇博文简单介绍ROC和AUC的特点，以及更为深入地，讨论如何作出ROC曲线图以及计算AUC。
 
@@ -75,3 +81,4 @@ AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积�
 
 * 维基百科中对ROC的介绍: http://en.wikipedia.org/wiki/Receiver_operating_characteristic
 * ROC曲线及AUC评价指标 by 冒泡的崔：http://bubblexc.com/y2011/148/
+>>>>>>> 31738c4da94e03edcf8799864be91c405d5392a2

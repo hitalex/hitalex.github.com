@@ -9,13 +9,13 @@ tags:
 - 几何
 ---
 
-所有的三角形都是等腰三角形！Whant？不信你就看视频中的“证明”。
+所有的三角形都是等腰三角形！What？不信你就看视频中的“证明”。
 
 <embed src="http://player.youku.com/player.php/sid/XMTAzNzYxODg0/v.swf" quality="high" width="480" height="400" align="middle" allowScriptAccess="sameDomain" allowFullscreen="true" type="application/x-shockwave-flash"></embed>
 
 视频中的证明肯定是错误的，可问题在哪呢？
 
-其实视频中的这位老师“犯了”一个集合证明中非常常见的错误，请看下面的一个例子。
+其实视频中的这位老师“犯了”一个几何证明中非常常见的错误，请看下面的一个例子。
 
 ![non-isosceles triangle example](/images/non-isosceles-triangle-example.jpg "non-isosceles triangle example")
 
