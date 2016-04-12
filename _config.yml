@@ -25,12 +25,12 @@ nav:
     url: /archives/index.html
     icon: icon-reorder
     class: none
-  - text: 关于我
-    url: /contact.html
+  - text: 发表论文
+    url: /publication/index.html
     icon: icon-envelope-alt
     class: none
   - text: 联系我
-    url: contact.html
+    url: /contact/index.html
     icon: icon-heart
     class: none
   - text: 博客源代码
@@ -43,10 +43,10 @@ page:
     url: /archives/index.html
     last: true
   - text: 友情链接
-    url: /links.html
+    url: /links/index.html
     last: true
   - text: 关于我
-    url: /contact.html
+    url: /contact/index.html
     last: false
 
 author:
