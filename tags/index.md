@@ -1,6 +1,6 @@
 ---
 title: tags
-layout: page
+layout: post
 ---
 
 <div id='tag_cloud'>

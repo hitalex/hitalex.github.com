@@ -22,7 +22,7 @@ nav:
     icon: icon-home
     class: home
   - text: 文章归档
-    url: /archives.html
+    url: /archives/index.html
     icon: icon-reorder
     class: none
   - text: 关于我
@@ -40,7 +40,7 @@ nav:
 
 page:
   - text: 文章分类
-    url: /archives.html
+    url: /archives/index.html
     last: true
   - text: 友情链接
     url: /links.html

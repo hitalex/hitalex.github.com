@@ -21,9 +21,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" media="all" href="/static/style.css" />
     <!--[if lt IE 9]>
-    <script src="http://localhost:4000/static/js/html5.js" type="text/javascript"></script>
+    <script src="http://alexkong.net/static/js/html5.js" type="text/javascript"></script>
     <![endif]-->
-    <script src="http://localhost:4000/static/js/jquery.js" type="text/javascript"></script>
+    <script src="http://alexkong.net/static/js/jquery.js" type="text/javascript"></script>
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
@@ -55,8 +55,6 @@
             
             
             
-                
-            
             <li class="home ">
                 <a href="/index.html" rel="bookmark" title="首页">
                     <i class="icon-home"></i>
@@ -69,7 +67,7 @@
             
             
             <li class="">
-                <a href="/archives.html" rel="bookmark" title="文章归档">
+                <a href="/archives/index.html" rel="bookmark" title="文章归档">
                     <i class="icon-reorder"></i>
                 </a>
                 
@@ -114,7 +112,7 @@
     <p class="lotus-breadcrub">
     <a href="/index.html" rel="nofollow" rel="nofollow" title="首页">Home</a>
     <span> &gt; </span>
-    <a href="/archives.html" rel="nofollow" >Archives</a>
+    <a href="/archives/index.html" rel="nofollow" >Archives</a>
     <span> &gt; </span>
     论文阅读笔记 - 2014.6.21
 </p>
@@ -133,27 +131,21 @@
 
 <p>对于多视图聚类问题，本文应用NMF的思路是：在基本的NMF框架下，添加对多个视图下聚类结果的约束，例如添加约束条件使得多个视图下的聚类结果相差不大。根据以上思路写出优化目标函数：</p>
 
-<script type="math/tex; mode=display">
-J = \sum_{s=1}^{n_v} \lambda_s \Vert V^{(s)} - W^{(s)}H^{(s)} \Vert + R, s.t. W^{(s)} \ge 0, H^{(s)} \ge 0
-</script>
+<script type="math/tex; mode=display">J = \sum_{s=1}^{n_v} \lambda_s \Vert V^{(s)} - W^{(s)}H^{(s)} \Vert + R, s.t. W^{(s)} \ge 0, H^{(s)} \ge 0</script>
 
 <p>其中，<script type="math/tex">n_s</script>表示视图的个数，矩阵<script type="math/tex">W^{(s)}</script>和<script type="math/tex">H^{(s)}</script>的大小分别为<script type="math/tex">m \times k</script>和<script type="math/tex">k \times n</script>，<script type="math/tex">R</script>是附加的约束条件。</p>
 
 <h2 id="pair-wise-conmf">Pair-wise CoNMF</h2>
 <p>Pair-wise CoNMF要求对于任意两个视图的$W$之间相差不应该太大，所以此时的附加约束为：</p>
 
-<script type="math/tex; mode=display">
-R_1 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)} - W^{(t)}\Vert
-</script>
+<script type="math/tex; mode=display">R_1 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)} - W^{(t)}\Vert</script>
 
 <p>本文详尽地提供了目标函数的优化算法推导，其中主要涉及的技术有：<script type="math/tex">\Vert A \Vert = Tr(A^T A)</script>, <script type="math/tex">Tr(AB) = Tr(BA)</script>, 矩阵求导和Lagrange乘数法。</p>
 
 <h2 id="cluster-wise-conmf">Cluster-wise CoNMF</h2>
 <p>第二个思路则是考察<script type="math/tex">W</script>的L2 norm: <script type="math/tex">W^T W</script>。因为<script type="math/tex">W</script>的每列表示一个cluster中每个item的分布，所以<script type="math/tex">W^T W</script>实际上表示每个cluster之间的相似度。基于此，第二种附加约束为：</p>
 
-<script type="math/tex; mode=display">
-R_2 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)T}W^{(s)} - W^{(t)T}W^{(t)}\Vert
-</script>
+<script type="math/tex; mode=display">R_2 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)T}W^{(s)} - W^{(t)T}W^{(t)}\Vert</script>
 
 <p>目标函数的优化求解方法同上。</p>
 
@@ -170,9 +162,7 @@ R_2 = \sum_{s,t} \lambda_{s,t} \Vert W^{(s)T}W^{(s)} - W^{(t)T}W^{(t)}\Vert
 
 <p>边上的权重<script type="math/tex">w</script>表示该评论（可能是多个评论，因为一个用户可能多次评论一个item）对该item的流行度的贡献。作者认为时间越近的评论产生的作用越大，所以定义<script type="math/tex">w_{ij}</script>如下：</p>
 
-<script type="math/tex; mode=display">
-w_{ij} = \delta^{a(t_0 - t_{ij}) + b}
-</script>
+<script type="math/tex; mode=display">w_{ij} = \delta^{a(t_0 - t_{ij}) + b}</script>
 
 <p>其中，<script type="math/tex">t_0</script>是搜索排序的时间，<script type="math/tex">t_{ij}</script>是用户<script type="math/tex">u_i</script>对<script type="math/tex">p_j</script>的评论时间，<script type="math/tex">a, b</script>为常数。</p>
 
@@ -187,25 +177,19 @@ w_{ij} = \delta^{a(t_0 - t_{ij}) + b}
 
 <h2 id="h1h2">对于H1和H2的实现</h2>
 
-<script type="math/tex; mode=display">
-R_1(f) = \frac{1}{2} \sum_{j=1}^n \sum_{i=1}^m w_{ij} (\frac{f(p_j)}{\sqrt{d_j^p}} - \frac{f(u_i)}{\sqrt{d_i^u}})^2
-</script>
+<script type="math/tex; mode=display">R_1(f) = \frac{1}{2} \sum_{j=1}^n \sum_{i=1}^m w_{ij} (\frac{f(p_j)}{\sqrt{d_j^p}} - \frac{f(u_i)}{\sqrt{d_i^u}})^2</script>
 
 <p>其中，<script type="math/tex">d_j^p</script>和<script type="math/tex">d_i^u</script>分别为item <script type="math/tex">p_j</script>和用户<script type="math/tex">u_i</script>的weighted degree，<script type="math/tex">f(p_j)</script>值较大的item将会在排序中获得更靠前的位置。在上面的正则约束中，如果<script type="math/tex">p_j</script>的weighted degree较大，即该item收到更多的评论，那么<script type="math/tex">f(p_j)</script>的值也较大（其他变量的值不变），即体现了H1；另外，上式中括号中的第二项较大时，第一项也会较大，即归一化后<script type="math/tex">f(u_i)</script>也较大时，也就是用户<script type="math/tex">u_i</script>的影响力较大时，<script type="math/tex">f(p_j)</script>的值也会较大。</p>
 
 <h2 id="h2">对于H2的实现</h2>
 <p>根据每个用户的朋友数，计算其初始影响力的取值，记为<script type="math/tex">u_i^0</script>，那么</p>
 
-<script type="math/tex; mode=display">
-R_2(f) = \sum_{i=1}^m(f(u_i) - u_i^0)^2
-</script>
+<script type="math/tex; mode=display">R_2(f) = \sum_{i=1}^m(f(u_i) - u_i^0)^2</script>
 
-<h2 id="h3">对于H3的实现</h2>
-<p>根据在搜索排序时刻的流行度，定义相对流行度的取值<script type="math/tex">p_j^0</script>，那么</p>
+<p>##对于H3的实现
+根据在搜索排序时刻的流行度，定义相对流行度的取值<script type="math/tex">p_j^0</script>，那么</p>
 
-<script type="math/tex; mode=display">
-R_3(f) = \sum_{j=1}^n(f(p_j) - p_j^0)^2
-</script>
+<script type="math/tex; mode=display">R_3(f) = \sum_{j=1}^n(f(p_j) - p_j^0)^2</script>
 
 <p>最终，目标函数为：<script type="math/tex">Q(f) = R_1 + \alpha R_2 + \beta R_3</script>。求解方法和上一篇文章的相同：alternating optimization　－－　对于两个变量<script type="math/tex">f(p_j)</script>和<script type="math/tex">f(u_i)</script>，分别固定一个，然后优化求解另外一个。求解的最终结果形式在此不再列出。</p>
 
@@ -232,7 +216,7 @@ R_3(f) = \sum_{j=1}^n(f(p_j) - p_j^0)^2
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
-    var disqus_url = 'http://localhost:4000/2014/06/paper-reading-notes/';
+    var disqus_url = 'http://alexkong.net/2014/06/paper-reading-notes/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -247,10 +231,10 @@ R_3(f) = \sum_{j=1}^n(f(p_j) - p_j^0)^2
 
 
 <footer class="lotus-footer">
-	<p>Copyright © 2010–2014 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
+	<p>Copyright © 2010–2016 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
 </footer>
-<script src="http://localhost:4000/static/js/jquery.scrollTo.js" type="text/javascript"></script>
-<script src="http://localhost:4000/static/js/iLotus.js" type="text/javascript"></script>
+<script src="http://alexkong.net/static/js/jquery.scrollTo.js" type="text/javascript"></script>
+<script src="http://alexkong.net/static/js/iLotus.js" type="text/javascript"></script>
 
 <script type="text/javascript">
       var _gaq = _gaq || [];
