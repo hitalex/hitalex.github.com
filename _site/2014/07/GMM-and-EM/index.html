@@ -21,9 +21,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" media="all" href="/static/style.css" />
     <!--[if lt IE 9]>
-    <script src="http://alexkong.net/static/js/html5.js" type="text/javascript"></script>
+    <script src="http://localhost:4000/static/js/html5.js" type="text/javascript"></script>
     <![endif]-->
-    <script src="http://alexkong.net/static/js/jquery.js" type="text/javascript"></script>
+    <script src="http://localhost:4000/static/js/jquery.js" type="text/javascript"></script>
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
@@ -78,7 +78,7 @@
             
             
             <li class="">
-                <a href="/contact.html" rel="bookmark" title="关于我">
+                <a href="/publication/index.html" rel="bookmark" title="发表论文">
                     <i class="icon-envelope-alt"></i>
                 </a>
                 
@@ -89,7 +89,7 @@
             
             
             <li class="">
-                <a href="contact.html" rel="bookmark" title="联系我">
+                <a href="/contact/index.html" rel="bookmark" title="联系我">
                     <i class="icon-heart"></i>
                 </a>
                 
@@ -119,10 +119,10 @@
 <h1 class="lotus-pagetit">高斯混合模型和期望最大化算法</h1>
 <p class="lotus-meta"> <time class="date" pubdate="July 14, 2014">July 14, 2014</time></p>
 <article  itemscope itemtype="http://schema.org/Article" class="lotus-post">
-<h1 id="section">概述</h1>
+<h1 id="概述">概述</h1>
 <p>在这篇博文中，我们将讨论高斯混合模型（Gaussian Mixture Models，GMM）以及它的求解方法–期望最大化（Expectation-Maximization，EM）算法。GMM是经典的无监督聚类模型，它假设数据是从多个高斯分布中得到。我们在GMM的模型求解过程中引入“隐变量”（latent variable）的概念，并基于此使用EM算法求解模型参数。GMM在语音识别技术中有应用。</p>
 
-<h1 id="section-1">求解高斯混合模型：初尝败果</h1>
+<h1 id="求解高斯混合模型初尝败果">求解高斯混合模型：初尝败果</h1>
 <p>在线性判别分析（Linear Discriminant Analysis, LDA）中，我们假设每类中的数据服从高斯分布，通过计算两类之间的判别超平面得到分类函数。注意，在线性判别分析中，数据是有类别标签的，也就是属于有监督的分类问题。GMM与线性判别分析模型具有同样的数据生成假设，不同的是，GMM的训练数据中没有类别标签，即为无监督模型。一般地，GMM的定义如下：</p>
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{x}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)</script>
@@ -133,7 +133,7 @@
 
 <p>如果此时试图使用<a href="http://en.wikipedia.org/wiki/Lagrange_multiplier">拉格朗日乘数法</a>来求解，那么遇到的最大麻烦将是<script type="math/tex">\ln \{ \cdots \}</script>这一部分，导致根本无法继续求解。</p>
 
-<h1 id="section-2">引入隐变量</h1>
+<h1 id="引入隐变量">引入隐变量</h1>
 <p>接下来，我们将引入“隐变量”。我们假设，对于数据点<script type="math/tex">\mathbf{\mbox{x}}</script>来说存在一个隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>，也就意味着对于每个数据点的取值都存在一个相应的隐变量的取值，但是无法观测得到。隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>的定义如下：<script type="math/tex">\mathbf{\mbox{z}}</script>为<script type="math/tex">K</script>维变量，满足<script type="math/tex">z_k \in \{0, 1\}</script>而且<script type="math/tex">\sum_k z_k = 1</script>，也就意味着隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>中有且仅有一位为1，其他位置都为0。<script type="math/tex">\mathbf{\mbox{z}}</script>和<script type="math/tex">\pi_k</script>的关系如下：</p>
 
 <script type="math/tex; mode=display">p(z_k = 1) = \pi_k</script>
@@ -154,10 +154,10 @@
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{x}}) = \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{z}}) p(\mathbf{\mbox{x}} | \mathbf{\mbox{z}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)</script>
 
-<h1 id="em">EM算法登场</h1>
+<h1 id="em算法登场">EM算法登场</h1>
 <p>我们首先给出EM算法的一般步骤，然后将其应用于GMM的参数求解。</p>
 
-<h2 id="em-1">EM算法的一般步骤</h2>
+<h2 id="em算法的一般步骤">EM算法的一般步骤</h2>
 <p>给定观测数据<script type="math/tex">\mathbf{\mbox{X}}</script>，其中第<script type="math/tex">n</script>行<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>表示第<script type="math/tex">n</script>个观测数据，列的个数为数据的维数。正如我们之前所介绍的，每个观测数据都对应一个隐变量的取值–采用<script type="math/tex">\mathbf{\mbox{Z}}</script>表示，<script type="math/tex">\mathbf{\mbox{z}}_n^T</script>表示对应<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>的隐变量取值，经常称<script type="math/tex">\{ \mathbf{\mbox{X,Z}} \}</script>为完整数据（complete data）。在加入隐变量之后，似然函数变为（<script type="math/tex">\mathbf{\theta}</script>表示模型的未知参数集合）：</p>
 
 <script type="math/tex; mode=display">\ln p(\mathbf{\mbox{X}} | \mathbf{\theta}) = \ln \left\{ \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta}) \right\}</script>
@@ -199,7 +199,7 @@
   </li>
 </ul>
 
-<h2 id="emgmm">将EM算法应用于GMM</h2>
+<h2 id="将em算法应用于gmm">将EM算法应用于GMM</h2>
 <p>首先，根据<script type="math/tex">p(\mathbf{\mbox{z}})</script>和<script type="math/tex">p(\mathbf{\mbox{x}} \vert \mathbf{\mbox{z}})</script>计算<script type="math/tex">p(\mathbf{\mbox{x,z}})</script>，进而计算完整数据<script type="math/tex">\{\mathbf{\mbox{X,Z}}\}</script>的似然。计算后可得：</p>
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi}) = \prod_{n=1}^N \prod_{k=1}^K \pi_k^{z_{nk}} \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu_k, \Sigma_k})^{z_{nk}}</script>
@@ -259,7 +259,7 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
-    var disqus_url = 'http://alexkong.net/2014/07/GMM-and-EM/';
+    var disqus_url = 'http://localhost:4000/2014/07/GMM-and-EM/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -276,8 +276,8 @@
 <footer class="lotus-footer">
 	<p>Copyright © 2010–2016 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
 </footer>
-<script src="http://alexkong.net/static/js/jquery.scrollTo.js" type="text/javascript"></script>
-<script src="http://alexkong.net/static/js/iLotus.js" type="text/javascript"></script>
+<script src="http://localhost:4000/static/js/jquery.scrollTo.js" type="text/javascript"></script>
+<script src="http://localhost:4000/static/js/iLotus.js" type="text/javascript"></script>
 
 <script type="text/javascript">
       var _gaq = _gaq || [];

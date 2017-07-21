@@ -1,6 +1,6 @@
 markdown: kramdown
 pygments: true
-plugins: ./_plugins
+plugins_dir: ./_plugins
 paginate: 8
 permalink:        /:year/:month/:title/
 

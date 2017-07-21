@@ -21,9 +21,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" media="all" href="/static/style.css" />
     <!--[if lt IE 9]>
-    <script src="http://alexkong.net/static/js/html5.js" type="text/javascript"></script>
+    <script src="http://localhost:4000/static/js/html5.js" type="text/javascript"></script>
     <![endif]-->
-    <script src="http://alexkong.net/static/js/jquery.js" type="text/javascript"></script>
+    <script src="http://localhost:4000/static/js/jquery.js" type="text/javascript"></script>
     
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
@@ -78,7 +78,7 @@
             
             
             <li class="">
-                <a href="/contact.html" rel="bookmark" title="关于我">
+                <a href="/publication/index.html" rel="bookmark" title="发表论文">
                     <i class="icon-envelope-alt"></i>
                 </a>
                 
@@ -89,7 +89,7 @@
             
             
             <li class="">
-                <a href="contact.html" rel="bookmark" title="联系我">
+                <a href="/contact/index.html" rel="bookmark" title="联系我">
                     <i class="icon-heart"></i>
                 </a>
                 
@@ -121,7 +121,7 @@
 <article  itemscope itemtype="http://schema.org/Article" class="lotus-post">
 <p>ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见<a href="http://bubblexc.com/y2011/148/">这里</a>。这篇博文简单介绍ROC和AUC的特点，以及更为深入地，讨论如何作出ROC曲线图以及计算AUC。</p>
 
-<h2 id="roc">ROC曲线</h2>
+<h2 id="roc曲线">ROC曲线</h2>
 <p>需要提前说明的是，我们这里只讨论二值分类器。对于分类器，或者说分类算法，评价指标主要有precision，recall，F-score<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>，以及我们今天要讨论的ROC和AUC。下图是一个ROC曲线的示例<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>。</p>
 
 <p><img src="/images/Roccurves.png" alt="ROC曲线示例" /></p>
@@ -134,7 +134,7 @@
 
 <p>下面考虑ROC曲线图中的虚线y=x上的点。这条对角线上的点其实表示的是一个采用随机猜测策略的分类器的结果，例如(0.5,0.5)，表示该分类器随机对于一半的样本猜测其为正样本，另外一半的样本为负样本。</p>
 
-<h2 id="roc-1">如何画ROC曲线</h2>
+<h2 id="如何画roc曲线">如何画ROC曲线</h2>
 <p>对于一个特定的分类器和测试数据集，显然只能得到一个分类结果，即一组FPR和TPR结果，而要得到一个曲线，我们实际上需要一系列FPR和TPR的值，这又是如何得到的呢？我们先来看一下<a href="http://en.wikipedia.org/wiki/Receiver_operating_characteristic">Wikipedia</a>上对ROC曲线的定义：</p>
 
 <blockquote>
@@ -155,18 +155,20 @@
 
 <p>其实，我们并不一定要得到每个测试样本是正样本的概率值，只要得到这个分类器对该测试样本的“评分值”即可（评分值并不一定在(0,1)区间）。评分越高，表示分类器越肯定地认为这个测试样本是正样本，而且同时使用各个评分值作为threshold。我认为将评分值转化为概率更易于理解一些。</p>
 
-<h2 id="auc">AUC值的计算</h2>
+<h2 id="auc值的计算">AUC值的计算</h2>
 <p>AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积的数值不会大于1。又由于ROC曲线一般都处于y=x这条直线的上方，所以AUC的取值范围在0.5和1之间。使用AUC值作为评价标准是因为很多时候ROC曲线并不能清晰的说明哪个分类器的效果更好，而作为一个数值，对应AUC更大的分类器效果更好。</p>
 
 <p>在了解了ROC曲线的构造过程后，编写代码实现并不是一件困难的事情。相比自己编写代码，有时候阅读其他人的代码收获更多，当然过程也更痛苦些。在此推荐<a href="http://scikit-learn.org/stable/">scikit-learn</a>中关于<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/metrics/metrics.py#L479">计算AUC的代码</a>。</p>
 
-<h2 id="auc-1">AUC意味着什么</h2>
-<p>那么AUC值的含义是什么呢？根据(Fawcett, 2006)，AUC的值的含义是：
-&gt; The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+<h2 id="auc意味着什么">AUC意味着什么</h2>
+<p>那么AUC值的含义是什么呢？根据(Fawcett, 2006)，AUC的值的含义是：</p>
+<blockquote>
+  <p>The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+</blockquote>
 
 <p>这句话有些绕，我尝试解释一下：首先AUC值是一个概率值，当你随机挑选一个正样本以及一个负样本，当前的分类算法根据计算得到的Score值将这个正样本排在负样本前面的概率就是AUC值。当然，AUC值越大，当前的分类算法越有可能将正样本排在负样本前面，即能够更好的分类。</p>
 
-<h2 id="roc-2">为什么使用ROC曲线</h2>
+<h2 id="为什么使用roc曲线">为什么使用ROC曲线</h2>
 <p>既然已经这么多评价标准，为什么还要使用ROC和AUC呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup>的对比：</p>
 
 <p><img src="/images/roc-and-precall.png" alt="ROC曲线 vs. Precision-Recall曲线" /></p>
@@ -184,22 +186,22 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>我避免将precision，recall等评价指标翻译成中文，因为它们可能对应多个中文解释，极易产生混淆。 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>我避免将precision，recall等评价指标翻译成中文，因为它们可能对应多个中文解释，极易产生混淆。&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>图片来源：http://en.wikipedia.org/wiki/File:Roccurves.png <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>图片来源：http://en.wikipedia.org/wiki/File:Roccurves.png&nbsp;<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>这种映射不一定都是可靠的，即你不一定真的得到了某个样本是正样本的概率。 <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>这种映射不一定都是可靠的，即你不一定真的得到了某个样本是正样本的概率。&nbsp;<a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>注意这里使用了“Score”，而不是概率，我们暂且可以认为“Score”值就是是正样本的概率。 <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>注意这里使用了“Score”，而不是概率，我们暂且可以认为“Score”值就是是正样本的概率。&nbsp;<a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+      <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM.&nbsp;<a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>(Fawcett, 2006)，Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+      <p>(Fawcett, 2006)，Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874.&nbsp;<a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -220,7 +222,7 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'hitalex'; // required: replace example with your forum shortname
-    var disqus_url = 'http://alexkong.net/2013/06/introduction-to-auc-and-roc/';
+    var disqus_url = 'http://localhost:4000/2013/06/introduction-to-auc-and-roc/';
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -237,8 +239,8 @@
 <footer class="lotus-footer">
 	<p>Copyright © 2010–2016 孔明的博客 All rights reserved. Designed by <a href="http://www.zhanxin.info" target="_blank">zhanxin</a>.</p>
 </footer>
-<script src="http://alexkong.net/static/js/jquery.scrollTo.js" type="text/javascript"></script>
-<script src="http://alexkong.net/static/js/iLotus.js" type="text/javascript"></script>
+<script src="http://localhost:4000/static/js/jquery.scrollTo.js" type="text/javascript"></script>
+<script src="http://localhost:4000/static/js/iLotus.js" type="text/javascript"></script>
 
 <script type="text/javascript">
       var _gaq = _gaq || [];

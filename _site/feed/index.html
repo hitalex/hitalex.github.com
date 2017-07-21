@@ -5,33 +5,87 @@
   >
   <channel>
     <title>{"name"=>"孔明"}</title>
-    <link href="http://alexkong.net/feed/" rel="self" />
+    <link href="http://localhost:4000/feed/" rel="self" />
     <link href="http://alexkong.net/" />
-    <lastBuildDate>2016-04-12T17:27:46+08:00</lastBuildDate>
+    <lastBuildDate>2017-07-21T12:33:36+08:00</lastBuildDate>
     <webMaster>kqingchao@gmail.com</webMaster>
     
     <item>
+      <title>论文阅读笔记：Related Event Discovery [WSDM 2017]</title>
+      <link href="http://localhost:4000/2017/07/Paper-reading-related-event-discovery/"/>
+      <pubDate>2017-07-21T00:00:00+08:00</pubDate>
+      <author>{"name"=>"孔明"}</author>
+      <guid>http://localhost:4000/2017/07/Paper-reading-related-event-discovery</guid>
+      <content:encoded><![CDATA[<p>今天跟大家分享的论文是发表在2017年WSDM会议上的一篇文章：Related Event Discovery。文章主要解决的问题是：给定一个事件及其相关描述，在候选事件集合中找到与该事件具有语义关联的事件。</p>
+
+<p>从问题定义出发，我们可以问出以下几个问题：</p>
+<ol>
+  <li>“事件”如何定义？事件是否属于某个领域？</li>
+  <li>事件的相关描述包括哪几部分？</li>
+  <li>“语义相关”如何定义？</li>
+  <li>在做实验时，候选的事件集合如何确定？</li>
+  <li>具体的问题输出是什么样的？</li>
+</ol>
+
+<p>接下来我们来看一看这篇文章针对这几个问题所提出的解决方案或相关讨论。</p>
+
+<p>第一、这篇文章中的“事件”指的是被计划安排的活动事件，比如hiking、movie、tour等，跟突发事件相对应，而且并没有特定的领域属性。另外，这里的事件跟传统NLP中的事件也不一样：这里的事件属性可能包括时间、地点、参与人员、相关描述等等。</p>
+
+<p>下面是两个query events以及文章所提出的方法得到的结果：</p>
+
+<p><img src="/images/related-event-discovery-example-related-events.png" alt="Example of relateds events, retrieved by our system in response to example query events" /></p>
+
+<p>第二、事件的相关描述主要体现为用于事件发现算法的特征，主要包括以下几个部分：标题、周围的文本、对应该事件的搜索关键词、锚文本（Anchor text）、分类信息（Taxonomy）。可以看出主要还是用了文本信息。</p>
+
+<p>第三、“语义相关”如何定义？在NLP中，关于“语义”的准确定义一直没有明确的方法，本质上还是因为每个人对于两段文本是否“语义相关”具有不同的看法。文章所采用的相关事件发现方法体现了作者对于语义相关性的理解。</p>
+
+<p>作者在本文中提出了两种相关事件发现的方法 ，分别是COMBINER和EXPANDER，都属于无监督的方法。整体的方法流程如下：</p>
+
+<p><img src="/images/related-event-discovery-method-overview.png" alt="相关事件发现方法流程" /></p>
+
+<p>COMBINER方法的思想很简单：分别针对以上讨论的每个特征，依据KL距离计算目标事件（query event）和各个候选事件的相似度，并得到一个排序结果，最终应用Reciprocal Rank Fusion方法综合多个排序结果得到最终的排序结果。其中，Reciprocal Rank Fusion方法的具体表述如下：
+ <script type="math/tex">sc(S,T) = \Sigma_j{\frac{1}{r_{S,T}^j} + K}</script>
+ 其中，$S$表示目标事件，$T$表示某个候选事件，$j$用于索引各个排序方法，$r_{S,T}^j$表示第$j$个排序结果中，候选事件$T$的排名。</p>
+
+<p>EXPANDER方法主要基于label propagation：首先构建一个二部图，两种节点类型分别是特征（词组）和事件：如果事件中包含该特征，则连接该事件和特征。如下所示：</p>
+
+<p><img src="/images/related-event-discovery-expander.png" alt="EXPANDER方法" /></p>
+
+<p>在EXPANDER方法中，label为每个event，在初始运行时由于不知道哪些event是相关的，则每个event只标记和自己是相关的。最终，该方法得到的结果是每个event节点对应一个label（即event）的分布情况，即得到与每个event相关的额事件列表。</p>
+
+<p>第四、在做实验时，这篇文章的候选事件集合是由COMBINER和EXPANDER两个方法运行的结果，显然并不合适，因为有可能存在更为相关的事件，但并没有被以上两个方法检测到。</p>
+
+<p>第五、具体的输出是针对目标事件的相关事件列表，按照相关度排序。这本质上是一个排序问题，所以作者也对比了几个排序算法，包括RankBoost、Coordinate Ascent等。需要注意的是，这里所用的排序学习算法都是有监督方法。实验效果也表明，这些排序学习算法的效果确实比文章所提出的无监督学习方法的效果更好。实验结果如下所示：</p>
+
+<pre><code>![实验结果](/images/related-event-discovery-experiment-result.png)
+</code></pre>
+
+<p>短评：从研究问题上来说，相关事件检索/检测的相关研究确实不多，相关性比较难判断是一个原因；从研究方法来看，文章所用的无监督方法并不复杂，主要还是应用了文本数据作为特征，并没有使用事件中包含的实体信息，以及其他事件属性信息。</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
       <title>如何写好一篇科技论文？</title>
-      <link href="http://alexkong.net/2016/04/how-to-write-a-good-scientific-paper/"/>
+      <link href="http://localhost:4000/2016/04/how-to-write-a-good-scientific-paper/"/>
       <pubDate>2016-04-01T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2016/04/how-to-write-a-good-scientific-paper</guid>
+      <guid>http://localhost:4000/2016/04/how-to-write-a-good-scientific-paper</guid>
       <content:encoded><![CDATA[<p>论文是研究者和整个学术界交流最重要的方式，其重要性强调再多也不为过。如何通过写作的方式将自己的想法、方法和科学发现以“简洁易懂、准确无误”地传达给读者，需要极为深厚的功力。</p>
 
 <p>笔者写本文的目的绝不是在吹嘘我是一个多好的写作者，恰恰相反，我的写作水平很差，包括表达能力、沟通能力都还需要进一步提高。我希望以写文章的方式总结写一篇好论文的要点，以便经常反省。如果你发现这篇文章恰好对你也有帮助，那再好不过了。需要说明的是，这里主要针对科技论文写作。</p>
 
 <p>下面我分别从几个不同的方面来聊聊如何写好一篇科技论文。</p>
 
-<h1 id="section">确保行文的逻辑性</h1>
+<h1 id="确保行文的逻辑性">确保行文的逻辑性</h1>
 <p>相对于其他文体，例如小说、散文等，“逻辑性”可能是（科技）论文最显著的特点。那么何谓逻辑性？我的理解是：说明为什么要这样做，甚至为什么不那样做。例如，在解释自己的idea时，要说明你为什么会这么想或者是受什么启发。再如，在选择分类方法时，为什么选择逻辑回归而不是SVM？那么为什么要确保“逻辑性”呢？我觉得原因有以下两点：第一，如果在逻辑上都说不通，那么随后的方法、结论都将不堪一击；第二，逻辑性可以使得思考更为全面，也就能帮助我们有新发现，做出新成果。</p>
 
-<h1 id="section-1">用论文讲一个故事</h1>
+<h1 id="用论文讲一个故事">用论文讲一个故事</h1>
 <p>这里所说的“故事”当然并不是指小说中的故事，而是像“说故事”一样对自己的工作娓娓道来（对应英文中的“flow”），那么该如何做到这一点呢？我觉得最重要的是将论文的各个部分连成一体，循序渐进地阐述自己的工作，吸引读者阅读。“余音绕梁，三日不绝”是最高境界。具体来说，好标题是起点，但不要“标题党”。科技论文的标题也可以很诗意，例如2013年WWW会议的最佳论文“No country for old members: user lifecycle and linguistic change in online communities”，堪称典范。两百字左右的摘要也需要按照整个论文的结构来写，只不过一切从简，只需要说重点。接着正文开始，包括前言、相关工作、方法描述、实验方法、实验结果以及讨论等。整个论文结构已经保持了相当的逻辑性，但是其中的内容仍然需要“从已知到未知”，尤其是实验结果和结论需要让人产生“Wow”的效果。</p>
 
-<h1 id="section-2">时刻清楚自己要表达什么</h1>
+<h1 id="时刻清楚自己要表达什么">时刻清楚自己要表达什么</h1>
 <p>针对同一事物，语言表达的方式有千万之多，那么如何选择呢？这便要看我们希望表达什么。对于科技论文而言，我们需要清楚每一句话需要表达的意思，并明确重点，确保读者不会产生歧义，并时刻跟随我们的思路。</p>
 
-<h1 id="section-3">其他需要注意的问题</h1>
+<h1 id="其他需要注意的问题">其他需要注意的问题</h1>
 <ul>
   <li>可能很多人平时也会写英文论文，虽然写作的本质是相通的，但仍要注意语言表达习惯。</li>
   <li>关于论文修改的问题，如果当下没人能为你的论文提供修改意见，自己如何修改提高呢？我觉得这是一个很困难的问题，因为修改意味着在短时间内否定之前的自己，尤其是在初稿已经是很认真写的前提下。我现在并没有好的解决办法，或许对照以上几条标准会有帮助。</li>
@@ -44,24 +98,24 @@
     
     <item>
       <title>关于Python中字符编码问题的一切</title>
-      <link href="http://alexkong.net/2014/11/all-about-character-encodings-in-python/"/>
+      <link href="http://localhost:4000/2014/11/all-about-character-encodings-in-python/"/>
       <pubDate>2014-11-21T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2014/11/all-about-character-encodings-in-python</guid>
+      <guid>http://localhost:4000/2014/11/all-about-character-encodings-in-python</guid>
       <content:encoded><![CDATA[<p>本文目标：</p>
 ]]></content:encoded>
     </item>
     
     <item>
       <title>高斯混合模型和期望最大化算法</title>
-      <link href="http://alexkong.net/2014/07/GMM-and-EM/"/>
+      <link href="http://localhost:4000/2014/07/GMM-and-EM/"/>
       <pubDate>2014-07-14T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2014/07/GMM-and-EM</guid>
-      <content:encoded><![CDATA[<h1 id="section">概述</h1>
+      <guid>http://localhost:4000/2014/07/GMM-and-EM</guid>
+      <content:encoded><![CDATA[<h1 id="概述">概述</h1>
 <p>在这篇博文中，我们将讨论高斯混合模型（Gaussian Mixture Models，GMM）以及它的求解方法–期望最大化（Expectation-Maximization，EM）算法。GMM是经典的无监督聚类模型，它假设数据是从多个高斯分布中得到。我们在GMM的模型求解过程中引入“隐变量”（latent variable）的概念，并基于此使用EM算法求解模型参数。GMM在语音识别技术中有应用。</p>
 
-<h1 id="section-1">求解高斯混合模型：初尝败果</h1>
+<h1 id="求解高斯混合模型初尝败果">求解高斯混合模型：初尝败果</h1>
 <p>在线性判别分析（Linear Discriminant Analysis, LDA）中，我们假设每类中的数据服从高斯分布，通过计算两类之间的判别超平面得到分类函数。注意，在线性判别分析中，数据是有类别标签的，也就是属于有监督的分类问题。GMM与线性判别分析模型具有同样的数据生成假设，不同的是，GMM的训练数据中没有类别标签，即为无监督模型。一般地，GMM的定义如下：</p>
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{x}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)</script>
@@ -72,7 +126,7 @@
 
 <p>如果此时试图使用<a href="http://en.wikipedia.org/wiki/Lagrange_multiplier">拉格朗日乘数法</a>来求解，那么遇到的最大麻烦将是<script type="math/tex">\ln \{ \cdots \}</script>这一部分，导致根本无法继续求解。</p>
 
-<h1 id="section-2">引入隐变量</h1>
+<h1 id="引入隐变量">引入隐变量</h1>
 <p>接下来，我们将引入“隐变量”。我们假设，对于数据点<script type="math/tex">\mathbf{\mbox{x}}</script>来说存在一个隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>，也就意味着对于每个数据点的取值都存在一个相应的隐变量的取值，但是无法观测得到。隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>的定义如下：<script type="math/tex">\mathbf{\mbox{z}}</script>为<script type="math/tex">K</script>维变量，满足<script type="math/tex">z_k \in \{0, 1\}</script>而且<script type="math/tex">\sum_k z_k = 1</script>，也就意味着隐变量<script type="math/tex">\mathbf{\mbox{z}}</script>中有且仅有一位为1，其他位置都为0。<script type="math/tex">\mathbf{\mbox{z}}</script>和<script type="math/tex">\pi_k</script>的关系如下：</p>
 
 <script type="math/tex; mode=display">p(z_k = 1) = \pi_k</script>
@@ -93,10 +147,10 @@
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{x}}) = \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{z}}) p(\mathbf{\mbox{x}} | \mathbf{\mbox{z}}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{\mbox{x}} | \mathbf{\mu}_k, \mathbf{\Sigma}_k)</script>
 
-<h1 id="em">EM算法登场</h1>
+<h1 id="em算法登场">EM算法登场</h1>
 <p>我们首先给出EM算法的一般步骤，然后将其应用于GMM的参数求解。</p>
 
-<h2 id="em-1">EM算法的一般步骤</h2>
+<h2 id="em算法的一般步骤">EM算法的一般步骤</h2>
 <p>给定观测数据<script type="math/tex">\mathbf{\mbox{X}}</script>，其中第<script type="math/tex">n</script>行<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>表示第<script type="math/tex">n</script>个观测数据，列的个数为数据的维数。正如我们之前所介绍的，每个观测数据都对应一个隐变量的取值–采用<script type="math/tex">\mathbf{\mbox{Z}}</script>表示，<script type="math/tex">\mathbf{\mbox{z}}_n^T</script>表示对应<script type="math/tex">\mathbf{\mbox{x}}_n^T</script>的隐变量取值，经常称<script type="math/tex">\{ \mathbf{\mbox{X,Z}} \}</script>为完整数据（complete data）。在加入隐变量之后，似然函数变为（<script type="math/tex">\mathbf{\theta}</script>表示模型的未知参数集合）：</p>
 
 <script type="math/tex; mode=display">\ln p(\mathbf{\mbox{X}} | \mathbf{\theta}) = \ln \left\{ \sum_{\mathbf{\mbox{z}}} p(\mathbf{\mbox{X}}, \mathbf{\mbox{Z}} | \mathbf{\theta}) \right\}</script>
@@ -138,7 +192,7 @@
   </li>
 </ul>
 
-<h2 id="emgmm">将EM算法应用于GMM</h2>
+<h2 id="将em算法应用于gmm">将EM算法应用于GMM</h2>
 <p>首先，根据<script type="math/tex">p(\mathbf{\mbox{z}})</script>和<script type="math/tex">p(\mathbf{\mbox{x}} \vert \mathbf{\mbox{z}})</script>计算<script type="math/tex">p(\mathbf{\mbox{x,z}})</script>，进而计算完整数据<script type="math/tex">\{\mathbf{\mbox{X,Z}}\}</script>的似然。计算后可得：</p>
 
 <script type="math/tex; mode=display">p(\mathbf{\mbox{X,Z}} \vert \mathbf{\mu, \Sigma, \pi}) = \prod_{n=1}^N \prod_{k=1}^K \pi_k^{z_{nk}} \mathcal{N}(\mathbf{\mbox{x}}_n \vert \mathbf{\mu_k, \Sigma_k})^{z_{nk}}</script>
@@ -186,11 +240,11 @@
     
     <item>
       <title>论文阅读笔记 - 2014.6.21</title>
-      <link href="http://alexkong.net/2014/06/paper-reading-notes/"/>
+      <link href="http://localhost:4000/2014/06/paper-reading-notes/"/>
       <pubDate>2014-06-21T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2014/06/paper-reading-notes</guid>
-      <content:encoded><![CDATA[<h1 id="section">引言</h1>
+      <guid>http://localhost:4000/2014/06/paper-reading-notes</guid>
+      <content:encoded><![CDATA[<h1 id="引言">引言</h1>
 <p>从本周开始，坚持每周至少写一篇论文阅读笔记。要求精读，详细说明论文方法，并分析该篇文章的优点和缺点。如有可能，提出自己的观点。</p>
 
 <p>这篇博文主要讨论两篇文章，第一作者都是Xiangnan He，<a href="http://www.comp.nus.edu.sg/~xiangnan/">这里</a>是他的主页。这两篇文章分别是：“Comment-based Multi-View Clustering of Web 2.0 Items”，发表在WWW 2014上，以及“Predicting the Popularity of Web 2.0 Items Based on User Comments”，发表在SIGIR 2014上。两篇文章都和用户评论相关，正好也是我的主要研究内容。</p>
@@ -246,13 +300,13 @@
 下面分别将以上三个假设采用正则优化的思路进行数学公式实现。</li>
 </ul>
 
-<h2 id="h1h2">对于H1和H2的实现</h2>
+<h2 id="对于h1和h2的实现">对于H1和H2的实现</h2>
 
 <script type="math/tex; mode=display">R_1(f) = \frac{1}{2} \sum_{j=1}^n \sum_{i=1}^m w_{ij} (\frac{f(p_j)}{\sqrt{d_j^p}} - \frac{f(u_i)}{\sqrt{d_i^u}})^2</script>
 
 <p>其中，<script type="math/tex">d_j^p</script>和<script type="math/tex">d_i^u</script>分别为item <script type="math/tex">p_j</script>和用户<script type="math/tex">u_i</script>的weighted degree，<script type="math/tex">f(p_j)</script>值较大的item将会在排序中获得更靠前的位置。在上面的正则约束中，如果<script type="math/tex">p_j</script>的weighted degree较大，即该item收到更多的评论，那么<script type="math/tex">f(p_j)</script>的值也较大（其他变量的值不变），即体现了H1；另外，上式中括号中的第二项较大时，第一项也会较大，即归一化后<script type="math/tex">f(u_i)</script>也较大时，也就是用户<script type="math/tex">u_i</script>的影响力较大时，<script type="math/tex">f(p_j)</script>的值也会较大。</p>
 
-<h2 id="h2">对于H2的实现</h2>
+<h2 id="对于h2的实现">对于H2的实现</h2>
 <p>根据每个用户的朋友数，计算其初始影响力的取值，记为<script type="math/tex">u_i^0</script>，那么</p>
 
 <script type="math/tex; mode=display">R_2(f) = \sum_{i=1}^m(f(u_i) - u_i^0)^2</script>
@@ -275,10 +329,10 @@
     
     <item>
       <title>一些计算机方向的学术会议整理</title>
-      <link href="http://alexkong.net/2013/07/related-cs-conference/"/>
+      <link href="http://localhost:4000/2013/07/related-cs-conference/"/>
       <pubDate>2013-07-16T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2013/07/related-cs-conference</guid>
+      <guid>http://localhost:4000/2013/07/related-cs-conference</guid>
       <content:encoded><![CDATA[<p>这篇博文简单列举几个与我的研究方向相关的学术会议。提起我的研究方向，其实我现在都没有一个确切的答案。往大了说，可以定位为“社会计算”，往小了说，我主要（打算）使用数据挖掘和机器学习算法，研究社交网络、行为建模方面的问题，应用偏向安全领域。我偏向于寻找新问题和应用，而不是理论研究。我前段时间刚做了一篇关于豆瓣小组评论的文章（ISI 2013），可以在<a href="http://alexkong.net/publication/">Publication页面</a>查看。</p>
 
 <p>从我最喜欢的会议开始说起。</p>
@@ -307,13 +361,13 @@
     
     <item>
       <title>ROC和AUC介绍以及如何计算AUC</title>
-      <link href="http://alexkong.net/2013/06/introduction-to-auc-and-roc/"/>
+      <link href="http://localhost:4000/2013/06/introduction-to-auc-and-roc/"/>
       <pubDate>2013-06-22T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2013/06/introduction-to-auc-and-roc</guid>
+      <guid>http://localhost:4000/2013/06/introduction-to-auc-and-roc</guid>
       <content:encoded><![CDATA[<p>ROC（Receiver Operating Characteristic）曲线和AUC常被用来评价一个二值分类器（binary classifier）的优劣，对两者的简单介绍见<a href="http://bubblexc.com/y2011/148/">这里</a>。这篇博文简单介绍ROC和AUC的特点，以及更为深入地，讨论如何作出ROC曲线图以及计算AUC。</p>
 
-<h2 id="roc">ROC曲线</h2>
+<h2 id="roc曲线">ROC曲线</h2>
 <p>需要提前说明的是，我们这里只讨论二值分类器。对于分类器，或者说分类算法，评价指标主要有precision，recall，F-score<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>，以及我们今天要讨论的ROC和AUC。下图是一个ROC曲线的示例<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>。</p>
 
 <p><img src="/images/Roccurves.png" alt="ROC曲线示例" /></p>
@@ -326,7 +380,7 @@
 
 <p>下面考虑ROC曲线图中的虚线y=x上的点。这条对角线上的点其实表示的是一个采用随机猜测策略的分类器的结果，例如(0.5,0.5)，表示该分类器随机对于一半的样本猜测其为正样本，另外一半的样本为负样本。</p>
 
-<h2 id="roc-1">如何画ROC曲线</h2>
+<h2 id="如何画roc曲线">如何画ROC曲线</h2>
 <p>对于一个特定的分类器和测试数据集，显然只能得到一个分类结果，即一组FPR和TPR结果，而要得到一个曲线，我们实际上需要一系列FPR和TPR的值，这又是如何得到的呢？我们先来看一下<a href="http://en.wikipedia.org/wiki/Receiver_operating_characteristic">Wikipedia</a>上对ROC曲线的定义：</p>
 
 <blockquote>
@@ -347,18 +401,20 @@
 
 <p>其实，我们并不一定要得到每个测试样本是正样本的概率值，只要得到这个分类器对该测试样本的“评分值”即可（评分值并不一定在(0,1)区间）。评分越高，表示分类器越肯定地认为这个测试样本是正样本，而且同时使用各个评分值作为threshold。我认为将评分值转化为概率更易于理解一些。</p>
 
-<h2 id="auc">AUC值的计算</h2>
+<h2 id="auc值的计算">AUC值的计算</h2>
 <p>AUC（Area Under Curve）被定义为ROC曲线下的面积，显然这个面积的数值不会大于1。又由于ROC曲线一般都处于y=x这条直线的上方，所以AUC的取值范围在0.5和1之间。使用AUC值作为评价标准是因为很多时候ROC曲线并不能清晰的说明哪个分类器的效果更好，而作为一个数值，对应AUC更大的分类器效果更好。</p>
 
 <p>在了解了ROC曲线的构造过程后，编写代码实现并不是一件困难的事情。相比自己编写代码，有时候阅读其他人的代码收获更多，当然过程也更痛苦些。在此推荐<a href="http://scikit-learn.org/stable/">scikit-learn</a>中关于<a href="https://github.com/scikit-learn/scikit-learn/blob/master/sklearn/metrics/metrics.py#L479">计算AUC的代码</a>。</p>
 
-<h2 id="auc-1">AUC意味着什么</h2>
-<p>那么AUC值的含义是什么呢？根据(Fawcett, 2006)，AUC的值的含义是：
-&gt; The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+<h2 id="auc意味着什么">AUC意味着什么</h2>
+<p>那么AUC值的含义是什么呢？根据(Fawcett, 2006)，AUC的值的含义是：</p>
+<blockquote>
+  <p>The AUC value is equivalent to the probability that a randomly chosen positive example is ranked higher than a randomly chosen negative example.</p>
+</blockquote>
 
 <p>这句话有些绕，我尝试解释一下：首先AUC值是一个概率值，当你随机挑选一个正样本以及一个负样本，当前的分类算法根据计算得到的Score值将这个正样本排在负样本前面的概率就是AUC值。当然，AUC值越大，当前的分类算法越有可能将正样本排在负样本前面，即能够更好的分类。</p>
 
-<h2 id="roc-2">为什么使用ROC曲线</h2>
+<h2 id="为什么使用roc曲线">为什么使用ROC曲线</h2>
 <p>既然已经这么多评价标准，为什么还要使用ROC和AUC呢？因为ROC曲线有个很好的特性：当测试集中的正负样本的分布变化的时候，ROC曲线能够保持不变。在实际的数据集中经常会出现类不平衡（class imbalance）现象，即负样本比正样本多很多（或者相反），而且测试数据中的正负样本的分布也可能随着时间变化。下图是ROC曲线和Precision-Recall曲线<sup id="fnref:5"><a href="#fn:5" class="footnote">5</a></sup>的对比：</p>
 
 <p><img src="/images/roc-and-precall.png" alt="ROC曲线 vs. Precision-Recall曲线" /></p>
@@ -376,22 +432,22 @@
 <div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>我避免将precision，recall等评价指标翻译成中文，因为它们可能对应多个中文解释，极易产生混淆。 <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+      <p>我避免将precision，recall等评价指标翻译成中文，因为它们可能对应多个中文解释，极易产生混淆。&nbsp;<a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>图片来源：http://en.wikipedia.org/wiki/File:Roccurves.png <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+      <p>图片来源：http://en.wikipedia.org/wiki/File:Roccurves.png&nbsp;<a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>这种映射不一定都是可靠的，即你不一定真的得到了某个样本是正样本的概率。 <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+      <p>这种映射不一定都是可靠的，即你不一定真的得到了某个样本是正样本的概率。&nbsp;<a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p>注意这里使用了“Score”，而不是概率，我们暂且可以认为“Score”值就是是正样本的概率。 <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
+      <p>注意这里使用了“Score”，而不是概率，我们暂且可以认为“Score”值就是是正样本的概率。&nbsp;<a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:5">
-      <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM. <a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
+      <p>Davis, J., &amp; Goadrich, M. (2006, June). The relationship between Precision-Recall and ROC curves. In Proceedings of the 23rd international conference on Machine learning (pp. 233-240). ACM.&nbsp;<a href="#fnref:5" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:6">
-      <p>(Fawcett, 2006)，Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874. <a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
+      <p>(Fawcett, 2006)，Fawcett, T. (2006). An introduction to ROC analysis. Pattern recognition letters, 27(8), 861-874.&nbsp;<a href="#fnref:6" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -400,10 +456,10 @@
     
     <item>
       <title>关于中文学术论文的格式问题 -- 我的一些看法</title>
-      <link href="http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/"/>
+      <link href="http://localhost:4000/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese/"/>
       <pubDate>2012-10-04T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese</guid>
+      <guid>http://localhost:4000/2012/10/my-views-on-formatting-issues-of-acdemic-papers-in-chinese</guid>
       <content:encoded><![CDATA[<p>先说一下我为什么会关注这个问题。就在几天前，导师给了我一篇中文论文，让我帮忙评审（review）。拿到论文后，我竟然有些兴奋 – 的确，我的桌子上几乎不看任何中文论文。造成这种局面的原因比较尴尬和复杂，我们改日再讨论。在仔细读完论文后，除去内容不谈，我发现在此篇论文在书写格式方面有很大的问题，比如错误使用标点符号、断句、中英文和公式混排等。这其中有些问题也是我在写本科毕业论文的时候注意到的。</p>
 
 <p>究其原因，可能是大家平时读写英文论文、英文E-mail太多，反而忽视或者忘记了中文书写的规范。下面我就谈一谈出现的问题以及我的看法。</p>
@@ -428,15 +484,17 @@
     
     <item>
       <title>Appplying Gibbs sampling inference to Naive Bayes classification</title>
-      <link href="http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification/"/>
+      <link href="http://localhost:4000/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification/"/>
       <pubDate>2012-09-09T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification</guid>
-      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code class="highlighter-rouge">\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
+      <guid>http://localhost:4000/2012/09/applying-gibbs-sampling-inference-to-naive-bayes-classification</guid>
+      <content:encoded><![CDATA[<p>Naive Bayes（naive的另外一种写法为naïve，见<a href="http://en.wiktionary.org/wiki/na%C3%AFve">这里</a>），即朴素贝叶斯，是一种应用贝叶斯原理的简单分类器，常用于文本分类，它基于这样的假设：每个文档中的单词生成都是独立的（所以它是Naive的），并且并不考虑单词之间的顺序（Bag-Of-Words，BOW模型）。在自然语言处理（Natural Language Processing，NLP）领域中，这样的模型被称为Unigram model，当然还有Bigram，Trigram，甚至n-gram model。在n-gram model（n&gt;1）中，单词与单词之间不再独立，而是有一定的转移概率 <code>\(P(w_2 | w_1)\)</code>。举一个简单的例子，比如“我”字后面出现“们”的概率显然比出现“中”的概率大，而在unigram model中则并不考虑这种概率差异。不过即便有这样简单的假设，Naive Bayes方法依然强大。</p>
 
-<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：
-* <strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。
-* <strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</p>
+<p>这里并不打算介绍Naive Bayes的细节，只是推荐两篇文章：</p>
+<ul>
+  <li><strong>Parameter estimation for text analysis</strong>，这篇文章主要介绍参数估计的方法，循序渐进，从极大似然估计（Maximum likelyhood，ML）、最大后验（Maximum A Posteriori，MAP）再到Bayesian estimation，得到估计参数的分布，最后详细推导了LDA（Latent Dirichlet Allocation）的Gibbs sampling推导。</li>
+  <li><strong>Gibbs sampling for the unitialiated</strong>，这篇文章主要介绍了Gibbs sampling，另外还将Gibbs sampling应用到Naive Bayes模型的推导，分析步骤很详细，值得一读。以下简称Unitialiated。</li>
+</ul>
 
 <p>如果你已经读了至少Gibbs sampling for the unitialiated这篇文章，或者本来理解Gibss sampling，我建议你继续阅读。</p>
 
@@ -446,10 +504,10 @@
     
     <item>
       <title>论文阅读总结</title>
-      <link href="http://alexkong.net/2012/08/paper-reading-summary/"/>
+      <link href="http://localhost:4000/2012/08/paper-reading-summary/"/>
       <pubDate>2012-08-31T00:00:00+08:00</pubDate>
       <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2012/08/paper-reading-summary</guid>
+      <guid>http://localhost:4000/2012/08/paper-reading-summary</guid>
       <content:encoded><![CDATA[<p>以下列出从8月16号以来直到现在所阅读的论文的总结。</p>
 
 <p><strong>Topic visualization</strong></p>
@@ -502,48 +560,17 @@
 
 <p><em>Modeling User Posting Behavior on Social Media</em> by Zhiheng Xu, <em>et al.</em>（SIGIR2012）</p>
 
-<p>文章认为Twitter用户的转发行为与以下三个方面有关：
-* Breaking news
-* posts from social friends
-* users’ intrinsic interest
-作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</p>
+<p>文章认为Twitter用户的转发行为与以下三个方面有关：</p>
+<ul>
+  <li>Breaking news</li>
+  <li>posts from social friends</li>
+  <li>users’ intrinsic interest
+作者扩展了LDA模型，将这三种原因加入到模型中。这篇文章主要参考了另外两篇文章：Modeling General and Specific Aspects of Documents with a Probabilistic Topic Model（NIPS2006）和Cross-Cultural Analyisi of Blogs and Forums with Mixed-Collection Topic Models（EMNLP2009）。</li>
+</ul>
 
 <p><strong>总结</strong></p>
 
 <p>目前看论文存在的问题是：贪多，看论文不仔细，没有能够及时总结论文思想，提取idea。</p>
-]]></content:encoded>
-    </item>
-    
-    <item>
-      <title>Problem oriented, not model oriented -- 阶段总结</title>
-      <link href="http://alexkong.net/2012/08/problem-oriented-not-model-oriented/"/>
-      <pubDate>2012-08-30T00:00:00+08:00</pubDate>
-      <author>{"name"=>"孔明"}</author>
-      <guid>http://alexkong.net/2012/08/problem-oriented-not-model-oriented</guid>
-      <content:encoded><![CDATA[<p><strong>阶段总结</strong></p>
-
-<p>8月4号回到北京，5号休息了一天，之后的一周（6号到10号）就开始在清华听<a href="http://bigeye.au.tsinghua.edu.cn/DragonStar2012/registration.html">龙星计划</a>，讲课的两位老师分别是余凯和张瞳。余凯目前在百度做多媒体相关的研究，相较于张瞳，他更偏向于工业界的应用（余凯本人也非常幽默），而张瞳则是Rutgers大学教授，Stanford博士毕业，统计学的大牛。对于机器学习这个研究领域来说，5天的暑期课程远远不够，课程期间，余凯主要是介绍了机器学习的一些相关概念，比如<a href="http://deeplearning.net/">deep learning</a>（我之前则从未听说），张瞳则主要介绍了优化算法、统计理论方面的知识。其实细想起来，整个课程的知识性收获并不太多，主要是开拓了自己的眼界，多认识了几个大牛，比如清华的<a href="http://www.ml-thu.net/~jun/">朱军</a>，微软的<a href="http://research.microsoft.com/en-us/people/tyliu/">Tie-Yan Liu</a>，计算所的常虹，香港科大的<a href="http://www.cse.ust.hk/~qyang/">杨强</a>。非常巧合的是，杨强就是随后在国际会议中心举办的KDD（Knowledge Discovery and Data Mining） 2012的主席（General Chair）。</p>
-
-<p>10号中午在清华吃完饭后又跑到计算所听了<a href="http://cs.stanford.edu/people/jure/">Jure Leskovec</a>关于社交网络（Social Network）的讲座，回去查找他的主页的时候又一次被震惊：顶级会议（top-tier conference）的paper一堆堆，还加杂着各种best paper。后来才知道，Jure也在KDD 2012的Summer School中也有讲座。</p>
-
-<p>各路大牛齐聚北京，为的就是第一次在中国召开的数据挖掘方面的顶级会议<a href="http://kdd2012.sigkdd.org/">KDD2012</a>。从周日开始，我又开始出现在国际会议中心里，听KDD的报告。</p>
-
-<p>KDD不愧为“盛会”，今年参加会议的人大约在1000人以上。这次我也是开足了眼界，见到了很多书中和paper中的大牛，简单罗列几个：孙茂松、Jiawei Han、 余凯、杨强、周志华、唐洁、<a href="http://www.cs.berkeley.edu/~jordan/">Michael Jordan</a>、Michael Kearns、李彦宏、Tie-yan Liu、林智仁、Xiaojin Zhu。这次的KDD和<a href="http://www.sigir.org/sigir2012/">SIGIR2012</a>会议时间上几乎完全重叠，否则还能见到更多的大牛。在这些大牛中给我留下最深刻印象的是林智仁，他在Industry Practice Expo中做了一个报告：<a href="http://kdd2012.sigkdd.org/indexpo.shtml#lin">Experiences and Lessons in Developing Industry-Strength Machine Learning and Data Mining Software</a>，主要介绍了他们开发LIBSVM的经历。林教授非常和蔼、幽默，就像个小孩子一般，让人感觉很亲近，整个报告的气氛也非常轻松。</p>
-
-<p>从KDD回来，就开始看论文。经过龙星课程和KDD2012的连番轰炸，我开始真正认识到学术圈子（research community），开始关注一些大牛，开始想着如何才能发高质量的论文。这其中也要感谢杨逍的帮忙，整个KDD期间，我都在跟他讨论、请教。我也必须感到庆幸，这些经历都正好发生在我即将开始真正的实验室学术生活的“前一天”。</p>
-
-<p><strong>Problem oriented, not model oriented</strong></p>
-
-<p>我最近一直也在寻找自己的研究方向，自己虽然有些模糊的想法和方向，但还是不够清晰，也不够坚定。从去年看论文开始，一直到现在，我一直都专注于topic model的学习，LDA以及模型求解，再到前几天的模型的应用，我发现我不知不觉到了这样一个误区：先想一个问题，然后再考虑如何用topic model去解决。这不是典型的“有个锤子，就认为满世界都是钉子”思路么？要解决的是实际或者研究问题，模型、方法都只是手段而已。总的来说就是太依赖于某个算法、模型，而忽略了自己要解决的问题，这个问题如此严峻，以至于和我最初的“以问题为导向”（Problem oriented）的研究思路相违背。</p>
-
-<p><strong>Future posts</strong></p>
-
-<p>现在我心里还有几篇博文在“孕育”，写下来防止未来自己不认帐:
-* 近几天所看的论文的总结，无论如何都要停下来回顾一下自己看的文章，消化一下。
-* From dimension reduction to LDA，关于LSA、PLSA和LDA
-* Gibbs sampling，以及其C语言实现
-* Bayesian non-parametircs
-* 读 <em>Unix编程的艺术</em> 有感</p>
 ]]></content:encoded>
     </item>
     
